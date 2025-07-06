@@ -89,28 +89,32 @@ export function UserCard() {
 
 export default function BlocksPage() {
   return (
-    <div className="container py-8 md:py-12">
-      <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between md:gap-8">
-        <div className="flex-1 space-y-4">
-          <h1 className="inline-block font-bold text-4xl tracking-tight lg:text-5xl">
-            Blocks
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            Pre-built component blocks that you can copy and paste into your
-            projects.
+    <div className="min-h-screen bg-background">
+      <div className="mx-auto max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
+        {/* Page Header */}
+        <div className="space-y-4 border-b border-border pb-8 mb-12">
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-12 bg-accent rounded-full" />
+            <h1 className="text-5xl font-bold tracking-tight font-ndot">Blocks</h1>
+          </div>
+          <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+            Pre-built component blocks that you can copy and paste into your projects. 
+            Perfect for rapid prototyping and development.
           </p>
         </div>
-      </div>
 
-      <div className="pb-8 pt-6 md:pb-10 md:pt-8 space-y-12">
-        {/* Stats Cards Block */}
-        <div className="space-y-6">
-          <div>
-            <h2 className="text-3xl font-bold">Stats Cards</h2>
-            <p className="text-muted-foreground">
-              Display key metrics and statistics in a clean, organized layout.
-            </p>
-          </div>
+        <div className="space-y-16">
+          {/* Stats Cards Block */}
+          <div className="space-y-8">
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <div className="w-1 h-8 bg-accent rounded-full" />
+                <h2 className="text-3xl font-bold tracking-tight">Stats Cards</h2>
+              </div>
+              <p className="text-muted-foreground leading-relaxed ml-4">
+                Display key metrics and statistics in a clean, organized layout.
+              </p>
+            </div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card>
@@ -176,14 +180,17 @@ export default function BlocksPage() {
           />
         </div>
 
-        {/* User Cards Block */}
-        <div className="space-y-6">
-          <div>
-            <h2 className="text-3xl font-bold">User Cards</h2>
-            <p className="text-muted-foreground">
-              Display user information with profile cards and contact details.
-            </p>
-          </div>
+          {/* User Cards Block */}
+          <div className="space-y-8">
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <div className="w-1 h-8 bg-accent rounded-full" />
+                <h2 className="text-3xl font-bold tracking-tight">User Cards</h2>
+              </div>
+              <p className="text-muted-foreground leading-relaxed ml-4">
+                Display user information with profile cards and contact details.
+              </p>
+            </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <Card className="w-full">
@@ -262,14 +269,17 @@ export default function BlocksPage() {
           <CodeBlock code={userCardCode} language="tsx" title="UserCard.tsx" />
         </div>
 
-        {/* Social Media Post Block */}
-        <div className="space-y-6">
-          <div>
-            <h2 className="text-3xl font-bold">Social Media Post</h2>
-            <p className="text-muted-foreground">
-              A social media post layout with engagement buttons and user info.
-            </p>
-          </div>
+          {/* Social Media Post Block */}
+          <div className="space-y-8">
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <div className="w-1 h-8 bg-accent rounded-full" />
+                <h2 className="text-3xl font-bold tracking-tight">Social Media Post</h2>
+              </div>
+              <p className="text-muted-foreground leading-relaxed ml-4">
+                A social media post layout with engagement buttons and user info.
+              </p>
+            </div>
 
           <Card className="w-full max-w-md">
             <CardHeader>
@@ -310,14 +320,17 @@ export default function BlocksPage() {
           </Card>
         </div>
 
-        {/* Event Card Block */}
-        <div className="space-y-6">
-          <div>
-            <h2 className="text-3xl font-bold">Event Card</h2>
-            <p className="text-muted-foreground">
-              Display event information with date, time, and location details.
-            </p>
-          </div>
+          {/* Event Card Block */}
+          <div className="space-y-8">
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <div className="w-1 h-8 bg-accent rounded-full" />
+                <h2 className="text-3xl font-bold tracking-tight">Event Card</h2>
+              </div>
+              <p className="text-muted-foreground leading-relaxed ml-4">
+                Display event information with date, time, and location details.
+              </p>
+            </div>
 
           <Card className="w-full max-w-md">
             <CardHeader>
@@ -362,6 +375,7 @@ export default function BlocksPage() {
               </div>
             </CardContent>
           </Card>
+        </div>
         </div>
       </div>
     </div>

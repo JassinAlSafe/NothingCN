@@ -60,7 +60,7 @@ export function CodeBlock({
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <pre
               className={cn(
-                "overflow-x-auto p-4 text-sm bg-muted rounded-lg",
+                "overflow-x-auto p-4 text-sm bg-muted rounded-2xl font-ntype82-mono",
                 className
               )}
               style={style}

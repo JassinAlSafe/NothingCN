@@ -11,7 +11,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Architecture
 
-This is a Next.js 15 component showcase application built with React 19, TypeScript, and Tailwind CSS 4. It's structured as a shadcn/ui-style component library with live previews and copy-paste functionality.
+This is NothingCN - an open source Next.js 15 component showcase built with React 19, TypeScript, and Tailwind CSS 4. The goal is to create a comprehensive library of creative, reusable components that developers can easily copy and use in their projects.
 
 ### Key Architecture Patterns
 
@@ -39,11 +39,18 @@ All reusable components are in `src/components/ui/` and follow these patterns:
 
 ### Navigation Structure
 
-- `/` - Homepage
-- `/components` - Component showcase and documentation
-- `/blocks` - Pre-built component combinations
-- `/themes` - Theme customization examples
-- `/docs` - Documentation pages
+- `/` - Homepage showcasing NothingCN
+- `/components` - Creative component library with copy-paste functionality
+- `/blocks` - Pre-built component combinations and layouts
+- `/themes` - Theme customization and color schemes
+- `/docs` - Documentation and contribution guidelines
+
+### Project Goals
+
+- **Open Source**: All components are freely available for developers to use
+- **Creative Focus**: Emphasis on unique, visually appealing components
+- **Copy-Paste Ready**: No installation required - just copy the code
+- **Community Driven**: Built for and by the developer community
 
 ### Styling Guidelines
 

@@ -1,235 +1,164 @@
-"use client";
-
-import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CodeBlock } from "@/components/ui/code-block";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowRight, Palette, Code, Copy, Zap } from "lucide-react";
 
-// Component examples
-const buttonCode = `import { Button } from "@/components/ui/button"
+const features = [
+  {
+    icon: <Zap className="h-6 w-6" />,
+    title: "Fast & Modern",
+    description: "Built with Next.js 15 and React 19 for optimal performance.",
+  },
+  {
+    icon: <Palette className="h-6 w-6" />,
+    title: "Creative Design",
+    description: "Unique, visually stunning components that stand out.",
+  },
+  {
+    icon: <Code className="h-6 w-6" />,
+    title: "Developer First",
+    description: "TypeScript support, great DX, and comprehensive documentation.",
+  },
+  {
+    icon: <Copy className="h-6 w-6" />,
+    title: "Copy & Paste",
+    description: "No installation required. Copy the code and paste it into your project.",
+  },
+];
 
-export function ButtonExample() {
-  return (
-    <div className="flex items-center space-x-2">
-      <Button>Default</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="outline">Outline</Button>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="link">Link</Button>
-    </div>
-  )
-}`;
-
-const cardCode = `import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-
-export function CardExample() {
-  return (
-    <Card className="w-[350px]">
-      <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>Card Description</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p>Card content goes here.</p>
-      </CardContent>
-    </Card>
-  )
-}`;
-
-const badgeCode = `import { Badge } from "@/components/ui/badge"
-
-export function BadgeExample() {
-  return (
-    <div className="flex items-center space-x-2">
-      <Badge>Default</Badge>
-      <Badge variant="secondary">Secondary</Badge>
-      <Badge variant="outline">Outline</Badge>
-      <Badge variant="destructive">Destructive</Badge>
-    </div>
-  )
-}`;
-
-interface ComponentPreviewProps {
-  title: string;
-  description: string;
-  preview: React.ReactNode;
-  code: string;
-}
-
-function ComponentPreview({
-  title,
-  description,
-  preview,
-  code,
-}: ComponentPreviewProps) {
-  return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Tabs defaultValue="preview" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="preview">Preview</TabsTrigger>
-            <TabsTrigger value="code">Code</TabsTrigger>
-          </TabsList>
-          <TabsContent value="preview" className="mt-4">
-            <div className="component-preview-content">{preview}</div>
-          </TabsContent>
-          <TabsContent value="code" className="mt-4">
-            <CodeBlock code={code} language="tsx" />
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
-  );
-}
+const popularComponents = [
+  {
+    name: "Button",
+    description: "Displays a button or a component that looks like a button.",
+    href: "/components/button",
+  },
+  {
+    name: "Card",
+    description: "Displays a card with header, content, and footer.",
+    href: "/components/card",
+  },
+  {
+    name: "Badge",
+    description: "Displays a badge or a component that looks like a badge.",
+    href: "/components/badge",
+  },
+  {
+    name: "Code Block",
+    description: "Displays syntax-highlighted code with copy functionality.",
+    href: "/components/code-block",
+  },
+];
 
 export default function ComponentsPage() {
-  const [count, setCount] = useState(0);
-
   return (
-    <div className="container py-8 md:py-12">
-      <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between md:gap-8">
-        <div className="flex-1 space-y-4">
-          <h1 className="inline-block font-bold text-4xl tracking-tight lg:text-5xl">
+    <div className="space-y-16">
+      {/* Hero Section */}
+      <div className="space-y-8 text-center py-12">
+        <div className="flex justify-center">
+          <Badge className="bg-accent text-accent-foreground font-medium px-4 py-2 text-sm">
+            NOTHINGCN COMPONENTS
+          </Badge>
+        </div>
+        <div className="space-y-4">
+          <h1 className="text-6xl font-bold tracking-tight font-ndot">
             Components
           </h1>
-          <p className="text-xl text-muted-foreground">
-            Beautifully designed components built with Radix UI and Tailwind
-            CSS.
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Creative, accessible components built with Radix UI and Tailwind CSS. 
+            Copy and paste into your apps. Open source and ready to use.
           </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <Button asChild size="lg">
+            <Link href="/components/button">
+              Browse Components
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
+          <Button variant="outline" asChild size="lg">
+            <Link href="https://github.com" target="_blank">
+              View on GitHub
+            </Link>
+          </Button>
         </div>
       </div>
 
-      <div className="pb-8 pt-6 md:pb-10 md:pt-8">
-        <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
-          {/* Button Component */}
-          <ComponentPreview
-            title="Button"
-            description="Displays a button or a component that looks like a button."
-            preview={
-              <div className="flex flex-col space-y-4">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Button>Default</Button>
-                  <Button variant="secondary">Secondary</Button>
-                  <Button variant="outline">Outline</Button>
-                  <Button variant="ghost">Ghost</Button>
-                  <Button variant="link">Link</Button>
+      {/* Features Section */}
+      <div className="space-y-8">
+        <div className="text-center space-y-3">
+          <h2 className="text-3xl font-bold tracking-tight">Why Choose NothingCN?</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Built with modern web standards and developer experience in mind.
+          </p>
+        </div>
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
+          {features.map((feature, index) => (
+            <Card key={index} className="group p-8 hover:border-accent/50 transition-colors">
+              <CardHeader className="p-0">
+                <div className="w-16 h-16 bg-accent text-accent-foreground rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
+                  {feature.icon}
                 </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <Button size="sm">Small</Button>
-                  <Button size="default">Default</Button>
-                  <Button size="lg">Large</Button>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <Button disabled>Disabled</Button>
-                  <Button variant="outline" disabled>
-                    Disabled
-                  </Button>
-                </div>
-              </div>
-            }
-            code={buttonCode}
-          />
+                <CardTitle className="text-xl mb-2">{feature.title}</CardTitle>
+                <CardDescription className="text-base leading-relaxed">{feature.description}</CardDescription>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      </div>
 
-          {/* Card Component */}
-          <ComponentPreview
-            title="Card"
-            description="Displays a card with header, content, and footer."
-            preview={
-              <div className="flex flex-wrap gap-4">
-                <Card className="w-[350px]">
-                  <CardHeader>
-                    <CardTitle>Card Title</CardTitle>
-                    <CardDescription>Card Description</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      Card content goes here. This is a simple card component.
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card className="w-[350px]">
-                  <CardHeader>
-                    <CardTitle>Interactive Card</CardTitle>
-                    <CardDescription>
-                      This card has interactive elements.
+      {/* Popular Components Section */}
+      <div className="space-y-8">
+        <div className="space-y-3">
+          <h2 className="text-3xl font-bold tracking-tight">Popular Components</h2>
+          <p className="text-muted-foreground">
+            Start with these frequently used components.
+          </p>
+        </div>
+        <div className="grid gap-6 md:grid-cols-2">
+          {popularComponents.map((component) => (
+            <Card key={component.name} className="group hover:border-accent transition-colors relative p-8">
+              <CardHeader className="p-0">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-2">
+                    <CardTitle className="text-xl group-hover:text-accent transition-colors">
+                      {component.name}
+                    </CardTitle>
+                    <CardDescription className="text-base leading-relaxed">
+                      {component.description}
                     </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-col space-y-2">
-                      <p>Count: {count}</p>
-                      <Button onClick={() => setCount(count + 1)}>
-                        Increment
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            }
-            code={cardCode}
-          />
+                  </div>
+                  <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-accent group-hover:translate-x-1 transition-all" />
+                </div>
+              </CardHeader>
+              <Link href={component.href} className="absolute inset-0" />
+            </Card>
+          ))}
+        </div>
+      </div>
 
-          {/* Badge Component */}
-          <ComponentPreview
-            title="Badge"
-            description="Displays a badge or a component that looks like a badge."
-            preview={
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge>Default</Badge>
-                <Badge variant="secondary">Secondary</Badge>
-                <Badge variant="outline">Outline</Badge>
-                <Badge variant="destructive">Destructive</Badge>
-              </div>
-            }
-            code={badgeCode}
-          />
-
-          {/* Code Block Component */}
-          <ComponentPreview
-            title="Code Block"
-            description="Displays syntax-highlighted code with copy functionality."
-            preview={
-              <div className="w-full max-w-2xl">
-                <CodeBlock
-                  code={`function hello() {
-  console.log("Hello, World!");
-}`}
-                  language="javascript"
-                  title="example.js"
-                />
-              </div>
-            }
-            code={`import { CodeBlock } from "@/components/ui/code-block"
-
-export function CodeBlockExample() {
-  return (
-    <CodeBlock
-      code={\`function hello() {
-  console.log("Hello, World!");
-}\`}
-      language="javascript"
-      title="example.js"
-    />
-  )
-}`}
-          />
+      {/* Getting Started Section */}
+      <div className="border-t-2 border-border pt-12">
+        <div className="space-y-8 text-center">
+          <div className="space-y-3">
+            <h2 className="text-3xl font-bold tracking-tight">Getting Started</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Choose a component from the sidebar to view detailed documentation, examples, and ready-to-copy code.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Button asChild variant="outline" size="lg">
+              <Link href="/components/installation">
+                Installation Guide
+              </Link>
+            </Button>
+            <Button asChild variant="ghost" size="lg">
+              <Link href="/components/typography">
+                Typography
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </div>

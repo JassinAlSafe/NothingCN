@@ -1,10 +1,10 @@
-# Component Showcase
+# NothingCN
 
-A beautiful component library showcase built with Next.js 15, React 19, TypeScript, and Tailwind CSS. Similar to shadcn/ui, this project provides a comprehensive set of reusable UI components with live previews and copy-paste code examples.
+An open source creative component library built with Next.js 15, React 19, TypeScript, and Tailwind CSS. NothingCN provides a comprehensive set of unique, visually stunning UI components with live previews and copy-paste code examples for developers.
 
 ## ✨ Features
 
-- 🎨 **Beautiful Design** - Carefully crafted components with attention to detail
+- 🎨 **Creative Design** - Unique, visually stunning components that stand out
 - 🌙 **Dark Mode** - Full dark mode support with smooth transitions
 - ♿ **Accessible** - Built with accessibility in mind using Radix UI primitives
 - 📱 **Responsive** - Works perfectly on all device sizes
@@ -23,6 +23,14 @@ A beautiful component library showcase built with Next.js 15, React 19, TypeScri
 - **Code Highlighting**: Prism React Renderer
 - **Variant Management**: Class Variance Authority
 - **Utilities**: clsx, tailwind-merge
+
+## 🌟 What Makes NothingCN Special
+
+- **Open Source**: Completely free and open for everyone to use
+- **Creative Focus**: Emphasis on unique, creative component designs
+- **Copy-Paste Ready**: No installation required - just copy and use
+- **Community Driven**: Built by developers, for developers
+- **Modern Stack**: Latest web technologies for optimal performance
 
 ## 📦 Components
 
@@ -58,7 +66,7 @@ A beautiful component library showcase built with Next.js 15, React 19, TypeScri
 
 ```bash
 git clone <repository-url>
-cd component-showcase
+cd NothingCN
 ```
 
 2. Install dependencies:
@@ -142,21 +150,21 @@ Dark mode is supported out of the box. Add the `dark` class to your HTML element
 ```
 src/
 ├── app/                    # Next.js app router pages
-│   ├── components/        # Components showcase page
-│   │   ├── blocks/           # Blocks showcase page
-│   │   ├── themes/           # Themes showcase page
-│   │   ├── docs/             # Documentation page
-│   │   ├── globals.css       # Global styles and theme variables
-│   │   ├── layout.tsx        # Root layout
-│   │   └── page.tsx          # Homepage
-│   └── components/
-│       ├── ui/               # Reusable UI components
-│       │   ├── button.tsx
-│       │   ├── card.tsx
-│       │   ├── badge.tsx
-│       │   ├── tabs.tsx
-│       │   └── code-block.tsx
-│       └── site-header.tsx   # Site navigation header
+│   ├── components/        # Creative components showcase
+│   ├── blocks/           # Pre-built component combinations
+│   ├── themes/           # Theme customization examples
+│   ├── docs/             # Documentation and guides
+│   ├── globals.css       # Global styles and theme variables
+│   ├── layout.tsx        # Root layout
+│   └── page.tsx          # NothingCN homepage
+├── components/
+│   ├── ui/               # Core creative UI components
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   ├── badge.tsx
+│   │   ├── tabs.tsx
+│   │   └── code-block.tsx
+│   └── site-header.tsx   # Site navigation header
 └── lib/
     └── utils.ts          # Utility functions
 ```
@@ -182,10 +190,14 @@ This project is open source and available under the [MIT License](LICENSE).
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Lucide](https://lucide.dev/) - Beautiful & consistent icon toolkit
 
+## 🎯 Mission
+
+NothingCN aims to democratize access to high-quality, creative UI components. We believe that beautiful design should be accessible to all developers, regardless of their design background or budget.
+
 ## 📞 Support
 
 If you have any questions or need help, please open an issue on GitHub.
 
 ---
 
-Built with ❤️ using Next.js and React
+Built with ❤️ by the NothingCN community using Next.js and React

@@ -28,27 +28,31 @@ export function SiteHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center">
+    <header className="sticky top-0 z-50 w-full border-b-2 border-border bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/80">
+      <div className="container flex h-20 items-center">
         <div className="mr-4 hidden md:flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <span className="hidden font-bold sm:inline-block">
-              Component Showcase
+          <Link href="/" className="mr-8 flex items-center space-x-2">
+            <span className="font-bold text-xl font-ndot tracking-tight">
+              NothingCN
             </span>
           </Link>
-          <nav className="flex items-center space-x-6 text-sm font-medium">
+          <nav className="flex items-center space-x-8 text-sm font-medium">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "transition-colors hover:text-foreground/80",
+                  "relative transition-all duration-300 hover:text-accent group",
                   pathname === item.href
                     ? "text-foreground"
-                    : "text-foreground/60"
+                    : "text-foreground/70"
                 )}
               >
                 {item.name}
+                {pathname === item.href && (
+                  <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-accent" />
+                )}
+                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </nav>
@@ -67,29 +71,30 @@ export function SiteHeader() {
           <span className="sr-only">Toggle Menu</span>
         </Button>
 
-        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+        <div className="flex flex-1 items-center justify-between space-x-4 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none">
             <Button
               variant="ghost"
-              className="relative h-8 w-8 px-0"
+              size="icon"
+              className="relative transition-colors duration-300"
               onClick={toggleTheme}
             >
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               <span className="sr-only">Toggle theme</span>
             </Button>
           </div>
-          <div className="flex items-center space-x-2">
-            <Badge variant="secondary" className="hidden sm:inline-flex">
-              Beta
+          <div className="flex items-center space-x-4">
+            <Badge className="hidden sm:inline-flex bg-accent text-accent-foreground border-0 px-3 py-1 font-medium">
+              BETA
             </Badge>
-            <Button variant="ghost" size="icon" asChild>
+            <Button variant="ghost" size="icon" asChild className="transition-colors duration-300">
               <Link
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Github className="h-4 w-4" />
+                <Github className="h-5 w-5" />
                 <span className="sr-only">GitHub</span>
               </Link>
             </Button>
@@ -99,17 +104,17 @@ export function SiteHeader() {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="space-y-1 px-2 pb-3 pt-2 shadow-lg">
+        <div className="md:hidden border-t-2 border-border bg-background/95 backdrop-blur-xl">
+          <div className="space-y-2 px-4 pb-6 pt-4">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "block px-3 py-2 rounded-md text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
+                  "block px-4 py-3 text-base font-medium transition-all duration-300 border-2 border-transparent hover:border-accent hover:bg-accent/10",
                   pathname === item.href
-                    ? "bg-accent text-accent-foreground"
-                    : "text-foreground/60"
+                    ? "border-accent bg-accent/10 text-foreground"
+                    : "text-foreground/70"
                 )}
                 onClick={() => setIsMenuOpen(false)}
               >

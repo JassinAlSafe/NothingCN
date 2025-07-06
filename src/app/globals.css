@@ -2,34 +2,34 @@
 
 :root {
   --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
+  --foreground: 0 0% 0%;
 
   --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
+  --card-foreground: 0 0% 0%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 3.9%;
+  --popover-foreground: 0 0% 0%;
 
-  --primary: 240 5.9% 10%;
-  --primary-foreground: 0 0% 98%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
 
-  --secondary: 240 4.8% 95.9%;
-  --secondary-foreground: 240 5.9% 10%;
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 0 0% 0%;
 
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 45.1%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
 
-  --accent: 240 4.8% 95.9%;
-  --accent-foreground: 240 5.9% 10%;
+  --accent: 0 84% 60%;
+  --accent-foreground: 0 0% 100%;
 
-  --destructive: 0 72% 51%;
-  --destructive-foreground: 0 0% 98%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
 
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 240 5.9% 10%;
+  --border: 0 0% 90%;
+  --input: 0 0% 96%;
+  --ring: 0 84% 60%;
 
-  --radius: 0.5rem;
+  --radius: 0rem;
 }
 
 @theme inline {
@@ -55,36 +55,38 @@
   --radius: var(--radius);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-ntype82: "NType82", "NType82-bold", system-ui, -apple-system, sans-serif;
+  --font-ntype82-mono: "NType82Mono", "NType82-Mono", "SF Mono", Monaco, monospace;
 }
 
 .dark {
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
 
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
+  --card: 0 0% 0%;
+  --card-foreground: 0 0% 100%;
 
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
+  --popover: 0 0% 0%;
+  --popover-foreground: 0 0% 100%;
 
-  --primary: 0 0% 98%;
-  --primary-foreground: 240 5.9% 10%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
 
-  --secondary: 240 3.7% 15.9%;
-  --secondary-foreground: 0 0% 98%;
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 0 0% 100%;
 
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 0 0% 65%;
 
-  --accent: 240 3.7% 15.9%;
-  --accent-foreground: 0 0% 98%;
+  --accent: 0 84% 60%;
+  --accent-foreground: 0 0% 0%;
 
-  --destructive: 0 63% 31%;
-  --destructive-foreground: 0 0% 98%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 0%;
 
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
+  --border: 0 0% 20%;
+  --input: 0 0% 10%;
+  --ring: 0 84% 60%;
 }
 
 * {
@@ -95,6 +97,47 @@ body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   font-feature-settings: "rlig" 1, "calt" 1;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Nothing OS inspired animations */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px hsl(var(--accent)), 0 0 10px hsl(var(--accent)), 0 0 15px hsl(var(--accent)); }
+  50% { box-shadow: 0 0 10px hsl(var(--accent)), 0 0 20px hsl(var(--accent)), 0 0 30px hsl(var(--accent)); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.4s ease-out;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
 }
 
 /* Scrollbar */
@@ -147,6 +190,7 @@ body {
   padding: 2px 4px;
   border-radius: 4px;
   font-size: 0.875em;
+  font-family: var(--font-ntype82-mono);
 }
 
 .prose pre {
@@ -154,6 +198,7 @@ body {
   color: hsl(var(--foreground));
   border: 1px solid hsl(var(--border));
   border-radius: 8px;
+  font-family: var(--font-ntype82-mono);
 }
 
 .prose pre code {
@@ -197,4 +242,24 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 200px;
+}
+
+/* Ndot font utility */
+.font-ndot {
+  font-family: "Ndot-55", "Ndot", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  font-feature-settings: normal;
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* NType82 font utilities */
+.font-ntype82 {
+  font-family: var(--font-ntype82);
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+.font-ntype82-mono {
+  font-family: var(--font-ntype82-mono);
+  font-feature-settings: "kern" 1, "liga" 1;
 }

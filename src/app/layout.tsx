@@ -13,12 +13,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+
 export const metadata: Metadata = {
-  title: "Component Showcase",
-  description: "A beautiful component library showcase built with Next.js and React",
-  keywords: ["React", "Next.js", "Components", "UI Library", "TypeScript"],
-  authors: [{ name: "Your Name" }],
-  creator: "Your Name",
+  title: "NothingCN - Creative Component Library",
+  description: "Open source creative component library built with Next.js and React. Copy-paste ready components for developers.",
+  keywords: ["React", "Next.js", "Components", "UI Library", "TypeScript", "Open Source", "Creative", "NothingCN"],
+  authors: [{ name: "NothingCN Team" }],
+  creator: "NothingCN",
 };
 
 export default function RootLayout({

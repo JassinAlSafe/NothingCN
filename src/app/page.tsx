@@ -33,9 +33,9 @@ const features = [
   },
   {
     icon: <Palette className="h-6 w-6" />,
-    title: "Beautiful Design",
+    title: "Creative Design",
     description:
-      "Carefully crafted components with attention to detail and accessibility.",
+      "Unique, visually stunning components that stand out from the crowd.",
   },
   {
     icon: <Code className="h-6 w-6" />,
@@ -55,126 +55,153 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="container space-y-6 py-8 md:py-12 lg:py-24">
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <Badge variant="secondary" className="mb-4">
-            Open Source
-          </Badge>
-          <h1 className="font-bold text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
-            Build your Component Library
-          </h1>
-          <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            A set of beautifully-designed, accessible components and a code
-            distribution platform. Works with your favorite frameworks. Open
-            Source. Open Code.
-          </p>
-          <div className="flex flex-col gap-4 sm:flex-row">
-            <Button asChild size="lg">
-              <Link href="/components">
-                Get Started
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button variant="outline" size="lg" asChild>
-              <Link
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
+      <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center space-y-8 animate-fade-in-up">
+            <div className="space-y-4">
+              <Badge variant="secondary" className="mb-8 bg-accent text-accent-foreground border-0 px-4 py-2 text-sm font-medium">
+                OPEN SOURCE
+              </Badge>
+              <h1 className="font-ndot text-6xl sm:text-8xl md:text-9xl lg:text-[12rem] font-bold tracking-tighter">
+                Nothing
+                <span className="block text-accent">CN</span>
+              </h1>
+            </div>
+            <p className="max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground leading-relaxed">
+              Creative components.
+              <br />
+              Copy. Paste. Build.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
+              <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/90">
+                <Link href="/components">
+                  Explore Components
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild>
+                <Link
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="mr-2 h-4 w-4" />
+                  GitHub
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+        {/* Background accent */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse" />
+      </section>
+
+      {/* Features Section */}
+      <section className="py-24 md:py-32">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="font-bold text-4xl md:text-6xl mb-6 tracking-tight">
+              Why NothingCN?
+            </h2>
+            <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
+              Everything you need to build creative, accessible components.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <Card
+                key={index}
+                className="border-2 border-border bg-background p-8 text-center hover:border-accent transition-all duration-300 group animate-slide-in"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                <Github className="mr-2 h-4 w-4" />
-                View on GitHub
-              </Link>
-            </Button>
+                <div className="mb-6">
+                  <div className="w-12 h-12 mx-auto bg-accent text-accent-foreground rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    {feature.icon}
+                  </div>
+                </div>
+                <h3 className="font-bold text-xl mb-3">{feature.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {feature.description}
+                </p>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="container space-y-6 py-8 md:py-12 lg:py-24">
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
-            Features
-          </h2>
-          <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            Everything you need to build beautiful, accessible components.
-          </p>
-        </div>
-        <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-4">
-          {features.map((feature, index) => (
-            <Card
-              key={index}
-              className="flex flex-col items-center space-y-2 p-6 text-center"
-            >
-              <div className="rounded-full bg-primary p-3 text-primary-foreground">
-                {feature.icon}
-              </div>
-              <h3 className="font-bold">{feature.title}</h3>
-              <p className="text-sm text-muted-foreground">
-                {feature.description}
-              </p>
-            </Card>
-          ))}
-        </div>
-      </section>
-
       {/* Example Section */}
-      <section className="container space-y-6 py-8 md:py-12 lg:py-24">
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
-            Example Component
-          </h2>
-          <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            Here&apos;s a preview of what you can build with our components.
-          </p>
-        </div>
-        <div className="mx-auto max-w-[58rem] space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Button Component</CardTitle>
-              <CardDescription>
-                A collection of button variants for different use cases.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col space-y-6">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Button>Default</Button>
-                  <Button variant="secondary">Secondary</Button>
-                  <Button variant="outline">Outline</Button>
-                  <Button variant="ghost">Ghost</Button>
-                  <Button variant="link">Link</Button>
+      <section className="py-24 md:py-32 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="font-bold text-4xl md:text-6xl mb-6 tracking-tight">
+              See It In Action
+            </h2>
+            <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
+              Preview components with live examples and copy-ready code.
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto space-y-8">
+            <Card className="border-2 border-border bg-background overflow-hidden">
+              <CardHeader className="border-b border-border bg-muted/50">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-xl font-bold">Button Component</CardTitle>
+                    <CardDescription className="mt-1">
+                      Versatile button variants for any interface.
+                    </CardDescription>
+                  </div>
+                  <Badge className="bg-accent text-accent-foreground">Live Preview</Badge>
                 </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <Button size="sm">Small</Button>
-                  <Button size="default">Default</Button>
-                  <Button size="lg">Large</Button>
+              </CardHeader>
+              <CardContent className="p-8">
+                <div className="space-y-8">
+                  <div className="flex flex-wrap items-center gap-4">
+                    <Button className="bg-foreground text-background hover:bg-foreground/90">Default</Button>
+                    <Button variant="secondary">Secondary</Button>
+                    <Button variant="outline" className="border-2 border-foreground">Outline</Button>
+                    <Button variant="ghost">Ghost</Button>
+                    <Button variant="link" className="text-accent">Link</Button>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <Button size="sm">Small</Button>
+                    <Button size="default">Default</Button>
+                    <Button size="lg">Large</Button>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-          <CodeBlock
-            code={exampleButtonCode}
-            language="tsx"
-            title="Button.tsx"
-          />
+              </CardContent>
+            </Card>
+            <div className="animate-fade-in-up">
+              <CodeBlock
+                code={exampleButtonCode}
+                language="tsx"
+                title="Button.tsx"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="container space-y-6 py-8 md:py-12 lg:py-24">
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
-            Ready to get started?
-          </h2>
-          <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            Browse our components and start building your next project.
-          </p>
-          <Button asChild size="lg">
-            <Link href="/components">
-              Browse Components
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+      <section className="py-24 md:py-32 relative">
+        <div className="container mx-auto px-4">
+          <div className="text-center space-y-8 animate-fade-in-up">
+            <h2 className="font-bold text-4xl md:text-6xl mb-6 tracking-tight">
+              Start Building
+            </h2>
+            <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-8">
+              Join developers who are building with NothingCN.
+            </p>
+            <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 animate-glow">
+              <Link href="/components">
+                Browse Components
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+        {/* Background grid */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent" />
         </div>
       </section>
     </div>
