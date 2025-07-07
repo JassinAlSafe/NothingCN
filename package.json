@@ -16,7 +16,7 @@
   "homepage": "https://nothingcn.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nothingcn/nothingcn"
+    "url": "https://github.com/JassinAlSafe/NothingCN"
   },
   "scripts": {
     "dev": "next dev --turbopack",
