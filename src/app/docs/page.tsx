@@ -69,19 +69,20 @@ const customButtonVariants = cva(
 
 export default function DocsPage() {
   return (
-    <div className="container py-8 md:py-12">
-      <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between md:gap-8">
-        <div className="flex-1 space-y-4">
-          <h1 className="inline-block font-bold text-4xl tracking-tight lg:text-5xl">
-            Documentation
-          </h1>
-          <p className="text-xl text-muted-foreground">
+    <div className="mx-auto max-w-4xl px-6 py-8 lg:px-8 lg:py-12">
+      <div className="space-y-12">
+        {/* Page Header */}
+        <div className="space-y-4 border-b border-border pb-8">
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-12 bg-accent rounded-full" />
+            <h1 className="text-5xl font-bold tracking-tight">Documentation</h1>
+          </div>
+          <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
             Learn how to use and customize our components.
           </p>
         </div>
-      </div>
 
-      <div className="pb-8 pt-6 md:pb-10 md:pt-8 space-y-8">
+        <div className="space-y-8">
         {/* Introduction */}
         <Card>
           <CardHeader>
@@ -218,6 +219,7 @@ export default function DocsPage() {
             </ul>
           </CardContent>
         </Card>
+        </div>
       </div>
     </div>
   );
