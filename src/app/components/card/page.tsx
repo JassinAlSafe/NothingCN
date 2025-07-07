@@ -10,6 +10,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { ComponentPreview } from "@/components/component-preview";
+import { ComponentCode } from "@/components/component-code";
 
 const cardCode = `import {
   Card,
@@ -117,6 +118,98 @@ export default function CardPage() {
         code={cardWithFooterCode}
       />
 
+      {/* Component Source Code */}
+      <ComponentCode
+        title="Component Source"
+        description="Copy and paste the following code into your project."
+        code={`import * as React from "react";
+
+import { cn } from "@/lib/utils";
+
+const Card = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "rounded-3xl border-2 border-border bg-card text-card-foreground transition-all duration-300 hover:border-accent/50",
+      className
+    )}
+    {...props}
+  />
+));
+Card.displayName = "Card";
+
+const CardHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex flex-col space-y-3 p-6 pb-4", className)}
+    {...props}
+  />
+));
+CardHeader.displayName = "CardHeader";
+
+const CardTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h3
+    ref={ref}
+    className={cn(
+      "text-2xl font-semibold leading-none tracking-tight",
+      className
+    )}
+    {...props}
+  />
+));
+CardTitle.displayName = "CardTitle";
+
+const CardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+));
+CardDescription.displayName = "CardDescription";
+
+const CardContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("px-6 pb-6", className)} {...props} />
+));
+CardContent.displayName = "CardContent";
+
+const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex items-center px-6 pb-6 pt-4", className)}
+    {...props}
+  />
+));
+CardFooter.displayName = "CardFooter";
+
+export {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+};`}
+      />
+
       {/* Installation Section */}
       <div className="space-y-6 border-t border-border pt-12">
         <div className="space-y-3">
@@ -129,16 +222,18 @@ export default function CardPage() {
           </p>
         </div>
         <ComponentPreview
-          title="Copy and Paste"
-          description="Copy the component code and paste it into your project."
+          title="Step-by-step"
+          description="Follow these steps to add the card component to your project."
           preview={<div />}
-          code={`// 1. Copy the card component code from above
-// 2. Create components/ui/card.tsx in your project  
-// 3. Paste the code
-// 4. Install dependencies if needed:
+          code={`# 1. Install dependencies
 npm install clsx tailwind-merge
 
-// 5. Import and use:
+# 2. Copy the component source code above
+# 3. Create a new file: components/ui/card.tsx
+# 4. Paste the code into the file
+# 5. Make sure you have the utils function in lib/utils.ts
+
+# 6. Import and use:
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 export function MyComponent() {

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ComponentPreview } from "@/components/component-preview";
+import { ComponentCode } from "@/components/component-code";
 
 const buttonCode = `import { Button } from "@/components/ui/button"
 
@@ -98,6 +99,68 @@ export default function ButtonPage() {
         code={buttonStatesCode}
       />
 
+      {/* Component Source Code */}
+      <ComponentCode
+        title="Component Source"
+        description="Copy and paste the following code into your project."
+        code={`import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+
+import { cn } from "@/lib/utils";
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-full",
+  {
+    variants: {
+      variant: {
+        default: "bg-foreground text-background hover:bg-foreground/90 border-0",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90 border-0",
+        outline:
+          "border-2 border-foreground bg-background text-foreground hover:bg-foreground hover:text-background",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 border-0",
+        ghost: "hover:bg-accent hover:text-accent-foreground border-0",
+        link: "text-primary underline-offset-4 hover:underline border-0",
+      },
+      size: {
+        default: "h-12 px-6 py-3 text-sm font-medium",
+        sm: "h-10 px-4 py-2 text-sm",
+        lg: "h-14 px-8 py-4 text-base font-medium",
+        icon: "h-12 w-12",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+);
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
+);
+Button.displayName = "Button";
+
+export { Button, buttonVariants };`}
+      />
+
       {/* Installation Section */}
       <div className="space-y-6 border-t border-border pt-12">
         <div className="space-y-3">
@@ -110,20 +173,28 @@ export default function ButtonPage() {
           </p>
         </div>
         <ComponentPreview
-          title="Copy and Paste"
-          description="Copy the component code and paste it into your project."
+          title="Step-by-step"
+          description="Follow these steps to add the button component to your project."
           preview={<div />}
-          code={`// 1. Copy the button component code from above
-// 2. Create components/ui/button.tsx in your project
-// 3. Paste the code
-// 4. Install dependencies if needed:
+          code={`# 1. Install dependencies
 npm install @radix-ui/react-slot class-variance-authority clsx tailwind-merge
 
-// 5. Import and use:
+# 2. Copy the component source code above
+# 3. Create a new file: components/ui/button.tsx
+# 4. Paste the code into the file
+# 5. Make sure you have the utils function in lib/utils.ts
+
+# 6. Import and use:
 import { Button } from "@/components/ui/button"
 
 export function MyComponent() {
-  return <Button>Click me</Button>
+  return (
+    <div className="space-x-2">
+      <Button>Default</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+    </div>
+  )
 }`}
           hidePreview
         />
