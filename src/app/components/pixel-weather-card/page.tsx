@@ -7,8 +7,8 @@ export default function PixelWeatherCardPage() {
       <div className="space-y-4">
         <h1 className="text-4xl font-bold font-ndot tracking-wide">Pixel Weather Card</h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          A static pixel art weather card component featuring your original cloud SVG design, dot-matrix style graphics, 
-          and app-themed colors. Perfect for clean weather displays and minimalist interfaces.
+          An animated pixel art weather card component featuring an animated cloud with falling rain, dot-matrix style graphics, 
+          and app-themed colors. Perfect for interactive weather displays and modern interfaces.
         </p>
       </div>
 
@@ -16,13 +16,18 @@ export default function PixelWeatherCardPage() {
         {/* Basic Example */}
         <ComponentPreview
           title="Basic Pixel Weather Card"
-          description="Default showers condition with 14° temperature using original cloud SVG"
+          description="Default showers condition with 14° temperature using animated cloud with rain"
           preview={
             <div className="flex items-center justify-center p-8">
               <PixelWeatherCard />
             </div>
           }
-          code={`import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
+          code={`// You'll need these files:
+// 1. Copy pixel-weather-card.tsx
+// 2. Copy the AnimatedCloud component from animated-cloud.tsx
+// 3. Copy icons/index.tsx for the export
+
+import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
 
 export default function Example() {
   return (
@@ -44,7 +49,8 @@ export default function Example() {
               <PixelWeatherCard temperature={-2} />
             </div>
           }
-          code={`import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
+          code={`// Requires: pixel-weather-card.tsx + AnimatedCloud component
+import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
 
 export default function Example() {
   return (
@@ -69,7 +75,8 @@ export default function Example() {
               <PixelWeatherCard condition="stormy" temperature={12} />
             </div>
           }
-          code={`import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
+          code={`// Requires: pixel-weather-card.tsx + AnimatedCloud component
+import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
 
 export default function Example() {
   return (
@@ -83,39 +90,6 @@ export default function Example() {
 }`}
         />
 
-        {/* Rain Display Control */}
-        <ComponentPreview
-          title="Rain Display Control"
-          description="Show or hide static rain drops"
-          preview={
-            <div className="flex items-center justify-center gap-6 p-8">
-              <div className="text-center space-y-4">
-                <PixelWeatherCard showRain={false} />
-                <p className="text-muted-foreground text-sm">No Rain</p>
-              </div>
-              <div className="text-center space-y-4">
-                <PixelWeatherCard showRain={true} />
-                <p className="text-muted-foreground text-sm">With Rain</p>
-              </div>
-            </div>
-          }
-          code={`import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
-
-export default function Example() {
-  return (
-    <div className="flex gap-6 p-8">
-      <div className="text-center space-y-4">
-        <PixelWeatherCard showRain={false} />
-        <p className="text-muted-foreground text-sm">No Rain</p>
-      </div>
-      <div className="text-center space-y-4">
-        <PixelWeatherCard showRain={true} />
-        <p className="text-muted-foreground text-sm">With Rain</p>
-      </div>
-    </div>
-  );
-}`}
-        />
 
         {/* Custom Styling */}
         <ComponentPreview
@@ -135,7 +109,8 @@ export default function Example() {
               />
             </div>
           }
-          code={`import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
+          code={`// Requires: pixel-weather-card.tsx + AnimatedCloud component
+import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
 
 export default function Example() {
   return (
@@ -175,7 +150,8 @@ export default function Example() {
               </div>
             </div>
           }
-          code={`import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
+          code={`// Requires: pixel-weather-card.tsx + AnimatedCloud component
+import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
 
 export default function Example() {
   return (
@@ -198,20 +174,131 @@ export default function Example() {
         />
       </div>
 
-      <div className="mt-12 p-6 bg-muted/50 rounded-lg">
+      {/* Installation Guide */}
+      <div className="mt-12 space-y-6">
+        <div className="p-6 bg-muted/50 rounded-lg">
+          <h2 className="text-xl font-semibold mb-4">📦 Installation</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Copy the required files to your project. This component depends on the AnimatedCloud component.
+          </p>
+          
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-sm font-semibold mb-2">1. Copy the main component file:</h3>
+              <div className="text-xs bg-muted p-3 rounded border font-mono">
+                src/components/ui/pixel-weather-card.tsx
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-sm font-semibold mb-2">2. Copy the AnimatedCloud dependency:</h3>
+              <div className="text-xs bg-muted p-3 rounded border font-mono space-y-1">
+                <div>src/components/ui/icons/animated-cloud.tsx</div>
+                <div>src/components/ui/icons/index.tsx</div>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-sm font-semibold mb-2">3. Ensure you have the utility function:</h3>
+              <div className="text-xs bg-muted p-3 rounded border font-mono">
+                src/lib/utils.ts (contains the cn() function)
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-sm font-semibold mb-2">4. Install required dependencies:</h3>
+              <div className="text-xs bg-muted p-3 rounded border font-mono">
+                npm install clsx tailwind-merge
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="p-6 bg-muted/50 rounded-lg">
+          <h2 className="text-xl font-semibold mb-4">🛠️ Required utils.ts</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            If you don't have the cn() utility function, create this file:
+          </p>
+          
+          <div className="bg-muted p-4 rounded border font-mono text-xs overflow-x-auto">
+            <div className="text-muted-foreground mb-2">// src/lib/utils.ts</div>
+            <div>import &#123; type ClassValue, clsx &#125; from "clsx"</div>
+            <div>import &#123; twMerge &#125; from "tailwind-merge"</div>
+            <div className="mt-2"></div>
+            <div>export function cn(...inputs: ClassValue[]) &#123;</div>
+            <div className="ml-4">return twMerge(clsx(inputs))</div>
+            <div>&#125;</div>
+          </div>
+        </div>
+        
+        <div className="p-6 bg-blue-50 border border-blue-200 rounded-lg">
+          <h2 className="text-xl font-semibold mb-4 text-blue-800">🎨 Tailwind CSS Requirements</h2>
+          <p className="text-sm text-blue-700 mb-4">
+            This component uses standard Tailwind CSS animations. Ensure you have:
+          </p>
+          
+          <ul className="text-sm text-blue-700 space-y-1">
+            <li>• <code className="bg-blue-100 px-1 rounded">animate-bounce</code> - For bouncing cloud animation</li>
+            <li>• <code className="bg-blue-100 px-1 rounded">animate-pulse</code> - For pulsing cloud animation</li>
+            <li>• Standard Tailwind utility classes for spacing, colors, and typography</li>
+            <li>• CSS custom properties support (for theme colors)</li>
+          </ul>
+          
+          <div className="mt-4 p-3 bg-blue-100 rounded border text-xs font-mono">
+            <div className="text-blue-600 mb-1">// Ensure these work in your Tailwind setup:</div>
+            <div>bg-card, text-foreground, border-border, text-accent</div>
+          </div>
+        </div>
+        
+        <div className="p-6 bg-green-50 border border-green-200 rounded-lg">
+          <h2 className="text-xl font-semibold mb-4 text-green-800">⚛️ React & TypeScript</h2>
+          <p className="text-sm text-green-700 mb-4">
+            Component requirements and compatibility:
+          </p>
+          
+          <ul className="text-sm text-green-700 space-y-1">
+            <li>• <strong>React 18+</strong> - Uses "use client" directive</li>
+            <li>• <strong>TypeScript</strong> - Fully typed with interfaces</li>
+            <li>• <strong>Next.js compatible</strong> - Works with App Router</li>
+            <li>• <strong>No external API calls</strong> - Pure client-side component</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="mt-8 p-6 bg-muted/50 rounded-lg">
         <h2 className="text-xl font-semibold mb-4">Features</h2>
         <ul className="space-y-2 text-sm text-muted-foreground">
-          <li>• **Original cloud SVG** from your design file integrated seamlessly</li>
-          <li>• **Static rain drops** with clean positioning and app-themed colors</li>
+          <li>• **Animated cloud component** with smooth SVG animations</li>
+          <li>• **Dynamic animations** that change based on weather condition</li>
           <li>• **Custom temperature display** using dot-matrix number patterns (0-9)</li>
           <li>• **Multiple weather conditions** (showers, sunny, cloudy, stormy)</li>
           <li>• **App theme integration** using CSS custom properties</li>
-          <li>• **Rain display toggle** for clean customization</li>
           <li>• **Responsive design** that works across different screen sizes</li>
           <li>• **Minimalist aesthetics** perfect for modern interfaces</li>
           <li>• **Degree symbol rendering** in dot-matrix style</li>
           <li>• **Theme-aware colors** with light/dark mode support</li>
+          <li>• **Performance optimized** animations using CSS transforms</li>
         </ul>
+
+        <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+          <h3 className="text-sm font-semibold text-yellow-800 mb-2">📋 Required Files to Copy</h3>
+          <div className="text-xs text-yellow-700 space-y-1">
+            <div>1. <code className="bg-yellow-100 px-1 rounded">pixel-weather-card.tsx</code> - Main component</div>
+            <div>2. <code className="bg-yellow-100 px-1 rounded">icons/animated-cloud.tsx</code> - Animated cloud dependency</div>
+            <div>3. <code className="bg-yellow-100 px-1 rounded">icons/index.tsx</code> - Export file</div>
+            <div>4. <code className="bg-yellow-100 px-1 rounded">utils.ts</code> - cn() utility function</div>
+          </div>
+        </div>
+        
+        <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <h3 className="text-sm font-semibold text-red-800 mb-2">🔧 Troubleshooting</h3>
+          <div className="text-xs text-red-700 space-y-2">
+            <div><strong>Import errors:</strong> Ensure all 4 files are copied and paths match your project structure</div>
+            <div><strong>Animation not working:</strong> Check that Tailwind CSS is properly configured with animations enabled</div>
+            <div><strong>Styling issues:</strong> Verify your project uses CSS custom properties for theming</div>
+            <div><strong>TypeScript errors:</strong> Make sure you have @types/react installed</div>
+          </div>
+        </div>
       </div>
     </div>
   );

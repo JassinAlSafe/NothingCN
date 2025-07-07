@@ -28,45 +28,47 @@
   background: transparent;
 }
 
-
 /* Direct font face declarations */
 @font-face {
-  font-family: 'Ndot';
-  src: url('/fonts/ndot/Web Fonts/d7a74ed36ff0603a3e41b6da32c47f03.woff2') format('woff2'),
-       url('/fonts/ndot/Web Fonts/d7a74ed36ff0603a3e41b6da32c47f03.woff') format('woff'),
-       url('/fonts/ndot/Web Fonts/d7a74ed36ff0603a3e41b6da32c47f03.ttf') format('truetype');
+  font-family: "Ndot";
+  src: url("/fonts/ndot/Web Fonts/d7a74ed36ff0603a3e41b6da32c47f03.woff2")
+      format("woff2"),
+    url("/fonts/ndot/Web Fonts/d7a74ed36ff0603a3e41b6da32c47f03.woff")
+      format("woff"),
+    url("/fonts/ndot/Web Fonts/d7a74ed36ff0603a3e41b6da32c47f03.ttf")
+      format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'CommitMono';
-  src: url('/fonts/commit-mono/CommitMono-400-Regular.otf') format('opentype');
+  font-family: "CommitMono";
+  src: url("/fonts/commit-mono/CommitMono-400-Regular.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'CommitMono';
-  src: url('/fonts/commit-mono/CommitMono-400-Italic.otf') format('opentype');
+  font-family: "CommitMono";
+  src: url("/fonts/commit-mono/CommitMono-400-Italic.otf") format("opentype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'CommitMono';
-  src: url('/fonts/commit-mono/CommitMono-700-Regular.otf') format('opentype');
+  font-family: "CommitMono";
+  src: url("/fonts/commit-mono/CommitMono-700-Regular.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'CommitMono';
-  src: url('/fonts/commit-mono/CommitMono-700-Italic.otf') format('opentype');
+  font-family: "CommitMono";
+  src: url("/fonts/commit-mono/CommitMono-700-Italic.otf") format("opentype");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -125,16 +127,19 @@
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
   --radius: var(--radius);
-  
+
   /* Font Family Definitions */
-  --font-ndot: "Ndot", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
-  --font-commit-mono: "CommitMono", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
-  --font-system: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  
+  --font-ndot: "Ndot", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono",
+    Consolas, "Courier New", monospace;
+  --font-commit-mono: "CommitMono", "SF Mono", Monaco, "Cascadia Code",
+    "Roboto Mono", Consolas, "Courier New", monospace;
+  --font-system: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+
   /* Default font assignments */
   --font-sans: var(--font-system);
   --font-mono: var(--font-commit-mono);
-  
+
   /* Tailwind font families */
   --font-family-ndot: var(--font-ndot);
   --font-family-commit-mono: var(--font-commit-mono);
@@ -187,8 +192,15 @@ body {
 
 /* Nothing OS inspired animations */
 @keyframes glow {
-  0%, 100% { box-shadow: 0 0 5px hsl(var(--accent)), 0 0 10px hsl(var(--accent)), 0 0 15px hsl(var(--accent)); }
-  50% { box-shadow: 0 0 10px hsl(var(--accent)), 0 0 20px hsl(var(--accent)), 0 0 30px hsl(var(--accent)); }
+  0%,
+  100% {
+    box-shadow: 0 0 5px hsl(var(--accent)), 0 0 10px hsl(var(--accent)),
+      0 0 15px hsl(var(--accent));
+  }
+  50% {
+    box-shadow: 0 0 10px hsl(var(--accent)), 0 0 20px hsl(var(--accent)),
+      0 0 30px hsl(var(--accent));
+  }
 }
 
 @keyframes fadeInUp {
@@ -213,6 +225,17 @@ body {
   }
 }
 
+@keyframes fallingRain {
+  from {
+    transform: translateY(-100vh);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out;
 }
@@ -223,6 +246,10 @@ body {
 
 .animate-glow {
   animation: glow 2s ease-in-out infinite;
+}
+
+.animate-falling-rain {
+  animation: fallingRain 2s linear infinite;
 }
 
 /* Scrollbar */
