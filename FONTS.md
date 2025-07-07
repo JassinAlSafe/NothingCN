@@ -1,5 +1,21 @@
 # Font Installation Guide
 
+## Typography Philosophy
+
+NothingCN&apos;s typography is inspired by **[NOTHING](https://nothing.tech/)&apos;s** minimalist design philosophy. We use carefully selected fonts that embody the same clean, purposeful aesthetic that NOTHING brings to their products.
+
+## Font Selection
+
+### Primary Font: Ndot (NOTHING-inspired)
+- **Inspiration**: Custom typography inspired by NOTHING&apos;s design language
+- **Usage**: Headers, branding, UI elements
+- **Character**: Clean, minimal, purposeful
+
+### Secondary Font: Commit Mono
+- **Source**: [Commit Mono](https://commitmono.com/) - A monospace font for code
+- **Usage**: Code blocks, technical text, monospace elements
+- **Character**: Readable, developer-friendly
+
 ## Quick Setup
 
 ### 1. Download the Font Files
@@ -55,5 +71,22 @@ public/fonts/
 - **Character set**: Basic Latin, numbers, symbols
 - **Perfect for**: Branding, headers, UI elements
 
-## Attribution
-Fonts made from [Web Fonts](http://www.onlinewebfonts.com) is licensed by CC BY 4.0
+## Attribution & Credits
+
+### Font Licenses
+- **Ndot Font**: Custom typography inspired by NOTHING&apos;s design language
+  - Web font files from [Web Fonts](http://www.onlinewebfonts.com) licensed by CC BY 4.0
+  - Design inspiration from [NOTHING](https://nothing.tech/)
+  
+- **Commit Mono**: Open source monospace font
+  - Source: [Commit Mono](https://commitmono.com/)
+  - License: Open source (check repository for specific license)
+
+### Design Philosophy Attribution
+- **[NOTHING](https://nothing.tech/)** - The minimalist design philosophy that inspired our typography choices
+- Typography selections align with NOTHING&apos;s principle of removing the unnecessary and focusing on what matters
+
+### Usage Rights
+- Fonts are used in accordance with their respective licenses
+- NOTHING brand name and design philosophy referenced for inspirational purposes only
+- No trademark or brand infringement intended

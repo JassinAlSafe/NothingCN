@@ -1,0 +1,69 @@
+name: Component Request
+description: Request a new component for the library
+title: "[Component]: "
+labels: ["component", "enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new component! This helps us prioritize what to build next.
+
+  - type: input
+    id: component-name
+    attributes:
+      label: Component Name
+      description: What should this component be called?
+      placeholder: ex. DatePicker, ImageGallery, etc.
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Component Description
+      description: Describe what this component should do and how it should behave.
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: Describe the specific use case or scenario where this component would be useful.
+    validations:
+      required: true
+
+  - type: textarea
+    id: design-inspiration
+    attributes:
+      label: Design Inspiration
+      description: Share any design references, links, or inspiration for this component.
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this component to you?
+      options:
+        - Low - Nice to have
+        - Medium - Would be helpful
+        - High - Really need this
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Are you willing to help with this component?
+      options:
+        - label: I'm willing to help design this component
+        - label: I'm willing to help implement this component
+        - label: I can provide testing and feedback
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

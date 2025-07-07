@@ -2,7 +2,7 @@
   "name": "nothingcn",
   "version": "0.1.0",
   "private": true,
-  "description": "Open source creative component library built with Next.js and React",
+  "description": "Open source creative component library built with Next.js and React by Zenit Digital",
   "keywords": [
     "react",
     "nextjs",
@@ -13,7 +13,7 @@
     "creative",
     "open-source"
   ],
-  "homepage": "https://nothingcn.com",
+  "homepage": "https://zenitdigital.se",
   "repository": {
     "type": "git",
     "url": "https://github.com/JassinAlSafe/NothingCN"

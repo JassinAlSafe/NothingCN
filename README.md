@@ -10,6 +10,8 @@
 
 An open source creative component library built with Next.js 15, React 19, TypeScript, and Tailwind CSS. NothingCN provides a comprehensive set of unique, visually stunning UI components with live previews and copy-paste code examples for developers.
 
+**Inspired by the minimalist design philosophy of [NOTHING](https://nothing.tech/)** - bringing that same "nothing" aesthetic to the web with clean, purposeful components.
+
 ## ✨ Features
 
 - 🎨 **Creative Design** - Unique, visually stunning components that stand out
@@ -197,19 +199,41 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🙏 Acknowledgments
 
-- [shadcn/ui](https://ui.shadcn.com/) - Inspiration for the component library structure
+### Design Inspiration
+- **[NOTHING](https://nothing.tech/)** - The minimalist design philosophy and aesthetic that inspired NothingCN&apos;s clean, purposeful approach to UI components
+- [shadcn/ui](https://ui.shadcn.com/) - Inspiration for the component library structure and architecture
+
+### Typography & Fonts
+- **[Commit Mono](https://commitmono.com/)** - The monospace font used throughout the project for code examples and technical text
+- **Ndot/Nothing Font** - Custom typography inspired by NOTHING&apos;s design language
+
+### Technical Foundation
 - [Radix UI](https://radix-ui.com/) - Unstyled, accessible UI primitives
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Lucide](https://lucide.dev/) - Beautiful & consistent icon toolkit
+- [Next.js](https://nextjs.org/) - The React framework for production
+- [Vercel](https://vercel.com/) - Platform for deployment and hosting
 
 ## 🎯 Mission
 
-NothingCN aims to democratize access to high-quality, creative UI components. We believe that beautiful design should be accessible to all developers, regardless of their design background or budget.
+NothingCN aims to democratize access to high-quality, creative UI components. Inspired by NOTHING&apos;s philosophy of removing the unnecessary and focusing on what matters, we believe that beautiful, minimalist design should be accessible to all developers, regardless of their design background or budget.
 
 ## 📞 Support
 
 If you have any questions or need help, please open an issue on GitHub.
 
+## 👨‍💻 Creator & Company
+
+**Created by Jassin Al Safe**
+
+- 🌐 **Company**: [Zenit Digital](https://zenitdigital.se) - Digital solutions and web development
+- 💼 **LinkedIn**: [Jassin Al Safe](https://www.linkedin.com/in/jassin-al-safe-343939181/)
+- 🧵 **Threads**: [@babajassin](https://www.threads.com/@babajassin)
+- 📧 **Contact**: Available through GitHub issues or LinkedIn
+
+### About Zenit Digital
+Zenit Digital specializes in creating modern web solutions and digital experiences. NothingCN represents our commitment to open source and sharing knowledge with the developer community.
+
 ---
 
-Built with ❤️ by the NothingCN community using Next.js and React
+Built with ❤️ by [Jassin Al Safe](https://www.linkedin.com/in/jassin-al-safe-343939181/) and the NothingCN community using Next.js and React
