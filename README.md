@@ -1,10 +1,11 @@
 # NothingCN
 
-[![License](https://img.shields.io/github/license/nothingcn/nothingcn)](LICENSE)
-[![Issues](https://img.shields.io/github/issues/nothingcn/nothingcn)](https://github.com/nothingcn/nothingcn/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr/nothingcn/nothingcn)](https://github.com/nothingcn/nothingcn/pulls)
+[![CI](https://github.com/JassinAlSafe/NothingCN/actions/workflows/ci.yml/badge.svg)](https://github.com/JassinAlSafe/NothingCN/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/JassinAlSafe/NothingCN)](LICENSE)
+[![Issues](https://img.shields.io/github/issues/JassinAlSafe/NothingCN)](https://github.com/JassinAlSafe/NothingCN/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/JassinAlSafe/NothingCN)](https://github.com/JassinAlSafe/NothingCN/pulls)
 [![Deploy](https://img.shields.io/vercel/production?label=vercel)](https://vercel.com)
-[![Stars](https://img.shields.io/github/stars/nothingcn/nothingcn?style=social)](https://github.com/nothingcn/nothingcn/stargazers)
+[![Stars](https://img.shields.io/github/stars/JassinAlSafe/NothingCN?style=social)](https://github.com/JassinAlSafe/NothingCN/stargazers)
 
 ---
 
