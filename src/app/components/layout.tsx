@@ -29,14 +29,14 @@ export default function ComponentsLayout({
           "fixed top-20 left-0 z-50 h-[calc(100vh-5rem)] w-80 shrink-0 border-r-2 border-border bg-background transform transition-transform duration-300 md:hidden",
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}>
-          <div className="h-full overflow-y-auto py-6 px-6">
+          <div className="h-full overflow-y-auto py-6 px-6 scrollbar-thin scroll-smooth">
             <ComponentsSidebar />
           </div>
         </aside>
         
         {/* Desktop Sidebar */}
         <aside className="fixed top-20 left-0 z-30 hidden h-[calc(100vh-5rem)] w-64 shrink-0 border-r-2 border-border bg-background/95 backdrop-blur-xl md:block">
-          <div className="h-full overflow-y-auto py-6 px-6">
+          <div className="h-full overflow-y-auto py-6 px-6 scrollbar-thin scroll-smooth">
             <ComponentsSidebar />
           </div>
         </aside>
