@@ -10,7 +10,7 @@ export default function InstallationPage() {
           <h1 className="text-5xl font-bold tracking-tight font-ndot">Installation</h1>
         </div>
         <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
-          Get started with NothingCN components. Copy, paste, and customize to your heart's content.
+          Get started with NothingCN components. Copy, paste, and customize to your heart&apos;s content.
         </p>
       </div>
 
@@ -22,7 +22,7 @@ export default function InstallationPage() {
             <h2 className="text-3xl font-bold tracking-tight">How it works</h2>
           </div>
           <p className="text-muted-foreground leading-relaxed ml-4">
-            NothingCN is a copy-paste component library. Unlike traditional libraries, there's no npm package to install. 
+            NothingCN is a copy-paste component library. Unlike traditional libraries, there&apos;s no npm package to install. 
             Instead, you copy the component source code directly into your project.
           </p>
         </div>
@@ -54,7 +54,7 @@ export default function InstallationPage() {
             </div>
             <h3 className="text-xl font-bold">Customize</h3>
             <p className="text-muted-foreground">
-              Modify the code to fit your needs. It's your code now!
+              Modify the code to fit your needs. It&apos;s your code now!
             </p>
           </div>
         </div>
@@ -309,7 +309,7 @@ module.exports = {
             <h2 className="text-3xl font-bold tracking-tight">Start Using Components</h2>
           </div>
           <p className="text-muted-foreground leading-relaxed ml-4">
-            You're all set! Start browsing components and copy the code into your project.
+            You&apos;re all set! Start browsing components and copy the code into your project.
           </p>
         </div>
 
@@ -319,7 +319,7 @@ module.exports = {
               <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center">
                 <span className="text-accent-foreground text-sm font-bold">✓</span>
               </div>
-              <h3 className="text-xl font-bold">You're ready to go!</h3>
+              <h3 className="text-xl font-bold">You&apos;re ready to go!</h3>
             </div>
             <p className="text-muted-foreground leading-relaxed">
               Browse the component library, copy the code, and start building beautiful interfaces with NothingCN.
