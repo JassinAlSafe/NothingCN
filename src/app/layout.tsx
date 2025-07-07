@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
+import { Analytics } from "@vercel/analytics/next";
 
 // Both fonts are now loaded via CSS @font-face declarations in globals.css
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           <SiteHeader />
           <div className="flex-1">{children}</div>
         </div>
+        <Analytics />
       </body>
     </html>
   );
