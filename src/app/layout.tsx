@@ -1,35 +1,8 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 
-// Secondary font: Commit Mono (loaded from local files)
-const commitMono = localFont({
-  src: [
-    {
-      path: "../../public/fonts/commit-mono/CommitMono-400-Regular.otf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/commit-mono/CommitMono-400-Italic.otf",
-      weight: "400",
-      style: "italic",
-    },
-    {
-      path: "../../public/fonts/commit-mono/CommitMono-700-Regular.otf",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/commit-mono/CommitMono-700-Italic.otf",
-      weight: "700",
-      style: "italic",
-    },
-  ],
-  variable: "--font-commit-mono",
-  display: "swap",
-});
+// Both fonts are now loaded via CSS @font-face declarations in globals.css
 
 
 export const metadata: Metadata = {
@@ -48,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${commitMono.variable} antialiased min-h-screen bg-background font-sans`}
+        className={`antialiased min-h-screen bg-background font-sans`}
       >
         <div className="relative flex min-h-screen flex-col">
           <SiteHeader />

@@ -1,5 +1,13 @@
 # NothingCN
 
+[![License](https://img.shields.io/github/license/nothingcn/nothingcn)](LICENSE)
+[![Issues](https://img.shields.io/github/issues/nothingcn/nothingcn)](https://github.com/nothingcn/nothingcn/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/nothingcn/nothingcn)](https://github.com/nothingcn/nothingcn/pulls)
+[![Deploy](https://img.shields.io/vercel/production?label=vercel)](https://vercel.com)
+[![Stars](https://img.shields.io/github/stars/nothingcn/nothingcn?style=social)](https://github.com/nothingcn/nothingcn/stargazers)
+
+---
+
 An open source creative component library built with Next.js 15, React 19, TypeScript, and Tailwind CSS. NothingCN provides a comprehensive set of unique, visually stunning UI components with live previews and copy-paste code examples for developers.
 
 ## ✨ Features
@@ -65,20 +73,24 @@ An open source creative component library built with Next.js 15, React 19, TypeS
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
-cd NothingCN
+git clone https://github.com/nothingcn/nothingcn.git
+cd nothingcn
 ```
 
 2. Install dependencies:
 
 ```bash
 npm install
+# or
+pnpm install
 ```
 
 3. Run the development server:
 
 ```bash
 npm run dev
+# or
+pnpm dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.

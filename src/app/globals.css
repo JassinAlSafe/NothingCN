@@ -1,5 +1,48 @@
 @import "tailwindcss";
 
+/* Direct font face declarations */
+@font-face {
+  font-family: 'Ndot';
+  src: url('/fonts/ndot/Web Fonts/d7a74ed36ff0603a3e41b6da32c47f03.woff2') format('woff2'),
+       url('/fonts/ndot/Web Fonts/d7a74ed36ff0603a3e41b6da32c47f03.woff') format('woff'),
+       url('/fonts/ndot/Web Fonts/d7a74ed36ff0603a3e41b6da32c47f03.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CommitMono';
+  src: url('/fonts/commit-mono/CommitMono-400-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CommitMono';
+  src: url('/fonts/commit-mono/CommitMono-400-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CommitMono';
+  src: url('/fonts/commit-mono/CommitMono-700-Regular.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CommitMono';
+  src: url('/fonts/commit-mono/CommitMono-700-Italic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   --background: 0 0% 100%;
   --foreground: 0 0% 0%;
@@ -55,8 +98,8 @@
   --radius: var(--radius);
   
   /* Font Family Definitions */
-  --font-ndot: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
-  --font-commit-mono: var(--font-commit-mono), "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  --font-ndot: "Ndot", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  --font-commit-mono: "CommitMono", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
   --font-system: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   
   /* Default font assignments */
@@ -261,12 +304,13 @@ body {
 
 /* Ndot font utility - for branding, headers, and special UI elements */
 .font-ndot {
-  font-family: var(--font-ndot);
+  font-family: var(--font-ndot) !important;
   font-feature-settings: normal;
   image-rendering: pixelated;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0.05em;
+  font-weight: 400;
 }
 
 /* Commit Mono font utility - for code, technical text, and monospace needs */
