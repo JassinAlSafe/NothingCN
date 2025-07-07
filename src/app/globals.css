@@ -53,10 +53,23 @@
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
   --radius: var(--radius);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-ntype82: "NType82", "NType82-bold", system-ui, -apple-system, sans-serif;
-  --font-ntype82-mono: "NType82Mono", "NType82-Mono", "SF Mono", Monaco, monospace;
+  
+  /* Font Family Definitions */
+  --font-ndot: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  --font-commit-mono: var(--font-commit-mono), "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  --font-system: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  
+  /* Default font assignments */
+  --font-sans: var(--font-system);
+  --font-mono: var(--font-commit-mono);
+  
+  /* Tailwind font families */
+  --font-family-ndot: var(--font-ndot);
+  --font-family-commit-mono: var(--font-commit-mono);
+  --font-family-system: var(--font-system);
+  --font-family-brand: var(--font-ndot);
+  --font-family-code: var(--font-commit-mono);
+  --font-family-ui: var(--font-system);
 }
 
 .dark {
@@ -190,7 +203,7 @@ body {
   padding: 2px 4px;
   border-radius: 4px;
   font-size: 0.875em;
-  font-family: var(--font-ntype82-mono);
+  font-family: var(--font-commit-mono);
 }
 
 .prose pre {
@@ -198,7 +211,7 @@ body {
   color: hsl(var(--foreground));
   border: 1px solid hsl(var(--border));
   border-radius: 8px;
-  font-family: var(--font-ntype82-mono);
+  font-family: var(--font-commit-mono);
 }
 
 .prose pre code {
@@ -244,22 +257,48 @@ body {
   min-height: 200px;
 }
 
-/* Ndot font utility */
+/* Primary font utilities */
+
+/* Ndot font utility - for branding, headers, and special UI elements */
 .font-ndot {
-  font-family: "Ndot-55", "Ndot", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  font-family: var(--font-ndot);
   font-feature-settings: normal;
   image-rendering: pixelated;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.05em;
 }
 
-/* NType82 font utilities */
-.font-ntype82 {
-  font-family: var(--font-ntype82);
+/* Commit Mono font utility - for code, technical text, and monospace needs */
+.font-commit-mono {
+  font-family: var(--font-commit-mono);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  font-variant-ligatures: normal;
+}
+
+/* System font utility - for body text and general UI */
+.font-system {
+  font-family: var(--font-system);
   font-feature-settings: "kern" 1, "liga" 1;
 }
 
-.font-ntype82-mono {
-  font-family: var(--font-ntype82-mono);
+/* Semantic font utilities */
+.font-brand {
+  font-family: var(--font-ndot);
+  font-feature-settings: normal;
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.05em;
+}
+
+.font-code {
+  font-family: var(--font-commit-mono);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  font-variant-ligatures: normal;
+}
+
+.font-ui {
+  font-family: var(--font-system);
   font-feature-settings: "kern" 1, "liga" 1;
 }

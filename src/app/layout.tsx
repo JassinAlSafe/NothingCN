@@ -1,16 +1,34 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Secondary font: Commit Mono (loaded from local files)
+const commitMono = localFont({
+  src: [
+    {
+      path: "../../public/fonts/commit-mono/CommitMono-400-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/commit-mono/CommitMono-400-Italic.otf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../../public/fonts/commit-mono/CommitMono-700-Regular.otf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/commit-mono/CommitMono-700-Italic.otf",
+      weight: "700",
+      style: "italic",
+    },
+  ],
+  variable: "--font-commit-mono",
+  display: "swap",
 });
 
 
@@ -30,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background font-sans`}
+        className={`${commitMono.variable} antialiased min-h-screen bg-background font-sans`}
       >
         <div className="relative flex min-h-screen flex-col">
           <SiteHeader />
