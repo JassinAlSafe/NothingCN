@@ -2,8 +2,6 @@
 
 import { ComponentPreview } from "@/components/component-preview";
 import { NothingCalendar } from "@/components/ui/nothing-calendar";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { ComponentCode } from "@/components/component-code";
 
 export default function NothingCalendarPage() {

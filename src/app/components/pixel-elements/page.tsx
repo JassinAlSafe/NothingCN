@@ -4,7 +4,7 @@ import { ComponentPreview } from "@/components/component-preview";
 import { NothingProgress } from "@/components/ui/nothing-progress";
 import { NothingDotMatrix } from "@/components/ui/nothing-dot-matrix";
 import { PixelLoader } from "@/components/ui/pixel-loader";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 export default function PixelElementsPage() {
