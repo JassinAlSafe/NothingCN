@@ -14,6 +14,20 @@ export function ButtonExample() {
       <Button variant="outline">Outline</Button>
       <Button variant="ghost">Ghost</Button>
       <Button variant="link">Link</Button>
+      <Button variant="pixel">Pixel</Button>
+    </div>
+  )
+}`;
+
+const pixelButtonCode = `import { Button } from "@/components/ui/button"
+
+export function PixelButtonExample() {
+  return (
+    <div className="flex items-center space-x-4 p-8 bg-muted/20 rounded-lg">
+      <Button variant="pixel" size="sm">POWER ON</Button>
+      <Button variant="pixel">START GAME</Button>
+      <Button variant="pixel" size="lg">CONTINUE</Button>
+      <Button variant="pixel" disabled>LOCKED</Button>
     </div>
   )
 }`;
@@ -67,6 +81,7 @@ export default function ButtonPage() {
             <Button variant="outline">Outline</Button>
             <Button variant="ghost">Ghost</Button>
             <Button variant="link">Link</Button>
+            <Button variant="pixel"><span className="font-ndot">Pixel</span></Button>
           </div>
         }
         code={buttonCode}
@@ -99,6 +114,20 @@ export default function ButtonPage() {
         code={buttonStatesCode}
       />
 
+      <ComponentPreview
+        title="Pixel Theme"
+        description="Retro gaming style buttons with pixel-perfect shadows and animations."
+        preview={
+          <div className="flex flex-wrap items-center gap-6 p-8 bg-muted/20 rounded-lg">
+            <Button variant="pixel" size="sm"><span className="font-ndot">POWER ON</span></Button>
+            <Button variant="pixel"><span className="font-ndot">START GAME</span></Button>
+            <Button variant="pixel" size="lg"><span className="font-ndot">CONTINUE</span></Button>
+            <Button variant="pixel" disabled><span className="font-ndot">LOCKED</span></Button>
+          </div>
+        }
+        code={pixelButtonCode}
+      />
+
       {/* Component Source Code */}
       <ComponentCode
         title="Component Source"
@@ -123,6 +152,7 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80 border-0",
         ghost: "hover:bg-accent hover:text-accent-foreground border-0",
         link: "text-primary underline-offset-4 hover:underline border-0",
+        pixel: "bg-background text-foreground border-2 border-foreground hover:bg-foreground hover:text-background font-mono font-bold tracking-wider uppercase text-xs rounded-none relative overflow-hidden shadow-[4px_4px_0px_0px_theme(colors.foreground)] hover:shadow-[2px_2px_0px_0px_theme(colors.foreground)] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all duration-150",
       },
       size: {
         default: "h-12 px-6 py-3 text-sm font-medium",

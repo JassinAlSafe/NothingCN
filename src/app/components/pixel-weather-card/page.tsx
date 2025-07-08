@@ -7,8 +7,9 @@ export default function PixelWeatherCardPage() {
       <div className="space-y-4">
         <h1 className="text-4xl font-bold font-ndot tracking-wide">Pixel Weather Card</h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          An animated pixel art weather card component featuring an animated cloud with falling rain, dot-matrix style graphics, 
-          and app-themed colors. Perfect for interactive weather displays and modern interfaces.
+          An animated pixel art weather card component featuring multiple weather conditions including sunny skies, 
+          animated clouds, and beautiful starry night scenes. Complete with dot-matrix style graphics and app-themed colors. 
+          Perfect for interactive weather displays and modern interfaces.
         </p>
       </div>
 
@@ -66,30 +67,56 @@ export default function Example() {
         {/* Different Conditions */}
         <ComponentPreview
           title="Weather Conditions"
-          description="Different weather condition labels"
+          description="Different weather condition labels with animated icons"
           preview={
-            <div className="flex items-center justify-center gap-6 p-8 flex-wrap">
+            <div className="flex items-center justify-center gap-4 p-8 flex-wrap">
               <PixelWeatherCard condition="showers" temperature={14} />
               <PixelWeatherCard condition="sunny" temperature={25} />
               <PixelWeatherCard condition="cloudy" temperature={18} />
               <PixelWeatherCard condition="stormy" temperature={12} />
+              <PixelWeatherCard condition="clear-night" temperature={16} />
             </div>
           }
-          code={`// Requires: pixel-weather-card.tsx + AnimatedCloud component
+          code={`// Requires: pixel-weather-card.tsx + animated icon components
 import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
 
 export default function Example() {
   return (
-    <div className="flex gap-6 p-8">
+    <div className="flex gap-4 p-8 flex-wrap">
       <PixelWeatherCard condition="showers" temperature={14} />
       <PixelWeatherCard condition="sunny" temperature={25} />
       <PixelWeatherCard condition="cloudy" temperature={18} />
       <PixelWeatherCard condition="stormy" temperature={12} />
+      <PixelWeatherCard condition="clear-night" temperature={16} />
     </div>
   );
 }`}
         />
 
+        {/* Clear Night Feature */}
+        <ComponentPreview
+          title="Clear Night Weather"
+          description="Beautiful starry night sky with twinkling star animations - automatically adapts to your theme (light/dark mode)"
+          preview={
+            <div className="flex items-center justify-center gap-4 p-8 flex-wrap">
+              <PixelWeatherCard condition="clear-night" temperature={12} />
+              <PixelWeatherCard condition="clear-night" temperature={8} />
+              <PixelWeatherCard condition="clear-night" temperature={-1} />
+            </div>
+          }
+          code={`// Clear night automatically adapts to light/dark theme
+import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
+
+export default function Example() {
+  return (
+    <div className="flex gap-4 p-8 flex-wrap">
+      <PixelWeatherCard condition="clear-night" temperature={12} />
+      <PixelWeatherCard condition="clear-night" temperature={8} />
+      <PixelWeatherCard condition="clear-night" temperature={-1} />
+    </div>
+  );
+}`}
+        />
 
         {/* Custom Styling */}
         <ComponentPreview
@@ -130,48 +157,6 @@ export default function Example() {
 }`}
         />
 
-        {/* Interactive Example */}
-        <ComponentPreview
-          title="Gaming Interface Example"
-          description="Multiple weather cards in a retro gaming style interface"
-          preview={
-            <div className="p-8 bg-black rounded-lg">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <PixelWeatherCard temperature={14} condition="showers" />
-                <PixelWeatherCard temperature={22} condition="sunny" />
-                <PixelWeatherCard temperature={7} condition="cloudy" />
-                <PixelWeatherCard temperature={-3} condition="stormy" />
-                <PixelWeatherCard temperature={19} condition="showers" />
-                <PixelWeatherCard temperature={26} condition="sunny" />
-              </div>
-              <div className="mt-6 text-center">
-                <h3 className="text-green-400 font-mono text-lg mb-2">WEATHER FORECAST</h3>
-                <p className="text-green-300 font-mono text-sm">SELECT LOCATION TO VIEW DETAILS</p>
-              </div>
-            </div>
-          }
-          code={`// Requires: pixel-weather-card.tsx + AnimatedCloud component
-import { PixelWeatherCard } from "@/components/ui/pixel-weather-card";
-
-export default function Example() {
-  return (
-    <div className="p-8 bg-black rounded-lg">
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <PixelWeatherCard temperature={14} condition="showers" />
-        <PixelWeatherCard temperature={22} condition="sunny" />
-        <PixelWeatherCard temperature={7} condition="cloudy" />
-        <PixelWeatherCard temperature={-3} condition="stormy" />
-        <PixelWeatherCard temperature={19} condition="showers" />
-        <PixelWeatherCard temperature={26} condition="sunny" />
-      </div>
-      <div className="mt-6 text-center">
-        <h3 className="text-green-400 font-mono text-lg mb-2">WEATHER FORECAST</h3>
-        <p className="text-green-300 font-mono text-sm">SELECT LOCATION TO VIEW DETAILS</p>
-      </div>
-    </div>
-  );
-}`}
-        />
       </div>
 
       {/* Installation Guide */}

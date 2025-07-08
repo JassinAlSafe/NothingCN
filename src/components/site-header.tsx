@@ -16,6 +16,7 @@ const navigation = [
   { name: "Components", href: "/components" },
   { name: "Blocks", href: "/blocks" },
   { name: "Themes", href: "/themes" },
+  { name: "Contribute", href: "/contribute" },
   { name: "Documentation", href: "/docs" },
 ];
 
@@ -94,12 +95,12 @@ function SearchDialog() {
       <DialogTrigger asChild>
         <Button 
           variant="ghost" 
-          className="relative w-full justify-start text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-56 h-9 bg-muted/50 hover:bg-muted transition-all duration-300"
+          className="relative justify-start text-sm text-muted-foreground h-8 w-full max-w-[180px] bg-muted/30 hover:bg-muted/50 border border-border/50 rounded-md px-3"
         >
-          <Search className="mr-2 h-4 w-4" />
-          Search components...
-          <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-            <span className="text-xs">⌘</span>K
+          <Search className="mr-2 h-3.5 w-3.5" />
+          <span className="hidden sm:inline">Search...</span>
+          <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded bg-muted px-1 font-mono text-[9px] font-medium lg:flex">
+            ⌘K
           </kbd>
         </Button>
       </DialogTrigger>
@@ -250,99 +251,97 @@ export function SiteHeader() {
         style={{ width: `${scrollProgress}%` }}
       />
       
-      <div className="container flex h-20 items-center">
-        <div className="mr-6 hidden md:flex">
-          <Link href="/" className="mr-8 flex items-center space-x-3 group">
-            <div className="flex items-center justify-center w-8 h-8 bg-accent text-accent-foreground rounded-full transition-all duration-300 group-hover:scale-110">
-              <Zap className="h-4 w-4" />
-            </div>
-            <span className="font-bold text-xl font-ndot tracking-tight group-hover:text-accent transition-colors duration-300">
-              NothingCN
-            </span>
-          </Link>
-          
-          {/* Visual Separator */}
-          <div className="w-px h-6 bg-border mr-8 self-center" />
-          
-          <nav className="flex items-center space-x-8 text-sm font-medium">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  "relative transition-all duration-300 hover:text-accent group px-2 py-1 rounded-md hover:bg-accent/10 hover:shadow-sm hover:scale-105",
-                  pathname === item.href
-                    ? "text-foreground font-semibold"
-                    : "text-foreground/70 font-medium"
-                )}
-              >
-                {item.name}
-                {pathname === item.href && (
-                  <div className="absolute -bottom-2 left-0 w-full h-0.5 bg-accent rounded-full" />
-                )}
-                <div className="absolute -bottom-2 left-0 w-0 h-0.5 bg-accent rounded-full transition-all duration-300 group-hover:w-full" />
-              </Link>
-            ))}
-          </nav>
-        </div>
+      <div className="container flex h-16 items-center">
+        {/* Logo */}
+        <Link href="/" className="flex items-center space-x-2 group mr-8">
+          <div className="flex items-center justify-center w-7 h-7 bg-accent text-accent-foreground rounded-lg transition-all duration-300 group-hover:scale-110">
+            <Zap className="h-3.5 w-3.5" />
+          </div>
+          <span className="font-bold text-lg font-ndot tracking-tight group-hover:text-accent transition-colors duration-300">
+            NothingCN
+          </span>
+        </Link>
         
-        {/* Search Bar - Hidden on mobile */}
-        <div className="hidden md:flex flex-1 max-w-sm mx-6">
-          <SearchDialog />
-        </div>
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center space-x-1">
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={cn(
+                "relative transition-all duration-200 hover:text-accent px-3 py-2 rounded-md text-sm font-medium",
+                pathname === item.href
+                  ? "text-foreground bg-accent/10"
+                  : "text-foreground/70 hover:bg-accent/5"
+              )}
+            >
+              {item.name}
+              {pathname === item.href && (
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-accent rounded-full" />
+              )}
+            </Link>
+          ))}
+        </nav>
 
-        <Button
-          variant="ghost"
-          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden min-h-[44px] min-w-[44px] flex items-center justify-center"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? (
-            <X className="h-6 w-6 transition-all duration-300" />
-          ) : (
-            <Menu className="h-6 w-6 transition-all duration-300" />
-          )}
-          <span className="sr-only">Toggle Menu</span>
-        </Button>
+        {/* Right Section */}
+        <div className="flex items-center ml-auto space-x-2">
+          {/* Search - Compact */}
+          <div className="hidden lg:block">
+            <SearchDialog />
+          </div>
 
-        <div className="flex flex-1 items-center justify-between space-x-4 md:justify-end">
+          {/* Mobile Menu Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
+            <span className="sr-only">Toggle Menu</span>
+          </Button>
+
           {/* Mobile Search */}
-          <div className="flex-1 md:hidden">
+          <div className="flex-1 lg:hidden md:block md:max-w-[200px]">
             <SearchDialog />
           </div>
           
-          <div className="flex items-center space-x-2">
-            {/* Theme Toggle with enhanced states */}
+          {/* Actions */}
+          <div className="flex items-center space-x-1">
+            {/* Theme Toggle */}
             <Button
               variant="ghost"
               size="icon"
-              className="relative transition-all duration-300 hover:scale-110 hover:bg-accent/10 min-h-[44px] min-w-[44px]"
               onClick={toggleTheme}
-              title={`Current theme: ${themeMode}`}
+              className="h-9 w-9"
+              title={`Theme: ${themeMode}`}
             >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all duration-500 dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all duration-500 dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme (current: {themeMode})</span>
+              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             </Button>
             
-            {/* Visual Separator */}
-            <div className="w-px h-6 bg-border mx-2" />
-            
-            <Badge className="hidden sm:inline-flex bg-accent text-accent-foreground border-0 px-3 py-1 font-medium transition-all duration-300 hover:scale-105">
+            {/* Beta Badge */}
+            <Badge variant="secondary" className="hidden sm:inline-flex text-xs px-2 py-1">
               BETA
             </Badge>
             
+            {/* GitHub Link */}
             <Button 
               variant="ghost" 
               size="icon" 
               asChild 
-              className="transition-all duration-300 hover:scale-110 hover:bg-accent/10 min-h-[44px] min-w-[44px]"
+              className="h-9 w-9"
             >
               <Link
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Github className="h-5 w-5" />
+                <Github className="h-4 w-4" />
                 <span className="sr-only">GitHub</span>
               </Link>
             </Button>
@@ -350,60 +349,45 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* Enhanced Mobile menu with swipe support */}
+      {/* Mobile Menu */}
       {isMenuOpen && (
         <div 
-          className="mobile-menu md:hidden border-t-2 border-border bg-background/95 backdrop-blur-xl animate-in slide-in-from-top-2 duration-300"
+          className="mobile-menu md:hidden border-t border-border bg-background/95 backdrop-blur-xl"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          <div className="space-y-1 px-4 pb-6 pt-4">
-            {/* Progressive disclosure sections */}
-            <div className="space-y-1">
-              <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                Navigation
-              </div>
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={cn(
-                    "flex px-4 py-4 text-base font-medium transition-all duration-300 border-2 border-transparent hover:border-accent hover:bg-accent/10 rounded-lg min-h-[44px] items-center hover:scale-[1.02] hover:shadow-sm",
-                    pathname === item.href
-                      ? "border-accent bg-accent/10 text-foreground font-semibold"
-                      : "text-foreground/70"
-                  )}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                  {pathname === item.href && (
-                    <div className="ml-auto w-2 h-2 bg-accent rounded-full" />
-                  )}
-                </Link>
-              ))}
-            </div>
+          <div className="px-4 py-4 space-y-2">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  "flex items-center px-3 py-2.5 text-sm font-medium rounded-md transition-colors",
+                  pathname === item.href
+                    ? "bg-accent/10 text-foreground"
+                    : "text-foreground/70 hover:bg-accent/5 hover:text-foreground"
+                )}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+                {pathname === item.href && (
+                  <div className="ml-auto w-1.5 h-1.5 bg-accent rounded-full" />
+                )}
+              </Link>
+            ))}
             
-            {/* Additional mobile menu sections */}
-            <div className="border-t border-border pt-4 mt-4">
-              <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                Quick Links
-              </div>
+            <div className="border-t border-border pt-3 mt-3">
               <Link
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex px-4 py-4 text-base font-medium transition-all duration-300 border-2 border-transparent hover:border-accent hover:bg-accent/10 rounded-lg min-h-[44px] items-center hover:scale-[1.02] hover:shadow-sm text-foreground/70"
+                className="flex items-center px-3 py-2.5 text-sm font-medium text-foreground/70 hover:bg-accent/5 hover:text-foreground rounded-md transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <Github className="mr-3 h-5 w-5" />
-                GitHub Repository
+                <Github className="mr-2 h-4 w-4" />
+                GitHub
               </Link>
-            </div>
-            
-            {/* Swipe indicator */}
-            <div className="flex justify-center pt-2">
-              <div className="w-8 h-1 bg-muted-foreground/30 rounded-full" />
             </div>
           </div>
         </div>

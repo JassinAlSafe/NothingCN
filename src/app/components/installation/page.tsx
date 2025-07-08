@@ -11,6 +11,8 @@ export default function InstallationPage() {
         </div>
         <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
           Get started with NothingCN components. Copy, paste, and customize to your heart&apos;s content.
+          <br />
+          <strong className="text-amber-600 dark:text-amber-400">⚠️ Important:</strong> Some components use semantic color tokens that may need configuration in your project.
         </p>
       </div>
 

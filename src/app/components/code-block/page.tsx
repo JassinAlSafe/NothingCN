@@ -62,7 +62,7 @@ export default function CodeBlockPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-4xl font-bold tracking-tight mb-2">Code Block</h1>
+        <h1 className="text-4xl font-bold tracking-tight mb-2 font-ndot">Code Block</h1>
         <p className="text-xl text-muted-foreground">
           Displays syntax-highlighted code with copy functionality.
         </p>
@@ -133,7 +133,7 @@ export function MyComponent() {
       />
 
       <div className="space-y-4">
-        <h2 className="text-2xl font-bold tracking-tight">Installation</h2>
+        <h2 className="text-2xl font-bold tracking-tight font-ndot">Installation</h2>
         <ComponentPreview
           title=""
           description=""

@@ -38,7 +38,7 @@ export function CodeBlock({
     <div className={cn("relative group", className)} {...props}>
       {title && (
         <div className="flex items-center justify-between px-4 py-2 bg-muted border-b">
-          <span className="text-sm font-medium">{title}</span>
+          <span className="text-sm font-medium font-ndot">{title}</span>
         </div>
       )}
 
@@ -68,7 +68,7 @@ export function CodeBlock({
               {tokens.map((line, i) => (
                 <div key={i} {...getLineProps({ line })}>
                   {showLineNumbers && (
-                    <span className="select-none text-muted-foreground mr-4 text-right w-8 inline-block">
+                    <span className="select-none text-muted-foreground mr-4 text-right w-8 inline-block font-ndot">
                       {i + 1}
                     </span>
                   )}

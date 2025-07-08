@@ -6,6 +6,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { NothingProgress } from "@/components/ui/nothing-progress";
 import { Search, ChevronDown, ChevronRight } from "lucide-react";
 
 interface SidebarItem {
@@ -58,6 +59,11 @@ const sidebarConfig: SidebarSection[] = [
         href: "/components/code-block",
       },
       {
+        title: "Discussion Card",
+        href: "/components/discussion-card",
+        label: "New",
+      },
+      {
         title: "Tabs",
         href: "/components/tabs",
         disabled: true,
@@ -66,8 +72,7 @@ const sidebarConfig: SidebarSection[] = [
       {
         title: "Input",
         href: "/components/input",
-        disabled: true,
-        label: "Soon",
+        label: "New",
       },
       {
         title: "Select",
@@ -89,6 +94,26 @@ const sidebarConfig: SidebarSection[] = [
       {
         title: "Pixel Weather Card",
         href: "/components/pixel-weather-card",
+        label: "New",
+      },
+      {
+        title: "Pixel Forms",
+        href: "/components/pixel-forms",
+        label: "New",
+      },
+      {
+        title: "Pixel Elements",
+        href: "/components/pixel-elements",
+        label: "New",
+      },
+      {
+        title: "Nothing Calendar",
+        href: "/components/nothing-calendar",
+        label: "New",
+      },
+      {
+        title: "Retro Gaming Weather",
+        href: "/components/retro-gaming-weather",
         label: "New",
       },
       {
@@ -132,8 +157,14 @@ export function ComponentsSidebar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [collapsedSections, setCollapsedSections] = useState<string[]>([]);
   const [focusedIndex, setFocusedIndex] = useState(-1);
+  const [isClient, setIsClient] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const activeItemRef = useRef<HTMLAnchorElement>(null);
+
+  // Ensure calculations only happen on client side
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const toggleSection = (sectionTitle: string) => {
     setCollapsedSections(prev => 
@@ -236,7 +267,7 @@ export function ComponentsSidebar() {
       {/* Navigation Sections */}
       <div className="space-y-6">
         {filteredSections.map((section) => {
-          const stats = getCompletionStats(section);
+          const stats = isClient ? getCompletionStats(section) : { completed: 0, total: section.items.length, percentage: 0 };
           return (
             <div key={section.title} className="space-y-3">
               <button
@@ -246,13 +277,14 @@ export function ComponentsSidebar() {
                 <div className="flex items-center space-x-2">
                   <span>{section.title}</span>
                   <div className="flex items-center space-x-1">
-                    <span className="text-[10px] text-muted-foreground">
+                    <span className="text-[10px] font-ndot text-muted-foreground">
                       {stats.completed}/{stats.total}
                     </span>
-                    <div className="w-8 h-1 bg-muted rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-accent transition-all duration-300"
-                        style={{ width: `${stats.percentage}%` }}
+                    <div className="w-8">
+                      <NothingProgress 
+                        value={stats.percentage} 
+                        size="sm" 
+                        variant="dotted"
                       />
                     </div>
                   </div>

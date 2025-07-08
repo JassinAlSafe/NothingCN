@@ -24,11 +24,24 @@ export function CardExample() {
   return (
     <Card className="w-[350px]">
       <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        <CardTitle>System Status</CardTitle>
+        <CardDescription>Current system information</CardDescription>
       </CardHeader>
       <CardContent>
-        <p>Card content goes here.</p>
+        <div className="space-y-3">
+          <div className="flex justify-between items-center">
+            <span>CPU Usage</span>
+            <span className="font-ndot text-green-500">45%</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span>Memory</span>
+            <span className="font-ndot text-blue-500">8.2GB</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span>Status</span>
+            <span className="font-ndot text-green-500">Online</span>
+          </div>
+        </div>
       </CardContent>
     </Card>
   )
@@ -84,11 +97,24 @@ export default function CardPage() {
         preview={
           <Card className="w-[350px]">
             <CardHeader>
-              <CardTitle>Card Title</CardTitle>
-              <CardDescription>Card Description</CardDescription>
+              <CardTitle>System Status</CardTitle>
+              <CardDescription>Current system information</CardDescription>
             </CardHeader>
             <CardContent>
-              <p>Card content goes here. This is a simple card component.</p>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span>CPU Usage</span>
+                  <span className="font-ndot text-green-500">45%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>Memory</span>
+                  <span className="font-ndot text-blue-500">8.2GB</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>Status</span>
+                  <span className="font-ndot text-green-500">Online</span>
+                </div>
+              </div>
             </CardContent>
           </Card>
         }
@@ -110,8 +136,8 @@ export default function CardPage() {
               <p>Get started with your project in minutes.</p>
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Button variant="outline">Cancel</Button>
-              <Button>Deploy</Button>
+              <Button variant="outline"><span className="font-ndot">Cancel</span></Button>
+              <Button><span className="font-ndot">Deploy</span></Button>
             </CardFooter>
           </Card>
         }
