@@ -8,10 +8,13 @@ export default function NothingCalendarPage() {
   return (
     <div className="space-y-8">
       <div className="space-y-4">
-        <h1 className="text-4xl font-bold font-ndot tracking-wide">Nothing Calendar</h1>
+        <h1 className="text-4xl font-bold font-ndot tracking-wide">
+          Nothing Calendar
+        </h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          Authentic Nothing OS calendar widgets with dot matrix typography, weather integration, 
-          and event indicators. Perfect for dashboards, home screens, and time-sensitive applications.
+          Authentic Nothing OS calendar widgets with dot matrix typography,
+          weather integration, and event indicators. Perfect for dashboards,
+          home screens, and time-sensitive applications.
         </p>
       </div>
 
@@ -22,21 +25,21 @@ export default function NothingCalendarPage() {
           description="Clean, minimal calendar with Nothing OS aesthetic"
           preview={
             <div className="flex items-center justify-center p-8">
-              <NothingCalendar 
+              <NothingCalendar
                 date={new Date(2024, 3, 23)} // April 23, 2024
                 time="10:30"
                 showAlarm={true}
                 weather={{
                   temperature: 21,
-                  condition: "sunny"
+                  condition: "sunny",
                 }}
                 events={[
                   {
                     id: "1",
                     title: "25th Placeholder event",
                     date: 25,
-                    color: "red"
-                  }
+                    color: "red",
+                  },
                 ]}
               />
             </div>
@@ -72,28 +75,28 @@ export default function BasicCalendarExample() {
           description="Nothing OS calendar with dark mode styling"
           preview={
             <div className="flex items-center justify-center p-8 bg-gray-900 rounded-lg">
-              <NothingCalendar 
+              <NothingCalendar
                 variant="dark"
                 date={new Date(2024, 3, 23)} // April 23, 2024
                 time="10:30"
                 showAlarm={true}
                 weather={{
                   temperature: 21,
-                  condition: "cloudy"
+                  condition: "cloudy",
                 }}
                 events={[
                   {
                     id: "1",
                     title: "Team Meeting",
                     date: 23,
-                    color: "blue"
+                    color: "blue",
                   },
                   {
                     id: "2",
                     title: "Project Review",
                     date: 23,
-                    color: "green"
-                  }
+                    color: "green",
+                  },
                 ]}
               />
             </div>
@@ -136,30 +139,30 @@ export default function DarkCalendarExample() {
           description="Different weather states with dot matrix icons"
           preview={
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8">
-              <NothingCalendar 
+              <NothingCalendar
                 size="sm"
                 date={new Date(2024, 3, 23)}
                 weather={{
                   temperature: 24,
-                  condition: "sunny"
+                  condition: "sunny",
                 }}
                 time="09:15"
               />
-              <NothingCalendar 
+              <NothingCalendar
                 size="sm"
                 date={new Date(2024, 3, 24)}
                 weather={{
                   temperature: 18,
-                  condition: "cloudy"
+                  condition: "cloudy",
                 }}
                 time="09:15"
               />
-              <NothingCalendar 
+              <NothingCalendar
                 size="sm"
                 date={new Date(2024, 3, 25)}
                 weather={{
                   temperature: 16,
-                  condition: "rainy"
+                  condition: "rainy",
                 }}
                 time="09:15"
               />
@@ -199,41 +202,41 @@ export default function WeatherExample() {
               <div className="relative">
                 {/* Back card */}
                 <div className="absolute -top-4 -right-4 rotate-12 opacity-60">
-                  <NothingCalendar 
+                  <NothingCalendar
                     variant="dark"
                     date={new Date(2024, 3, 24)}
                     time="10:30"
                     weather={{
                       temperature: 19,
-                      condition: "cloudy"
+                      condition: "cloudy",
                     }}
                     events={[
                       {
                         id: "1",
                         title: "Placeholder event",
                         date: 24,
-                        color: "purple"
-                      }
+                        color: "purple",
+                      },
                     ]}
                   />
                 </div>
-                
+
                 {/* Front card */}
-                <NothingCalendar 
+                <NothingCalendar
                   date={new Date(2024, 3, 23)}
                   time="10:30"
                   showAlarm={true}
                   weather={{
                     temperature: 21,
-                    condition: "sunny"
+                    condition: "sunny",
                   }}
                   events={[
                     {
                       id: "1",
                       title: "25th Placeholder event",
                       date: 25,
-                      color: "red"
-                    }
+                      color: "red",
+                    },
                   ]}
                 />
               </div>
@@ -294,32 +297,32 @@ export default function StackedCalendarExample() {
           description="Multiple events with different colors and indicators"
           preview={
             <div className="flex items-center justify-center p-8">
-              <NothingCalendar 
+              <NothingCalendar
                 date={new Date(2024, 3, 23)}
                 time="14:30"
                 weather={{
                   temperature: 22,
-                  condition: "sunny"
+                  condition: "sunny",
                 }}
                 events={[
                   {
                     id: "1",
                     title: "Morning standup",
                     date: 23,
-                    color: "blue"
+                    color: "blue",
                   },
                   {
-                    id: "2", 
+                    id: "2",
                     title: "Design review",
                     date: 23,
-                    color: "green"
+                    color: "green",
                   },
                   {
                     id: "3",
                     title: "Client call",
                     date: 23,
-                    color: "red"
-                  }
+                    color: "red",
+                  },
                 ]}
               />
             </div>
@@ -359,6 +362,418 @@ export default function EventManagementExample() {
   );
 }`}
         />
+
+        {/* Wide Version */}
+        <ComponentPreview
+          title="Wide Version - 4 Zone Layout"
+          description="Landscape-oriented calendar with clear information hierarchy: Day name (top-left), Weather (top-right), Date & Time (bottom-left), Events (bottom-right)"
+          preview={
+            <div className="space-y-6">
+              <div className="flex items-center justify-center p-8">
+                <NothingCalendar
+                  size="wide"
+                  date={new Date(2024, 3, 23)}
+                  time="18:20"
+                  showAlarm={true}
+                  weather={{
+                    temperature: 21,
+                    condition: "sunny",
+                  }}
+                  events={[
+                    {
+                      id: "1",
+                      title: "Morning standup",
+                      date: 23,
+                      color: "blue",
+                    },
+                    {
+                      id: "2",
+                      title: "Design review meeting",
+                      date: 23,
+                      color: "green",
+                    },
+                    {
+                      id: "3",
+                      title: "Client presentation",
+                      date: 23,
+                      color: "red",
+                    },
+                    {
+                      id: "4",
+                      title: "Team retrospective",
+                      date: 23,
+                      color: "purple",
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          }
+          code={`import { NothingCalendar } from "@/components/ui/nothing-calendar";
+
+export default function WideCalendarExample() {
+  return (
+    <NothingCalendar 
+      size="wide"
+      date={new Date(2024, 3, 23)}
+      time="18:20"
+      showAlarm={true}
+      weather={{
+        temperature: 21,
+        condition: "sunny"
+      }}
+      events={[
+        {
+          id: "1",
+          title: "Morning standup",
+          date: 23,
+          color: "blue"
+        },
+        {
+          id: "2",
+          title: "Design review meeting",
+          date: 23,
+          color: "green"
+        },
+        {
+          id: "3",
+          title: "Client presentation",
+          date: 23,
+          color: "red"
+        },
+        {
+          id: "4",
+          title: "Team retrospective",
+          date: 23,
+          color: "purple"
+        }
+      ]}
+    />
+  );
+}`}
+        />
+
+        {/* System Status Examples */}
+        <ComponentPreview
+          title="System Status Visibility - All Sizes"
+          description="Clear handling of different system states including sync status and empty events across all calendar sizes"
+          preview={
+            <div className="space-y-8">
+              {/* Wide Layout Examples */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold">Wide Layout</h3>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium">No Events</h4>
+                    <NothingCalendar
+                      size="wide"
+                      date={new Date(2024, 3, 24)}
+                      time="10:30"
+                      weather={{
+                        temperature: 18,
+                        condition: "cloudy",
+                      }}
+                      events={[]}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium">Sync Error</h4>
+                    <NothingCalendar
+                      size="wide"
+                      date={new Date(2024, 3, 25)}
+                      time="14:15"
+                      weather={{
+                        temperature: 22,
+                        condition: "sunny",
+                      }}
+                      syncStatus="error"
+                      events={[]}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Regular Size Examples */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold">Regular Sizes</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium">Small - No Events</h4>
+                    <NothingCalendar
+                      size="sm"
+                      date={new Date(2024, 3, 24)}
+                      time="10:30"
+                      weather={{
+                        temperature: 18,
+                        condition: "cloudy",
+                      }}
+                      events={[]}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium">Medium - Syncing</h4>
+                    <NothingCalendar
+                      size="md"
+                      date={new Date(2024, 3, 26)}
+                      time="09:45"
+                      weather={{
+                        temperature: 19,
+                        condition: "rainy",
+                      }}
+                      syncStatus="syncing"
+                      events={[]}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium">Large - Offline</h4>
+                    <NothingCalendar
+                      size="lg"
+                      date={new Date(2024, 3, 27)}
+                      time="16:00"
+                      weather={{
+                        temperature: 25,
+                        condition: "sunny",
+                      }}
+                      syncStatus="offline"
+                      events={[]}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Event Overflow Examples */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold">
+                  Event Overflow Handling
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium">
+                      Small - 2 events max
+                    </h4>
+                    <NothingCalendar
+                      size="sm"
+                      date={new Date(2024, 3, 23)}
+                      time="10:30"
+                      weather={{
+                        temperature: 21,
+                        condition: "sunny",
+                      }}
+                      events={[
+                        {
+                          id: "1",
+                          title: "Team standup meeting",
+                          date: 23,
+                          color: "blue",
+                        },
+                        {
+                          id: "2",
+                          title: "Design review session",
+                          date: 23,
+                          color: "green",
+                        },
+                        {
+                          id: "3",
+                          title: "Client presentation",
+                          date: 23,
+                          color: "red",
+                        },
+                        {
+                          id: "4",
+                          title: "Team retrospective",
+                          date: 23,
+                          color: "purple",
+                        },
+                      ]}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium">
+                      Medium - 3 events max
+                    </h4>
+                    <NothingCalendar
+                      size="md"
+                      date={new Date(2024, 3, 23)}
+                      time="10:30"
+                      weather={{
+                        temperature: 21,
+                        condition: "sunny",
+                      }}
+                      events={[
+                        {
+                          id: "1",
+                          title: "Team standup meeting",
+                          date: 23,
+                          color: "blue",
+                        },
+                        {
+                          id: "2",
+                          title: "Design review session",
+                          date: 23,
+                          color: "green",
+                        },
+                        {
+                          id: "3",
+                          title: "Client presentation",
+                          date: 23,
+                          color: "red",
+                        },
+                        {
+                          id: "4",
+                          title: "Team retrospective",
+                          date: 23,
+                          color: "purple",
+                        },
+                        {
+                          id: "5",
+                          title: "Code review",
+                          date: 23,
+                          color: "orange",
+                        },
+                      ]}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium">
+                      Large - 3 events max
+                    </h4>
+                    <NothingCalendar
+                      size="lg"
+                      date={new Date(2024, 3, 23)}
+                      time="10:30"
+                      weather={{
+                        temperature: 21,
+                        condition: "sunny",
+                      }}
+                      events={[
+                        {
+                          id: "1",
+                          title: "Team standup meeting",
+                          date: 23,
+                          color: "blue",
+                        },
+                        {
+                          id: "2",
+                          title: "Design review session",
+                          date: 23,
+                          color: "green",
+                        },
+                        {
+                          id: "3",
+                          title: "Client presentation",
+                          date: 23,
+                          color: "red",
+                        },
+                        {
+                          id: "4",
+                          title: "Team retrospective",
+                          date: 23,
+                          color: "purple",
+                        },
+                        {
+                          id: "5",
+                          title: "Code review",
+                          date: 23,
+                          color: "orange",
+                        },
+                        {
+                          id: "6",
+                          title: "Planning session",
+                          date: 23,
+                          color: "yellow",
+                        },
+                      ]}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+          code={`import { NothingCalendar } from "@/components/ui/nothing-calendar";
+
+export default function SystemStatusExample() {
+  return (
+    <div className="space-y-8">
+      {/* Works with all sizes */}
+      
+      {/* No Events - Available in all sizes */}
+      <NothingCalendar
+        size="md"
+        date={new Date(2024, 3, 24)}
+        time="10:30"
+        weather={{
+          temperature: 18,
+          condition: "cloudy"
+        }}
+        events={[]}
+      />
+
+      {/* Sync Error - Available in all sizes */}
+      <NothingCalendar
+        size="lg"
+        date={new Date(2024, 3, 25)}
+        time="14:15"
+        weather={{
+          temperature: 22,
+          condition: "sunny"
+        }}
+        syncStatus="error"
+        events={[]}
+      />
+
+      {/* Syncing - Available in all sizes */}
+      <NothingCalendar
+        size="sm"
+        date={new Date(2024, 3, 26)}
+        time="09:45"
+        weather={{
+          temperature: 19,
+          condition: "rainy"
+        }}
+        syncStatus="syncing"
+        events={[]}
+      />
+
+      {/* Event Overflow - Smart handling per size */}
+      <NothingCalendar
+        size="sm"
+        date={new Date(2024, 3, 23)}
+        time="10:30"
+        weather={{
+          temperature: 21,
+          condition: "sunny"
+        }}
+        events={[
+          {
+            id: "1",
+            title: "Team standup meeting",
+            date: 23,
+            color: "blue"
+          },
+          {
+            id: "2",
+            title: "Design review session",
+            date: 23,
+            color: "green"
+          },
+          {
+            id: "3",
+            title: "Client presentation",
+            date: 23,
+            color: "red"
+          },
+          {
+            id: "4",
+            title: "Team retrospective",
+            date: 23,
+            color: "purple"
+          }
+        ]}
+      />
+    </div>
+  );
+}`}
+        />
       </div>
 
       {/* Component Source Code */}
@@ -389,7 +804,8 @@ export interface NothingCalendarProps extends React.HTMLAttributes<HTMLDivElemen
   time?: string;
   showAlarm?: boolean;
   variant?: "light" | "dark";
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "wide";
+  syncStatus?: "synced" | "syncing" | "error" | "offline";
 }
 
 const NothingCalendar = React.forwardRef<HTMLDivElement, NothingCalendarProps>(
@@ -412,7 +828,8 @@ const NothingCalendar = React.forwardRef<HTMLDivElement, NothingCalendarProps>(
     const sizeClasses = {
       sm: "w-64 h-72",
       md: "w-80 h-88", 
-      lg: "w-96 h-96"
+      lg: "w-96 h-96",
+      wide: "w-[40rem] h-64"
     };
 
     const getWeatherIcon = (condition: string) => {
@@ -512,33 +929,6 @@ NothingCalendar.displayName = "NothingCalendar";
 
 export { NothingCalendar };`}
       />
-
-      {/* Design Philosophy */}
-      <div className="mt-8 p-6 bg-muted/50 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4 font-ndot">🎨 Nothing OS Design Philosophy</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-          <div>
-            <h3 className="font-semibold mb-3">Visual Design</h3>
-            <ul className="space-y-2">
-              <li>• **Dot Matrix Typography** - Strategic use of font-ndot for day names</li>
-              <li>• **Weather Icons** - Authentic dot matrix patterns for weather conditions</li>
-              <li>• **Color Coding** - Red accent for time and weather elements</li>
-              <li>• **Rounded Corners** - Smooth, modern card aesthetic</li>
-              <li>• **Subtle Shadows** - Depth without overwhelming the design</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold mb-3">Functionality</h3>
-            <ul className="space-y-2">
-              <li>• **Event Management** - Color-coded event indicators</li>
-              <li>• **Weather Integration** - Temperature and condition display</li>
-              <li>• **Time Display** - Current time with optional alarm icon</li>
-              <li>• **Theme Support** - Light and dark mode variants</li>
-              <li>• **Responsive Sizing** - Multiple size options for different use cases</li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
