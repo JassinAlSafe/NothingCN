@@ -4,28 +4,30 @@ import React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-interface AnimatedCloudProps {
+interface AnimatedSunProps {
   className?: string;
   width?: number;
   height?: number;
   animate?: boolean;
   animationType?: "float" | "pulse" | "bounce" | "spin" | "ping" | "none";
   speed?: "slow" | "normal" | "fast";
+  variant?: "normal" | "compromised";
   hover?: boolean;
 }
 
-export const AnimatedCloud: React.FC<AnimatedCloudProps> = ({
+export const AnimatedSun: React.FC<AnimatedSunProps> = ({
   className = "",
   width = 120,
   height = 80,
   animate = true,
-  animationType = "float",
+  animationType = "pulse",
   speed = "normal",
+  variant = "normal",
   hover = false,
 }) => {
   const getAnimationClass = () => {
     if (!animate || animationType === "none") return "";
-    
+
     switch (animationType) {
       case "float":
         return `animate-bounce`;
@@ -42,9 +44,15 @@ export const AnimatedCloud: React.FC<AnimatedCloudProps> = ({
     }
   };
 
+  const getVariantStyles = () => {
+    return variant === "compromised" 
+      ? "opacity-75 saturate-50" 
+      : "opacity-100 saturate-100";
+  };
+
   const getHoverStyles = () => {
     return hover 
-      ? "hover:scale-110 hover:rotate-3 transition-transform duration-300" 
+      ? "hover:scale-110 hover:rotate-12 transition-transform duration-300" 
       : "";
   };
 
@@ -53,6 +61,7 @@ export const AnimatedCloud: React.FC<AnimatedCloudProps> = ({
       className={cn(
         "relative inline-block",
         getAnimationClass(),
+        getVariantStyles(),
         getHoverStyles(),
         className
       )}
@@ -67,8 +76,8 @@ export const AnimatedCloud: React.FC<AnimatedCloudProps> = ({
       }}
     >
       <Image
-        src="/icons/weather.png"
-        alt="Weather cloud icon"
+        src="/icons/sun.png"
+        alt="Sun weather icon"
         width={width}
         height={height}
         className="object-contain w-full h-full"

@@ -217,13 +217,13 @@ export default function Example() {
         <div className="p-6 bg-muted/50 rounded-lg">
           <h2 className="text-xl font-semibold mb-4">🛠️ Required utils.ts</h2>
           <p className="text-sm text-muted-foreground mb-4">
-            If you don't have the cn() utility function, create this file:
+            If you don&apos;t have the cn() utility function, create this file:
           </p>
           
           <div className="bg-muted p-4 rounded border font-mono text-xs overflow-x-auto">
-            <div className="text-muted-foreground mb-2">// src/lib/utils.ts</div>
-            <div>import &#123; type ClassValue, clsx &#125; from "clsx"</div>
-            <div>import &#123; twMerge &#125; from "tailwind-merge"</div>
+            <div className="text-muted-foreground mb-2">{/* src/lib/utils.ts */}</div>
+            <div>import &#123; type ClassValue, clsx &#125; from &quot;clsx&quot;</div>
+            <div>import &#123; twMerge &#125; from &quot;tailwind-merge&quot;</div>
             <div className="mt-2"></div>
             <div>export function cn(...inputs: ClassValue[]) &#123;</div>
             <div className="ml-4">return twMerge(clsx(inputs))</div>
@@ -245,7 +245,7 @@ export default function Example() {
           </ul>
           
           <div className="mt-4 p-3 bg-blue-100 rounded border text-xs font-mono">
-            <div className="text-blue-600 mb-1">// Ensure these work in your Tailwind setup:</div>
+            <div className="text-blue-600 mb-1">{/* Ensure these work in your Tailwind setup: */}</div>
             <div>bg-card, text-foreground, border-border, text-accent</div>
           </div>
         </div>
@@ -257,7 +257,7 @@ export default function Example() {
           </p>
           
           <ul className="text-sm text-green-700 space-y-1">
-            <li>• <strong>React 18+</strong> - Uses "use client" directive</li>
+            <li>• <strong>React 18+</strong> - Uses &quot;use client&quot; directive</li>
             <li>• <strong>TypeScript</strong> - Fully typed with interfaces</li>
             <li>• <strong>Next.js compatible</strong> - Works with App Router</li>
             <li>• <strong>No external API calls</strong> - Pure client-side component</li>
