@@ -4,7 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  variant?: "default" | "pixel" | "terminal" | "glow";
+  variant?: "default" | "pixel" | "terminal" | "glow" | "nothing";
   pixelSize?: "sm" | "md" | "lg";
 }
 
@@ -88,6 +88,22 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         // Animated border gradient
         "relative before:absolute before:inset-0 before:rounded-2xl before:p-[1px] before:bg-gradient-to-r before:from-accent/20 before:via-accent/60 before:to-accent/20 before:-z-10",
         "after:absolute after:inset-[1px] after:rounded-[15px] after:bg-black/90 after:-z-10"
+      ),
+      nothing: cn(
+        "h-12 bg-background/95 backdrop-blur-sm text-foreground font-ndot text-sm border-2 border-border/40 rounded-lg",
+        "px-4 py-3 leading-none tracking-wide",
+        "placeholder:text-muted-foreground/60 placeholder:font-ndot",
+        "focus:outline-none focus:border-accent/80 focus:bg-background focus:shadow-[0_0_0_3px_theme(colors.accent/0.1)]",
+        "hover:border-accent/50 hover:bg-background/98",
+        "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-muted/30",
+        "file:bg-transparent file:font-ndot file:text-sm file:border-0 file:text-foreground",
+        "transition-all duration-300 ease-out",
+        // Nothing-specific styling
+        hasContent ? "border-accent/70 bg-accent/[0.03] text-foreground shadow-[0_0_0_1px_theme(colors.accent/0.1)]" : "",
+        isFocused ? "scale-[1.01] border-accent shadow-[0_0_0_3px_theme(colors.accent/0.15)]" : "",
+        // Unique Nothing design elements
+        "relative before:absolute before:inset-0 before:rounded-lg before:p-[1px] before:bg-gradient-to-r before:from-border/30 before:via-border/10 before:to-border/30 before:-z-10",
+        "after:absolute after:inset-[1px] after:rounded-[7px] after:bg-background/95 after:-z-10"
       )
     };
 
@@ -126,6 +142,41 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               animation: isFocused ? 'pulse 2s ease-in-out infinite' : 'none'
             }}
           />
+        )}
+        
+        {/* Nothing-style glyph interface elements */}
+        {variant === "nothing" && (
+          <>
+            {/* Animated glyph dots */}
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1 pointer-events-none">
+              <div className={cn(
+                "w-1.5 h-1.5 rounded-full transition-all duration-300",
+                isFocused ? "bg-accent animate-pulse" : "bg-border/40",
+                hasContent ? "bg-accent/70" : ""
+              )} />
+              <div className={cn(
+                "w-1.5 h-1.5 rounded-full transition-all duration-300",
+                isFocused ? "bg-accent animate-pulse [animation-delay:0.1s]" : "bg-border/40",
+                hasContent ? "bg-accent/70 [animation-delay:0.1s]" : ""
+              )} />
+              <div className={cn(
+                "w-1.5 h-1.5 rounded-full transition-all duration-300",
+                isFocused ? "bg-accent animate-pulse [animation-delay:0.2s]" : "bg-border/40",
+                hasContent ? "bg-accent/70 [animation-delay:0.2s]" : ""
+              )} />
+            </div>
+            
+            {/* Focus ring effect */}
+            {isFocused && (
+              <div className="absolute inset-0 rounded-lg border border-accent/30 pointer-events-none animate-pulse" />
+            )}
+            
+            {/* Subtle background pattern */}
+            <div className="absolute inset-0 rounded-lg pointer-events-none opacity-5">
+              <div className="absolute top-2 right-2 w-16 h-16 bg-gradient-to-br from-accent/20 to-transparent rounded-full blur-xl" />
+              <div className="absolute bottom-2 left-2 w-12 h-12 bg-gradient-to-tr from-accent/10 to-transparent rounded-full blur-lg" />
+            </div>
+          </>
         )}
       </div>
     );

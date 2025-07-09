@@ -1,13 +1,33 @@
 import type { Metadata } from "next";
 import { ComponentPreview } from "@/components/component-preview";
 import { ComponentCode } from "@/components/component-code";
+import { ComponentLayout } from "@/components/component-layout";
+import { InstallationTabs } from "@/components/installation-tabs";
 import {
   BasicDialogExample,
   FormDialogExample,
   ConfirmationDialogExample,
   SearchDialogExample,
   CustomDialogExample,
+  NothingDialogExample,
+  NothingNotificationDialogExample,
 } from "./dialog-examples";
+import { getComponentNavigation } from "@/lib/component-navigation";
+
+const sections = [
+  { id: "installation", title: "Installation" },
+  { id: "usage", title: "Usage" },
+  { id: "basic-dialog", title: "Basic Dialog" },
+  { id: "form-dialog", title: "Form Dialog" },
+  { id: "confirmation-dialog", title: "Confirmation Dialog" },
+  { id: "search-dialog", title: "Search Dialog" },
+  { id: "custom-dialog", title: "Custom Dialog" },
+  { id: "nothing-dialog", title: "Nothing Dialog" },
+  { id: "nothing-notifications", title: "Nothing Notifications" },
+  { id: "component-source", title: "Component Source" }
+];
+
+const { previous, next } = getComponentNavigation("/components/dialog");
 
 export const metadata: Metadata = {
   title: "Dialog - NothingCN",
@@ -237,6 +257,196 @@ export function CustomDialog() {
   )
 }`;
 
+const nothingDialogCode = `import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { 
+  Circle, 
+  Zap, 
+  Star, 
+  Cpu, 
+  Wifi, 
+  ArrowRight, 
+  Sparkles 
+} from "lucide-react"
+
+export function NothingDialog() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="relative group">
+          <Circle className="mr-2 h-4 w-4 animate-pulse" />
+          <span className="font-ndot">Nothing (1)</span>
+          <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-ping" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[520px] border-2 border-border bg-background/95 backdrop-blur-sm">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-3 font-ndot text-xl">
+            <div className="relative">
+              <Circle className="h-6 w-6 text-accent" />
+              <div className="absolute inset-0 h-6 w-6 border-2 border-accent rounded-full animate-ping" />
+            </div>
+            Nothing OS 3.0
+          </DialogTitle>
+          <DialogDescription className="text-muted-foreground">
+            Experience the power of Nothing with our signature ndot typography and minimal design
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-6 py-6">
+          <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
+            <div className="flex items-center gap-3">
+              <Zap className="h-5 w-5 text-yellow-500" />
+              <div>
+                <p className="font-ndot text-sm font-medium">Glyph Interface</p>
+                <p className="text-xs text-muted-foreground">LED pattern notifications</p>
+              </div>
+            </div>
+            <div className="flex gap-1">
+              <Circle className="h-2 w-2 bg-accent rounded-full animate-pulse" />
+              <Circle className="h-2 w-2 bg-accent rounded-full animate-pulse [animation-delay:0.2s]" />
+              <Circle className="h-2 w-2 bg-accent rounded-full animate-pulse [animation-delay:0.4s]" />
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div className="p-4 bg-muted/20 rounded-lg border border-border/30 hover:border-accent/50 transition-colors">
+              <div className="flex items-center gap-2 mb-2">
+                <Cpu className="h-4 w-4 text-accent" />
+                <span className="font-ndot text-sm">Performance</span>
+              </div>
+              <p className="text-xs text-muted-foreground">Snapdragon optimized</p>
+            </div>
+            
+            <div className="p-4 bg-muted/20 rounded-lg border border-border/30 hover:border-accent/50 transition-colors">
+              <div className="flex items-center gap-2 mb-2">
+                <Wifi className="h-4 w-4 text-accent" />
+                <span className="font-ndot text-sm">Connectivity</span>
+              </div>
+              <p className="text-xs text-muted-foreground">5G ready</p>
+            </div>
+          </div>
+          
+          <div className="p-4 bg-gradient-to-r from-accent/10 to-accent/5 rounded-lg border border-accent/20">
+            <div className="flex items-center gap-2 mb-2">
+              <Star className="h-4 w-4 text-accent" />
+              <span className="font-ndot text-sm">Nothing Special</span>
+            </div>
+            <p className="text-xs text-muted-foreground mb-3">
+              Unique design elements that make Nothing stand out
+            </p>
+            <div className="flex items-center gap-2">
+              <Button size="sm" className="font-ndot">
+                Explore <ArrowRight className="ml-1 h-3 w-3" />
+              </Button>
+            </div>
+          </div>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" className="font-ndot">
+            Close
+          </Button>
+          <Button className="font-ndot bg-accent hover:bg-accent/90">
+            <Sparkles className="mr-2 h-4 w-4" />
+            Activate
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}`;
+
+const nothingNotificationDialogCode = `import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Bell, Circle } from "lucide-react"
+
+export function NothingNotificationDialog() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="relative">
+          <Bell className="mr-2 h-4 w-4" />
+          <span className="font-ndot">Notifications</span>
+          <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full flex items-center justify-center">
+            <span className="text-[10px] font-ndot text-background">3</span>
+          </div>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[480px] border-2 border-border">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 font-ndot">
+            <div className="relative">
+              <Bell className="h-5 w-5 text-accent" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full animate-pulse" />
+            </div>
+            Nothing Notifications
+          </DialogTitle>
+          <DialogDescription>
+            Glyph Interface notifications and system alerts
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-4 py-4">
+          <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg border-l-4 border-l-accent">
+            <div className="flex-shrink-0 mt-1">
+              <Circle className="h-2 w-2 bg-accent rounded-full animate-pulse" />
+            </div>
+            <div className="flex-1">
+              <p className="font-ndot text-sm font-medium">Glyph Pattern Active</p>
+              <p className="text-xs text-muted-foreground">LED notification system is running</p>
+              <p className="text-xs text-muted-foreground mt-1">2 minutes ago</p>
+            </div>
+          </div>
+          
+          <div className="flex items-start gap-3 p-3 bg-muted/20 rounded-lg border-l-4 border-l-blue-500">
+            <div className="flex-shrink-0 mt-1">
+              <Circle className="h-2 w-2 bg-blue-500 rounded-full" />
+            </div>
+            <div className="flex-1">
+              <p className="font-ndot text-sm font-medium">System Update</p>
+              <p className="text-xs text-muted-foreground">Nothing OS 3.0.1 is available</p>
+              <p className="text-xs text-muted-foreground mt-1">1 hour ago</p>
+            </div>
+          </div>
+          
+          <div className="flex items-start gap-3 p-3 bg-muted/20 rounded-lg border-l-4 border-l-green-500">
+            <div className="flex-shrink-0 mt-1">
+              <Circle className="h-2 w-2 bg-green-500 rounded-full" />
+            </div>
+            <div className="flex-1">
+              <p className="font-ndot text-sm font-medium">Battery Optimized</p>
+              <p className="text-xs text-muted-foreground">Adaptive battery learning complete</p>
+              <p className="text-xs text-muted-foreground mt-1">3 hours ago</p>
+            </div>
+          </div>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" className="font-ndot">
+            Mark All Read
+          </Button>
+          <Button className="font-ndot">
+            Settings
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}`;
+
 const dialogSourceCode = `import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
@@ -339,7 +549,8 @@ export {
 
 export default function DialogPage() {
   return (
-    <div className="space-y-12">
+    <ComponentLayout sections={sections} previous={previous} next={next}>
+      <div className="space-y-12">
       {/* Page Header */}
       <div className="space-y-4 border-b border-border pb-8">
         <div className="flex items-center space-x-3">
@@ -351,47 +562,103 @@ export default function DialogPage() {
         </p>
       </div>
 
-      <ComponentPreview
+      <InstallationTabs
+        cliCommand="npx nothingcn@latest add dialog"
+        manualSteps={[
+          {
+            title: "Install Radix UI Dialog",
+            description: "Install the Radix UI Dialog primitive",
+            code: "npm install @radix-ui/react-dialog"
+          },
+          {
+            title: "Copy and paste the following code into your project.",
+            description: "Create a new file at src/components/ui/dialog.tsx",
+            code: dialogSourceCode
+          }
+        ]}
+      />
+
+      <div id="usage" className="space-y-4">
+        <h2 className="text-3xl font-bold tracking-tight font-ndot">Usage</h2>
+        <div className="space-y-2">
+          <pre className="bg-muted rounded-lg p-4 overflow-x-auto text-sm">
+            <code>{`import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"`}</code>
+          </pre>
+        </div>
+      </div>
+
+      <div id="basic-dialog">
+        <ComponentPreview
         title="Basic Dialog"
         description="A simple dialog with a title, description, and content area."
         preview={<BasicDialogExample />}
         code={basicDialogCode}
-      />
+        />
+      </div>
 
-      <ComponentPreview
-        title="Form Dialog"
-        description="A dialog containing a form with inputs and action buttons."
-        preview={<FormDialogExample />}
-        code={formDialogCode}
-      />
+      <div id="form-dialog">
+        <ComponentPreview
+          title="Form Dialog"
+          description="A dialog containing a form with inputs and action buttons."
+          preview={<FormDialogExample />}
+          code={formDialogCode}
+        />
+      </div>
 
-      <ComponentPreview
-        title="Confirmation Dialog"
-        description="A dialog for confirming destructive actions with warning styling."
-        preview={<ConfirmationDialogExample />}
-        code={confirmationDialogCode}
-      />
+      <div id="confirmation-dialog">
+        <ComponentPreview
+          title="Confirmation Dialog"
+          description="A dialog for confirming destructive actions with warning styling."
+          preview={<ConfirmationDialogExample />}
+          code={confirmationDialogCode}
+        />
+      </div>
 
-      <ComponentPreview
-        title="Search Dialog"
-        description="A specialized dialog for search functionality with custom styling."
-        preview={<SearchDialogExample />}
-        code={searchDialogCode}
-      />
+      <div id="search-dialog">
+        <ComponentPreview
+          title="Search Dialog"
+          description="A specialized dialog for search functionality with custom styling."
+          preview={<SearchDialogExample />}
+          code={searchDialogCode}
+        />
+      </div>
 
-      <ComponentPreview
-        title="Custom Dialog"
-        description="A more complex dialog with custom content and styling."
-        preview={<CustomDialogExample />}
-        code={customDialogCode}
-      />
+      <div id="custom-dialog">
+        <ComponentPreview
+          title="Custom Dialog"
+          description="A more complex dialog with custom content and styling."
+          preview={<CustomDialogExample />}
+          code={customDialogCode}
+        />
+      </div>
+
+      <div id="nothing-dialog">
+        <ComponentPreview
+          title="Nothing Dialog"
+          description="A Nothing-themed dialog with ndot typography, glyph interface elements, and unique Nothing design patterns."
+          preview={<NothingDialogExample />}
+          code={nothingDialogCode}
+        />
+      </div>
+
+      <div id="nothing-notifications">
+        <ComponentPreview
+          title="Nothing Notifications"
+          description="A Nothing-style notification dialog featuring glyph interface notifications with animated elements."
+          preview={<NothingNotificationDialogExample />}
+          code={nothingNotificationDialogCode}
+        />
+      </div>
 
       {/* Component Source Code */}
-      <ComponentCode
-        title="Component Source"
-        description="Copy and paste the following code into your project."
-        code={dialogSourceCode}
-      />
+      <div id="component-source">
+        <ComponentCode
+          title="Component Source"
+          description="Copy and paste the following code into your project."
+          code={dialogSourceCode}
+        />
+      </div>
     </div>
+  </ComponentLayout>
   );
 }

@@ -1,15 +1,34 @@
 "use client";
 
 import { ComponentPreview } from "@/components/component-preview";
+import { ComponentLayout } from "@/components/component-layout";
+import { InstallationTabs } from "@/components/installation-tabs";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getComponentNavigation } from "@/lib/component-navigation";
+
+const sections = [
+  { id: "installation", title: "Installation" },
+  { id: "usage", title: "Usage" },
+  { id: "input-field", title: "Input Field" },
+  { id: "textarea", title: "Textarea" },
+  { id: "contact-form", title: "Contact Form" },
+  { id: "nothing-input", title: "Nothing Input" },
+  { id: "nothing-form", title: "Nothing Form" },
+  { id: "all-variants", title: "All Input Variants" },
+  { id: "input-states", title: "Input States" },
+  { id: "examples", title: "Examples" }
+];
+
+const { previous, next } = getComponentNavigation("/components/input");
 
 export default function InputPage() {
   return (
-    <div className="space-y-8">
+    <ComponentLayout sections={sections} previous={previous} next={next}>
+      <div className="space-y-12">
       <div className="space-y-4">
         <h1 className="text-4xl font-bold font-ndot tracking-wide">Input & Textarea</h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
@@ -18,10 +37,64 @@ export default function InputPage() {
         </p>
       </div>
 
+      <InstallationTabs
+        cliCommand="npx nothingcn@latest add input"
+        manualSteps={[
+          {
+            title: "Copy and paste the following code into your project.",
+            description: "Create a new file at src/components/ui/input.tsx",
+            code: `"use client";
+
+import * as React from "react";
+import { cn } from "@/lib/utils";
+
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  variant?: "default" | "pixel" | "terminal" | "glow" | "nothing";
+  pixelSize?: "sm" | "md" | "lg";
+}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, variant = "default", ...props }, ref) => {
+    return (
+      <input
+        type={type}
+        className={cn(
+          "flex h-11 w-full rounded-xl border-2 border-border/40 bg-background/80 px-4 py-3 text-sm",
+          "ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium",
+          "placeholder:text-muted-foreground/50 focus-visible:outline-none focus-visible:ring-2",
+          "focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          className
+        )}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Input.displayName = "Input"
+
+export { Input }`
+          }
+        ]}
+      />
+
+      <div id="usage" className="space-y-4">
+        <h2 className="text-3xl font-bold tracking-tight font-ndot">Usage</h2>
+        <div className="space-y-2">
+          <pre className="bg-muted rounded-lg p-4 overflow-x-auto text-sm">
+            <code>{`import { Input } from "@/components/ui/input"`}</code>
+          </pre>
+          <pre className="bg-muted rounded-lg p-4 overflow-x-auto text-sm">
+            <code>{`<Input placeholder="Enter your name..." />`}</code>
+          </pre>
+        </div>
+      </div>
+
       <div className="space-y-8">
         {/* Basic Input Examples */}
-        <ComponentPreview
-          title="Input Field"
+        <div id="input-field">
+          <ComponentPreview
+            title="Input Field"
           description="Clean, minimal input with subtle Nothing OS styling"
           preview={
             <div className="space-y-4 p-8 max-w-md">
@@ -45,10 +118,12 @@ export default function InputExample() {
     </div>
   );
 }`}
-        />
+          />
+        </div>
 
         {/* Textarea Examples */}
-        <ComponentPreview
+        <div id="textarea">
+          <ComponentPreview
           title="Textarea"
           description="Multi-line text input with consistent Nothing OS styling"
           preview={
@@ -77,10 +152,12 @@ export default function TextareaExample() {
     </div>
   );
 }`}
-        />
+          />
+        </div>
 
         {/* Contact Form Example */}
-        <ComponentPreview
+        <div id="contact-form">
+          <ComponentPreview
           title="Contact Form"
           description="Complete form example with Nothing OS styling"
           preview={
@@ -198,10 +275,250 @@ export default function ContactFormExample() {
     </Card>
   );
 }`}
-        />
+          />
+        </div>
+
+        {/* Nothing Input Examples */}
+        <div id="nothing-input">
+          <ComponentPreview
+          title="Nothing Input"
+          description="Input field with Nothing OS design elements, ndot typography, and unique glyph interface"
+          preview={
+            <div className="space-y-4 p-8 max-w-md">
+              <Input variant="nothing" placeholder="Enter your name..." />
+              <Input variant="nothing" type="email" placeholder="your@email.com" />
+              <Input variant="nothing" type="password" placeholder="Password" />
+              <Input variant="nothing" value="Pre-filled content" readOnly />
+              <Input variant="nothing" placeholder="Disabled input" disabled />
+            </div>
+          }
+          code={`import { Input } from "@/components/ui/input";
+
+export default function NothingInputExample() {
+  return (
+    <div className="space-y-4">
+      <Input variant="nothing" placeholder="Enter your name..." />
+      <Input variant="nothing" type="email" placeholder="your@email.com" />
+      <Input variant="nothing" type="password" placeholder="Password" />
+      <Input variant="nothing" value="Pre-filled content" readOnly />
+      <Input variant="nothing" placeholder="Disabled input" disabled />
+    </div>
+  );
+}`}
+          />
+        </div>
+
+        {/* Nothing Form Example */}
+        <div id="nothing-form">
+          <ComponentPreview
+          title="Nothing Form"
+          description="Complete form example with Nothing OS styling and ndot typography"
+          preview={
+            <div className="p-8 max-w-lg mx-auto">
+              <Card className="border-2 border-border/60 bg-background/95 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-ndot">Nothing OS Contact</CardTitle>
+                  <CardDescription className="font-ndot">
+                    Connect with us using Nothing design language
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium font-ndot">
+                        First Name
+                      </label>
+                      <Input variant="nothing" placeholder="John" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium font-ndot">
+                        Last Name
+                      </label>
+                      <Input variant="nothing" placeholder="Doe" />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium font-ndot">
+                      Email Address
+                    </label>
+                    <Input variant="nothing" type="email" placeholder="john@nothing.tech" />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium font-ndot">
+                      Subject
+                    </label>
+                    <Input variant="nothing" placeholder="Nothing Phone (2a)" />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium font-ndot">
+                      Message
+                    </label>
+                    <Textarea 
+                      placeholder="Share your thoughts about Nothing OS..."
+                      rows={4}
+                      className="font-ndot"
+                    />
+                  </div>
+                  
+                  <div className="flex gap-2 pt-4">
+                    <Button className="flex-1 font-ndot bg-accent hover:bg-accent/90">
+                      Send Message
+                    </Button>
+                    <Button variant="outline" className="flex-1 font-ndot border-accent/50 hover:border-accent">
+                      Clear
+                    </Button>
+                  </div>
+                  
+                  <div className="text-center pt-2">
+                    <Badge variant="secondary" className="text-xs bg-accent/10 text-accent border-accent/30">
+                      <span className="font-ndot">Powered by Nothing OS</span>
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          }
+          code={`import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+export default function NothingContactFormExample() {
+  return (
+    <Card className="border-2 border-border/60 bg-background/95 backdrop-blur-sm max-w-lg">
+      <CardHeader>
+        <CardTitle className="text-2xl font-ndot">Nothing OS Contact</CardTitle>
+        <CardDescription className="font-ndot">
+          Connect with us using Nothing design language
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium font-ndot">First Name</label>
+            <Input variant="nothing" placeholder="John" />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium font-ndot">Last Name</label>
+            <Input variant="nothing" placeholder="Doe" />
+          </div>
+        </div>
+        
+        <div className="space-y-2">
+          <label className="text-sm font-medium font-ndot">Email Address</label>
+          <Input variant="nothing" type="email" placeholder="john@nothing.tech" />
+        </div>
+        
+        <div className="space-y-2">
+          <label className="text-sm font-medium font-ndot">Subject</label>
+          <Input variant="nothing" placeholder="Nothing Phone (2a)" />
+        </div>
+        
+        <div className="space-y-2">
+          <label className="text-sm font-medium font-ndot">Message</label>
+          <Textarea 
+            placeholder="Share your thoughts about Nothing OS..."
+            rows={4}
+            className="font-ndot"
+          />
+        </div>
+        
+        <div className="flex gap-2 pt-4">
+          <Button className="flex-1 font-ndot bg-accent hover:bg-accent/90">
+            Send Message
+          </Button>
+          <Button variant="outline" className="flex-1 font-ndot border-accent/50 hover:border-accent">
+            Clear
+          </Button>
+        </div>
+        
+        <div className="text-center pt-2">
+          <Badge variant="secondary" className="text-xs bg-accent/10 text-accent border-accent/30">
+            <span className="font-ndot">Powered by Nothing OS</span>
+          </Badge>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}`}
+          />
+        </div>
+
+        {/* All Input Variants */}
+        <div id="all-variants">
+          <ComponentPreview
+          title="All Input Variants"
+          description="Comparison of all available input variants including the new Nothing design"
+          preview={
+            <div className="space-y-6 p-8 max-w-lg">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Default</label>
+                <Input placeholder="Standard input field" />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium font-ndot">Nothing OS</label>
+                <Input variant="nothing" placeholder="Nothing-themed input" />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium font-mono">Pixel</label>
+                <Input variant="pixel" placeholder="Retro pixel input" />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium font-mono text-green-400">Terminal</label>
+                <Input variant="terminal" placeholder="Terminal-style input" />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-accent">Glow</label>
+                <Input variant="glow" placeholder="Futuristic glow input" />
+              </div>
+            </div>
+          }
+          code={`import { Input } from "@/components/ui/input";
+
+export default function AllInputVariantsExample() {
+  return (
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Default</label>
+        <Input placeholder="Standard input field" />
+      </div>
+      
+      <div className="space-y-2">
+        <label className="text-sm font-medium font-ndot">Nothing OS</label>
+        <Input variant="nothing" placeholder="Nothing-themed input" />
+      </div>
+      
+      <div className="space-y-2">
+        <label className="text-sm font-medium font-mono">Pixel</label>
+        <Input variant="pixel" placeholder="Retro pixel input" />
+      </div>
+      
+      <div className="space-y-2">
+        <label className="text-sm font-medium font-mono text-green-400">Terminal</label>
+        <Input variant="terminal" placeholder="Terminal-style input" />
+      </div>
+      
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-accent">Glow</label>
+        <Input variant="glow" placeholder="Futuristic glow input" />
+      </div>
+    </div>
+  );
+}`}
+          />
+        </div>
 
         {/* Input States */}
-        <ComponentPreview
+        <div id="input-states">
+          <ComponentPreview
           title="Input States"
           description="Different states and interactions for input fields"
           preview={
@@ -264,59 +581,10 @@ export default function InputStatesExample() {
     </div>
   );
 }`}
-        />
-      </div>
-
-      {/* Design Philosophy */}
-      <div className="mt-8 p-6 bg-muted/50 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4 font-ndot">🎨 Nothing OS Design Philosophy</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <ul className="space-y-2">
-            <li>• **Subtle interactions** - Gentle focus states and hover effects</li>
-            <li>• **Clean typography** - Readable, well-spaced text</li>
-            <li>• **Minimal borders** - Soft, translucent borders that don&apos;t overwhelm</li>
-            <li>• **Consistent spacing** - Harmonious padding and margins</li>
-            <li>• **Smooth transitions** - 200ms duration for all state changes</li>
-          </ul>
-          <ul className="space-y-2">
-            <li>• **Content-aware styling** - Border colors adapt to content state</li>
-            <li>• **Accessibility first** - Proper focus management and contrast</li>
-            <li>• **Professional appearance** - Suitable for business applications</li>
-            <li>• **Theme integration** - Seamless dark/light mode support</li>
-            <li>• **Performance optimized** - Lightweight and fast interactions</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* When to Use */}
-      <div className="mt-8 p-6 bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-800 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4 text-blue-800 dark:text-blue-200 font-ndot">
-          🎯 When to Use Normal vs Pixel Components
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-          <div>
-            <h3 className="font-semibold mb-2 text-blue-700 dark:text-blue-300">Use Normal Components For:</h3>
-            <ul className="space-y-1 text-blue-600 dark:text-blue-400">
-              <li>• Business applications and professional interfaces</li>
-              <li>• Forms requiring user data input</li>
-              <li>• Documentation and content management</li>
-              <li>• Settings and configuration pages</li>
-              <li>• When you need subtle, non-distracting inputs</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold mb-2 text-blue-700 dark:text-blue-300">Use Creative Components For:</h3>
-            <ul className="space-y-1 text-blue-600 dark:text-blue-400">
-              <li>• Gaming interfaces and retro applications</li>
-              <li>• Creative projects and portfolio sites</li>
-              <li>• Terminal/command-line inspired interfaces</li>
-              <li>• Modern cyberpunk and futuristic designs</li>
-              <li>• When you want to make a bold visual statement</li>
-              <li>• Entertainment and interactive experiences</li>
-            </ul>
-          </div>
+          />
         </div>
       </div>
     </div>
+  </ComponentLayout>
   );
 }

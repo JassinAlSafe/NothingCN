@@ -3,7 +3,18 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Github as GitHubIcon, Sun, Moon, Search, Zap, Star } from "lucide-react";
+import {
+  Menu,
+  X,
+  Github as GitHubIcon,
+  Sun,
+  Moon,
+  Search,
+  Zap,
+  Star,
+  Circle,
+  ArrowRight,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -28,31 +39,86 @@ const searchableContent = [
   {
     category: "Components",
     items: [
-      { name: "Button", href: "/components/button", description: "Versatile button variants for any interface" },
-      { name: "Card", href: "/components/card", description: "Displays content in a card format" },
-      { name: "Badge", href: "/components/badge", description: "Small status indicators and labels" },
-      { name: "Code Block", href: "/components/code-block", description: "Syntax-highlighted code display" },
-      { name: "Input", href: "/components/input", description: "Form input components with validation" },
-      { name: "Dialog", href: "/components/dialog", description: "Modal dialog component for displaying content and forms" },
-      { name: "Discussion Card", href: "/components/discussion-card", description: "Interactive discussion and comment cards" },
-      { name: "Pixel Weather Card", href: "/components/pixel-weather-card", description: "Retro-style weather display" },
-      { name: "Pixel Forms", href: "/components/pixel-forms", description: "Retro-styled form components" },
-      { name: "Nothing Calendar", href: "/components/nothing-calendar", description: "Modern calendar component" },
-    ]
+      {
+        name: "Button",
+        href: "/components/button",
+        description: "Versatile button variants for any interface",
+      },
+      {
+        name: "Card",
+        href: "/components/card",
+        description: "Displays content in a card format",
+      },
+      {
+        name: "Badge",
+        href: "/components/badge",
+        description: "Small status indicators and labels",
+      },
+      {
+        name: "Code Block",
+        href: "/components/code-block",
+        description: "Syntax-highlighted code display",
+      },
+      {
+        name: "Input",
+        href: "/components/input",
+        description: "Form input components with validation",
+      },
+      {
+        name: "Dialog",
+        href: "/components/dialog",
+        description: "Modal dialog component for displaying content and forms",
+      },
+      {
+        name: "Discussion Card",
+        href: "/components/discussion-card",
+        description: "Interactive discussion and comment cards",
+      },
+      {
+        name: "Pixel Weather Card",
+        href: "/components/pixel-weather-card",
+        description: "Retro-style weather display",
+      },
+      {
+        name: "Pixel Forms",
+        href: "/components/pixel-forms",
+        description: "Retro-styled form components",
+      },
+      {
+        name: "Nothing Calendar",
+        href: "/components/nothing-calendar",
+        description: "Modern calendar component",
+      },
+    ],
   },
   {
     category: "Pages",
     items: [
       { name: "Home", href: "/", description: "Welcome to NothingCN" },
-      { name: "Components", href: "/components", description: "Browse all available components" },
-      { name: "Blocks", href: "/blocks", description: "Pre-built component combinations" },
+      {
+        name: "Components",
+        href: "/components",
+        description: "Browse all available components",
+      },
+      {
+        name: "Blocks",
+        href: "/blocks",
+        description: "Pre-built component combinations",
+      },
       { name: "Themes", href: "/themes", description: "Customize your theme" },
-      { name: "Documentation", href: "/docs", description: "Learn how to use NothingCN" },
-      { name: "Contribute", href: "/contribute", description: "Help improve NothingCN" },
-    ]
-  }
+      {
+        name: "Documentation",
+        href: "/docs",
+        description: "Learn how to use NothingCN",
+      },
+      {
+        name: "Contribute",
+        href: "/contribute",
+        description: "Help improve NothingCN",
+      },
+    ],
+  },
 ];
-
 
 // Custom hook for system theme detection
 function useSystemTheme() {
@@ -79,7 +145,9 @@ function useSystemTheme() {
 function SearchDialog() {
   const [open, setOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [filteredResults, setFilteredResults] = React.useState<typeof searchableContent>([]);
+  const [filteredResults, setFilteredResults] = React.useState<
+    typeof searchableContent
+  >([]);
 
   // Keyboard shortcut
   React.useEffect(() => {
@@ -106,9 +174,10 @@ function SearchDialog() {
 
     const results: typeof searchableContent = [];
     searchableContent.forEach((category) => {
-      const matchingItems = category.items.filter((item) =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.description.toLowerCase().includes(searchQuery.toLowerCase())
+      const matchingItems = category.items.filter(
+        (item) =>
+          item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.description.toLowerCase().includes(searchQuery.toLowerCase())
       );
       if (matchingItems.length > 0) {
         results.push({ ...category, items: matchingItems });
@@ -128,45 +197,71 @@ function SearchDialog() {
       <DialogTrigger asChild>
         <Button
           variant="ghost"
-          className="relative justify-start text-sm text-muted-foreground h-9 w-full min-w-[240px] bg-muted/50 hover:bg-muted/70 border border-border rounded-md px-3 transition-all duration-200 hover:shadow-sm"
+          className="relative justify-start text-sm text-muted-foreground h-9 w-full min-w-[240px] bg-muted/50 hover:bg-muted/70 border border-border rounded-md px-3 transition-all duration-200 hover:shadow-sm group"
         >
-          <Search className="mr-2 h-4 w-4" />
-          <span>Search documentation...</span>
+          <div className="flex items-center">
+            <Search className="mr-2 h-4 w-4" />
+            <span className="font-ndot">Search...</span>
+          </div>
           <kbd className="pointer-events-none absolute right-2 top-2 hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] font-medium md:flex border border-border/50">
             ⌘K
           </kbd>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] p-0">
+      <DialogContent className="sm:max-w-[600px] p-0 border-2 border-border bg-background/95 backdrop-blur-sm">
         <DialogHeader className="sr-only">
           <DialogTitle>Search NothingCN</DialogTitle>
         </DialogHeader>
-        <div className="flex items-center border-b px-4 py-3">
-          <Search className="mr-2 h-4 w-4 shrink-0 text-muted-foreground" />
+        <div className="flex items-center border-b px-4 py-3 bg-muted/20">
+          <div className="flex items-center gap-2">
+            <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
+            <div className="flex gap-1">
+              <Circle className="h-1.5 w-1.5 bg-accent rounded-full animate-pulse" />
+              <Circle className="h-1.5 w-1.5 bg-accent rounded-full animate-pulse [animation-delay:0.2s]" />
+              <Circle className="h-1.5 w-1.5 bg-accent rounded-full animate-pulse [animation-delay:0.4s]" />
+            </div>
+          </div>
           <Input
             placeholder="Search components, pages, and more..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 border-0 bg-transparent px-0 py-0 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0"
+            className="flex-1 border-0 bg-transparent px-3 py-0 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 font-ndot"
             autoFocus
           />
         </div>
         <div className="max-h-[400px] overflow-y-auto">
           {filteredResults.length === 0 && searchQuery.trim() === "" && (
             <div className="p-6 text-center text-muted-foreground">
-              <div className="mb-2 text-lg font-medium">Search NothingCN</div>
-              <p className="text-sm">Find components, pages, and documentation quickly.</p>
+              <div className="mb-4 flex justify-center">
+                <div className="relative">
+                  <Circle className="h-8 w-8 text-accent" />
+                  <div className="absolute inset-0 h-8 w-8 border-2 border-accent rounded-full animate-ping" />
+                </div>
+              </div>
+              <div className="mb-2 text-lg font-medium font-ndot">
+                Search NothingCN
+              </div>
+              <p className="text-sm">
+                Find components, pages, and documentation quickly.
+              </p>
             </div>
           )}
           {filteredResults.length === 0 && searchQuery.trim() !== "" && (
             <div className="p-6 text-center text-muted-foreground">
-              <div className="mb-2 text-lg font-medium">No results found</div>
-              <p className="text-sm">Try searching for components, pages, or documentation.</p>
+              <div className="mb-4 flex justify-center">
+                <Circle className="h-8 w-8 text-muted-foreground opacity-50" />
+              </div>
+              <div className="mb-2 text-lg font-medium font-ndot">
+                No results found
+              </div>
+              <p className="text-sm">
+                Try searching for components, pages, or documentation.
+              </p>
             </div>
           )}
           {filteredResults.map((category) => (
             <div key={category.category} className="p-2">
-              <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider font-ndot">
                 {category.category}
               </div>
               <div className="space-y-1">
@@ -174,20 +269,26 @@ function SearchDialog() {
                   <button
                     key={item.href}
                     onClick={() => handleItemSelect(item.href)}
-                    className="w-full text-left px-3 py-2 rounded-md hover:bg-muted/50 transition-colors duration-200 group"
+                    className="w-full text-left px-3 py-2 rounded-md hover:bg-muted/50 transition-colors duration-200 group border border-transparent hover:border-accent/20"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <div className="font-medium group-hover:text-accent transition-colors">
+                        <div className="font-medium group-hover:text-accent transition-colors font-ndot">
                           {item.name}
                         </div>
                         <div className="text-sm text-muted-foreground line-clamp-1">
                           {item.description}
                         </div>
                       </div>
-                      <Badge variant="secondary" className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">
-                        Enter
-                      </Badge>
+                      <div className="flex items-center gap-2">
+                        <ArrowRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity text-accent" />
+                        <Badge
+                          variant="secondary"
+                          className="text-xs opacity-0 group-hover:opacity-100 transition-opacity font-ndot"
+                        >
+                          Enter
+                        </Badge>
+                      </div>
                     </div>
                   </button>
                 ))}
@@ -195,10 +296,16 @@ function SearchDialog() {
             </div>
           ))}
         </div>
-        <div className="border-t p-2 text-xs text-muted-foreground">
+        <div className="border-t p-3 text-xs text-muted-foreground bg-muted/10">
           <div className="flex items-center justify-between">
-            <span>Use ↑↓ to navigate</span>
-            <span>Enter to select</span>
+            <div className="flex items-center gap-2">
+              <Circle className="h-1 w-1 bg-accent rounded-full" />
+              <span className="font-ndot">Use ↑↓ to navigate</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-ndot">Enter to select</span>
+              <Circle className="h-1 w-1 bg-accent rounded-full" />
+            </div>
           </div>
         </div>
       </DialogContent>
@@ -327,7 +434,10 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/95 transition-all duration-300">
       <div className="container flex h-14 items-center">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2 group mr-8 transition-all duration-300">
+        <Link
+          href="/"
+          className="flex items-center space-x-2 group mr-8 transition-all duration-300"
+        >
           <div className="flex items-center justify-center w-6 h-6 bg-foreground text-background rounded-sm transition-all duration-300 group-hover:bg-accent group-hover:text-accent-foreground group-hover:scale-110 group-hover:shadow-lg">
             <Zap className="h-3 w-3 transition-transform duration-300 group-hover:rotate-12" />
           </div>
@@ -381,7 +491,12 @@ export function SiteHeader() {
           </Button>
 
           {/* GitHub Link with Star Count */}
-          <Button variant="ghost" size="sm" asChild className="h-9 px-3 transition-all duration-300 hover:bg-accent/10 hover:text-accent group">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="h-9 px-3 transition-all duration-300 hover:bg-accent/10 hover:text-accent group"
+          >
             <Link
               href="https://github.com/JassinAlSafe/NothingCN"
               target="_blank"
@@ -409,10 +524,12 @@ export function SiteHeader() {
       </div>
 
       {/* Mobile Menu */}
-      <div className={cn(
-        "mobile-menu md:hidden border-t border-border bg-background/95 backdrop-blur-sm transition-all duration-300 ease-in-out overflow-hidden",
-        isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-      )}>
+      <div
+        className={cn(
+          "mobile-menu md:hidden border-t border-border bg-background/95 backdrop-blur-sm transition-all duration-300 ease-in-out overflow-hidden",
+          isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+        )}
+      >
         <div
           className="px-4 py-6 space-y-4"
           onTouchStart={handleTouchStart}
@@ -459,7 +576,7 @@ export function SiteHeader() {
               <span>GitHub</span>
               <div className="ml-auto flex items-center space-x-1">
                 <Star className="h-3 w-3 fill-current transition-colors duration-300 group-hover:text-yellow-500" />
-                <span className="text-xs">1.2k</span>
+                <span className="text-xs">2</span>
               </div>
             </Link>
           </div>
