@@ -3,135 +3,202 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Github, Sun, Moon, Search, Zap } from "lucide-react";
+import { Menu, X, Github as GitHubIcon, Sun, Moon, Search, Zap, Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
 const navigation = [
-  { name: "Home", href: "/" },
   { name: "Components", href: "/components" },
   { name: "Blocks", href: "/blocks" },
   { name: "Themes", href: "/themes" },
-  { name: "Contribute", href: "/contribute" },
-  { name: "Documentation", href: "/docs" },
+  { name: "Docs", href: "/docs" },
 ];
 
-const searchableComponents = [
-  { name: "Button", href: "/components/button", description: "Displays a button or component that looks like a button" },
-  { name: "Card", href: "/components/card", description: "Displays a card with header, content, and footer" },
-  { name: "Badge", href: "/components/badge", description: "Displays a badge or component that looks like a badge" },
-  { name: "Code Block", href: "/components/code-block", description: "Displays syntax-highlighted code with copy functionality" },
+const searchableContent = [
+  {
+    category: "Components",
+    items: [
+      { name: "Button", href: "/components/button", description: "Versatile button variants for any interface" },
+      { name: "Card", href: "/components/card", description: "Displays content in a card format" },
+      { name: "Badge", href: "/components/badge", description: "Small status indicators and labels" },
+      { name: "Code Block", href: "/components/code-block", description: "Syntax-highlighted code display" },
+      { name: "Input", href: "/components/input", description: "Form input components with validation" },
+      { name: "Dialog", href: "/components/dialog", description: "Modal dialog component for displaying content and forms" },
+      { name: "Discussion Card", href: "/components/discussion-card", description: "Interactive discussion and comment cards" },
+      { name: "Pixel Weather Card", href: "/components/pixel-weather-card", description: "Retro-style weather display" },
+      { name: "Pixel Forms", href: "/components/pixel-forms", description: "Retro-styled form components" },
+      { name: "Nothing Calendar", href: "/components/nothing-calendar", description: "Modern calendar component" },
+    ]
+  },
+  {
+    category: "Pages",
+    items: [
+      { name: "Home", href: "/", description: "Welcome to NothingCN" },
+      { name: "Components", href: "/components", description: "Browse all available components" },
+      { name: "Blocks", href: "/blocks", description: "Pre-built component combinations" },
+      { name: "Themes", href: "/themes", description: "Customize your theme" },
+      { name: "Documentation", href: "/docs", description: "Learn how to use NothingCN" },
+      { name: "Contribute", href: "/contribute", description: "Help improve NothingCN" },
+    ]
+  }
 ];
+
 
 // Custom hook for system theme detection
 function useSystemTheme() {
-  const [systemTheme, setSystemTheme] = React.useState<'light' | 'dark'>('light');
-  
+  const [systemTheme, setSystemTheme] = React.useState<"light" | "dark">(
+    "light"
+  );
+
   React.useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    setSystemTheme(mediaQuery.matches ? 'dark' : 'light');
-    
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    setSystemTheme(mediaQuery.matches ? "dark" : "light");
+
     const handleChange = (e: MediaQueryListEvent) => {
-      setSystemTheme(e.matches ? 'dark' : 'light');
+      setSystemTheme(e.matches ? "dark" : "light");
     };
-    
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
-  
+
   return systemTheme;
 }
 
-// Custom hook for scroll progress
-function useScrollProgress() {
-  const [scrollProgress, setScrollProgress] = React.useState(0);
-  
-  React.useEffect(() => {
-    const handleScroll = () => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const currentProgress = window.scrollY;
-      setScrollProgress((currentProgress / totalHeight) * 100);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-  
-  return scrollProgress;
-}
-
-// Search component
+// Enhanced Search Dialog Component
 function SearchDialog() {
   const [open, setOpen] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [filteredComponents, setFilteredComponents] = React.useState(searchableComponents);
-  
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [filteredResults, setFilteredResults] = React.useState<typeof searchableContent>([]);
+
+  // Keyboard shortcut
   React.useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen((open) => !open);
+        setOpen(true);
+      }
+      if (e.key === "Escape") {
+        setOpen(false);
       }
     };
-    
-    document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
-  
+
+  // Filter search results
   React.useEffect(() => {
-    const filtered = searchableComponents.filter(component => 
-      component.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      component.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredComponents(filtered);
+    if (!searchQuery.trim()) {
+      setFilteredResults([]);
+      return;
+    }
+
+    const results: typeof searchableContent = [];
+    searchableContent.forEach((category) => {
+      const matchingItems = category.items.filter((item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      if (matchingItems.length > 0) {
+        results.push({ ...category, items: matchingItems });
+      }
+    });
+    setFilteredResults(results);
   }, [searchQuery]);
-  
+
+  const handleItemSelect = (href: string) => {
+    setOpen(false);
+    setSearchQuery("");
+    window.location.href = href;
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button 
-          variant="ghost" 
-          className="relative justify-start text-sm text-muted-foreground h-8 w-full max-w-[180px] bg-muted/30 hover:bg-muted/50 border border-border/50 rounded-md px-3"
+        <Button
+          variant="ghost"
+          className="relative justify-start text-sm text-muted-foreground h-9 w-full min-w-[240px] bg-muted/50 hover:bg-muted/70 border border-border rounded-md px-3 transition-all duration-200 hover:shadow-sm"
         >
-          <Search className="mr-2 h-3.5 w-3.5" />
-          <span className="hidden sm:inline">Search...</span>
-          <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded bg-muted px-1 font-mono text-[9px] font-medium lg:flex">
+          <Search className="mr-2 h-4 w-4" />
+          <span>Search documentation...</span>
+          <kbd className="pointer-events-none absolute right-2 top-2 hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] font-medium md:flex border border-border/50">
             ⌘K
           </kbd>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Search Components</DialogTitle>
+      <DialogContent className="sm:max-w-[600px] p-0">
+        <DialogHeader className="sr-only">
+          <DialogTitle>Search NothingCN</DialogTitle>
         </DialogHeader>
-        <div className="space-y-4">
-          <Input 
-            placeholder="Search components..." 
+        <div className="flex items-center border-b px-4 py-3">
+          <Search className="mr-2 h-4 w-4 shrink-0 text-muted-foreground" />
+          <Input
+            placeholder="Search components, pages, and more..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="h-9"
+            className="flex-1 border-0 bg-transparent px-0 py-0 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0"
+            autoFocus
           />
-          <div className="space-y-2 max-h-60 overflow-y-auto">
-            {filteredComponents.map((component) => (
-              <Link
-                key={component.name}
-                href={component.href}
-                className="block p-3 rounded-lg hover:bg-muted transition-colors duration-200"
-                onClick={() => setOpen(false)}
-              >
-                <div className="font-medium">{component.name}</div>
-                <div className="text-sm text-muted-foreground">{component.description}</div>
-              </Link>
-            ))}
-            {filteredComponents.length === 0 && (
-              <div className="p-3 text-center text-muted-foreground">
-                No components found.
+        </div>
+        <div className="max-h-[400px] overflow-y-auto">
+          {filteredResults.length === 0 && searchQuery.trim() === "" && (
+            <div className="p-6 text-center text-muted-foreground">
+              <div className="mb-2 text-lg font-medium">Search NothingCN</div>
+              <p className="text-sm">Find components, pages, and documentation quickly.</p>
+            </div>
+          )}
+          {filteredResults.length === 0 && searchQuery.trim() !== "" && (
+            <div className="p-6 text-center text-muted-foreground">
+              <div className="mb-2 text-lg font-medium">No results found</div>
+              <p className="text-sm">Try searching for components, pages, or documentation.</p>
+            </div>
+          )}
+          {filteredResults.map((category) => (
+            <div key={category.category} className="p-2">
+              <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                {category.category}
               </div>
-            )}
+              <div className="space-y-1">
+                {category.items.map((item) => (
+                  <button
+                    key={item.href}
+                    onClick={() => handleItemSelect(item.href)}
+                    className="w-full text-left px-3 py-2 rounded-md hover:bg-muted/50 transition-colors duration-200 group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="font-medium group-hover:text-accent transition-colors">
+                          {item.name}
+                        </div>
+                        <div className="text-sm text-muted-foreground line-clamp-1">
+                          {item.description}
+                        </div>
+                      </div>
+                      <Badge variant="secondary" className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                        Enter
+                      </Badge>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="border-t p-2 text-xs text-muted-foreground">
+          <div className="flex items-center justify-between">
+            <span>Use ↑↓ to navigate</span>
+            <span>Enter to select</span>
           </div>
         </div>
       </DialogContent>
@@ -141,89 +208,102 @@ function SearchDialog() {
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [themeMode, setThemeMode] = React.useState<'light' | 'dark' | 'system'>('system');
+  const [themeMode, setThemeMode] = React.useState<"light" | "dark" | "system">(
+    "system"
+  );
   const pathname = usePathname();
   const systemTheme = useSystemTheme();
-  const scrollProgress = useScrollProgress();
-  
-  const applyTheme = React.useCallback((mode: 'light' | 'dark' | 'system') => {
-    const root = document.documentElement;
-    root.classList.remove('light', 'dark');
-    
-    if (mode === 'system') {
-      root.classList.add(systemTheme);
-    } else {
-      root.classList.add(mode);
-    }
-  }, [systemTheme]);
-  
+
+  const applyTheme = React.useCallback(
+    (mode: "light" | "dark" | "system") => {
+      const root = document.documentElement;
+      root.classList.remove("light", "dark");
+
+      if (mode === "system") {
+        root.classList.add(systemTheme);
+      } else {
+        root.classList.add(mode);
+      }
+    },
+    [systemTheme]
+  );
+
   // Initialize theme from localStorage
   React.useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | 'system' || 'system';
+    const savedTheme =
+      (localStorage.getItem("theme") as "light" | "dark" | "system") ||
+      "system";
     setThemeMode(savedTheme);
     applyTheme(savedTheme);
   }, [applyTheme]);
-  
+
   // Apply theme based on mode and system preference
   React.useEffect(() => {
     applyTheme(themeMode);
   }, [themeMode, applyTheme]);
-  
+
   const toggleTheme = () => {
-    const newMode = themeMode === 'light' ? 'dark' : themeMode === 'dark' ? 'system' : 'light';
+    const newMode =
+      themeMode === "light"
+        ? "dark"
+        : themeMode === "dark"
+        ? "system"
+        : "light";
     setThemeMode(newMode);
-    localStorage.setItem('theme', newMode);
+    localStorage.setItem("theme", newMode);
   };
-  
+
   // Handle swipe gestures for mobile menu
   const [touchStart, setTouchStart] = React.useState<number | null>(null);
   const [touchEnd, setTouchEnd] = React.useState<number | null>(null);
-  
+
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
   };
-  
+
   const handleTouchMove = (e: React.TouchEvent) => {
     setTouchEnd(e.targetTouches[0].clientX);
   };
-  
+
   const handleTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
-    
+
     if (isLeftSwipe && isMenuOpen) {
       setIsMenuOpen(false);
     } else if (isRightSwipe && !isMenuOpen) {
       setIsMenuOpen(true);
     }
   };
-  
+
   // Close menu on outside click
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (isMenuOpen && !(event.target as Element).closest('.mobile-menu')) {
+      if (isMenuOpen && !(event.target as Element).closest(".mobile-menu")) {
         setIsMenuOpen(false);
       }
     };
-    
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMenuOpen]);
-  
+
   // Focus trap for mobile menu
   React.useEffect(() => {
     if (isMenuOpen) {
       const focusableElements = document.querySelectorAll(
-        '.mobile-menu a, .mobile-menu button'
+        ".mobile-menu a, .mobile-menu button"
       );
       const firstElement = focusableElements[0] as HTMLElement;
-      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
-      
+      const lastElement = focusableElements[
+        focusableElements.length - 1
+      ] as HTMLElement;
+
       const handleTab = (e: KeyboardEvent) => {
-        if (e.key === 'Tab') {
+        if (e.key === "Tab") {
           if (e.shiftKey) {
             if (document.activeElement === firstElement) {
               lastElement.focus();
@@ -237,56 +317,51 @@ export function SiteHeader() {
           }
         }
       };
-      
-      document.addEventListener('keydown', handleTab);
-      return () => document.removeEventListener('keydown', handleTab);
+
+      document.addEventListener("keydown", handleTab);
+      return () => document.removeEventListener("keydown", handleTab);
     }
   }, [isMenuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b-2 border-border bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/80">
-      {/* Scroll Progress Bar */}
-      <div 
-        className="absolute top-0 left-0 h-0.5 bg-accent transition-all duration-300 ease-out"
-        style={{ width: `${scrollProgress}%` }}
-      />
-      
-      <div className="container flex h-16 items-center">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/95 transition-all duration-300">
+      <div className="container flex h-14 items-center">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2 group mr-8">
-          <div className="flex items-center justify-center w-7 h-7 bg-accent text-accent-foreground rounded-lg transition-all duration-300 group-hover:scale-110">
-            <Zap className="h-3.5 w-3.5" />
+        <Link href="/" className="flex items-center space-x-2 group mr-8 transition-all duration-300">
+          <div className="flex items-center justify-center w-6 h-6 bg-foreground text-background rounded-sm transition-all duration-300 group-hover:bg-accent group-hover:text-accent-foreground group-hover:scale-110 group-hover:shadow-lg">
+            <Zap className="h-3 w-3 transition-transform duration-300 group-hover:rotate-12" />
           </div>
-          <span className="font-bold text-lg font-ndot tracking-tight group-hover:text-accent transition-colors duration-300">
+          <span className="font-bold text-base font-ndot tracking-tight transition-colors duration-300 group-hover:text-accent">
             NothingCN
           </span>
         </Link>
-        
+
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-1">
+        <nav className="hidden md:flex items-center space-x-6">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
               className={cn(
-                "relative transition-all duration-200 hover:text-accent px-3 py-2 rounded-md text-sm font-medium",
+                "relative text-sm font-medium transition-all duration-300 hover:text-foreground py-2 px-1 rounded-md hover:bg-accent/5 group",
                 pathname === item.href
-                  ? "text-foreground bg-accent/10"
-                  : "text-foreground/70 hover:bg-accent/5"
+                  ? "text-foreground"
+                  : "text-muted-foreground"
               )}
             >
               {item.name}
               {pathname === item.href && (
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-accent rounded-full" />
+                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-accent rounded-full transition-all duration-300" />
               )}
+              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-accent/50 rounded-full transition-all duration-300 group-hover:w-full" />
             </Link>
           ))}
         </nav>
 
         {/* Right Section */}
-        <div className="flex items-center ml-auto space-x-2">
-          {/* Search - Compact */}
-          <div className="hidden lg:block">
+        <div className="flex items-center ml-auto space-x-3">
+          {/* Search */}
+          <div className="hidden md:block">
             <SearchDialog />
           </div>
 
@@ -294,104 +369,102 @@ export function SiteHeader() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="md:hidden h-9 w-9"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4" />
             ) : (
-              <Menu className="h-5 w-5" />
+              <Menu className="h-4 w-4" />
             )}
             <span className="sr-only">Toggle Menu</span>
           </Button>
 
-          {/* Mobile Search */}
-          <div className="flex-1 lg:hidden md:block md:max-w-[200px]">
-            <SearchDialog />
-          </div>
-          
-          {/* Actions */}
-          <div className="flex items-center space-x-1">
-            {/* Theme Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="h-9 w-9"
-              title={`Theme: ${themeMode}`}
+          {/* GitHub Link with Star Count */}
+          <Button variant="ghost" size="sm" asChild className="h-9 px-3 transition-all duration-300 hover:bg-accent/10 hover:text-accent group">
+            <Link
+              href="https://github.com/JassinAlSafe/NothingCN"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-1.5"
             >
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            </Button>
-            
-            {/* Beta Badge */}
-            <Badge variant="secondary" className="hidden sm:inline-flex text-xs px-2 py-1">
-              BETA
-            </Badge>
-            
-            {/* GitHub Link */}
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              asChild 
-              className="h-9 w-9"
-            >
-              <Link
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Github className="h-4 w-4" />
-                <span className="sr-only">GitHub</span>
-              </Link>
-            </Button>
-          </div>
+              <GitHubIcon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+              <Star className="h-3 w-3 fill-current transition-colors duration-300 group-hover:text-yellow-500" />
+              <span className="text-xs font-medium">1.2k</span>
+            </Link>
+          </Button>
+
+          {/* Theme Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
+            className="h-9 w-9 transition-all duration-300 hover:bg-accent/10 hover:text-accent group"
+            title={`Theme: ${themeMode}`}
+          >
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all duration-300 dark:-rotate-90 dark:scale-0 group-hover:rotate-180" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100 group-hover:-rotate-90" />
+          </Button>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div 
-          className="mobile-menu md:hidden border-t border-border bg-background/95 backdrop-blur-xl"
+      <div className={cn(
+        "mobile-menu md:hidden border-t border-border bg-background/95 backdrop-blur-sm transition-all duration-300 ease-in-out overflow-hidden",
+        isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+      )}>
+        <div
+          className="px-4 py-6 space-y-4"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          <div className="px-4 py-4 space-y-2">
+          {/* Mobile Search */}
+          <div className="mb-6">
+            <SearchDialog />
+          </div>
+
+          {/* Navigation Links */}
+          <div className="space-y-2">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "flex items-center px-3 py-2.5 text-sm font-medium rounded-md transition-colors",
+                  "flex items-center px-3 py-2.5 text-base font-medium rounded-md transition-all duration-300 group relative overflow-hidden",
                   pathname === item.href
-                    ? "bg-accent/10 text-foreground"
-                    : "text-foreground/70 hover:bg-accent/5 hover:text-foreground"
+                    ? "text-foreground bg-accent/10 border-l-2 border-accent"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/30 hover:translate-x-1"
                 )}
                 onClick={() => setIsMenuOpen(false)}
               >
-                {item.name}
+                <div className="absolute inset-0 bg-accent/5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                <span className="relative z-10">{item.name}</span>
                 {pathname === item.href && (
-                  <div className="ml-auto w-1.5 h-1.5 bg-accent rounded-full" />
+                  <div className="ml-auto w-2 h-2 bg-accent rounded-full" />
                 )}
               </Link>
             ))}
-            
-            <div className="border-t border-border pt-3 mt-3">
-              <Link
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center px-3 py-2.5 text-sm font-medium text-foreground/70 hover:bg-accent/5 hover:text-foreground rounded-md transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Github className="mr-2 h-4 w-4" />
-                GitHub
-              </Link>
-            </div>
+          </div>
+
+          <div className="border-t border-border pt-4 mt-6">
+            <Link
+              href="https://github.com/JassinAlSafe/NothingCN"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center px-3 py-2.5 text-base font-medium text-muted-foreground hover:text-foreground rounded-md transition-all duration-300 group hover:bg-accent/10"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <GitHubIcon className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+              <span>GitHub</span>
+              <div className="ml-auto flex items-center space-x-1">
+                <Star className="h-3 w-3 fill-current transition-colors duration-300 group-hover:text-yellow-500" />
+                <span className="text-xs">1.2k</span>
+              </div>
+            </Link>
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }

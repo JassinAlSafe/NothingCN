@@ -74,7 +74,7 @@ export default function BasicCalendarExample() {
           title="Dark Theme"
           description="Nothing OS calendar with dark mode styling"
           preview={
-            <div className="flex items-center justify-center p-8 bg-gray-900 rounded-lg">
+            <div className="flex items-center justify-center p-8">
               <NothingCalendar
                 variant="dark"
                 date={new Date(2024, 3, 23)} // April 23, 2024

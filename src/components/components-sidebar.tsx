@@ -83,8 +83,7 @@ const sidebarConfig: SidebarSection[] = [
       {
         title: "Dialog",
         href: "/components/dialog",
-        disabled: true,
-        label: "Soon",
+        label: "New",
       },
     ],
   },
@@ -102,18 +101,8 @@ const sidebarConfig: SidebarSection[] = [
         label: "New",
       },
       {
-        title: "Pixel Elements",
-        href: "/components/pixel-elements",
-        label: "New",
-      },
-      {
         title: "Nothing Calendar",
         href: "/components/nothing-calendar",
-        label: "New",
-      },
-      {
-        title: "Retro Gaming Weather",
-        href: "/components/retro-gaming-weather",
         label: "New",
       },
       {
@@ -157,14 +146,9 @@ export function ComponentsSidebar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [collapsedSections, setCollapsedSections] = useState<string[]>([]);
   const [focusedIndex, setFocusedIndex] = useState(-1);
-  const [isClient, setIsClient] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const activeItemRef = useRef<HTMLAnchorElement>(null);
 
-  // Ensure calculations only happen on client side
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const toggleSection = (sectionTitle: string) => {
     setCollapsedSections(prev => 
@@ -267,7 +251,7 @@ export function ComponentsSidebar() {
       {/* Navigation Sections */}
       <div className="space-y-6">
         {filteredSections.map((section) => {
-          const stats = isClient ? getCompletionStats(section) : { completed: 0, total: section.items.length, percentage: 0 };
+          const stats = getCompletionStats(section);
           return (
             <div key={section.title} className="space-y-3">
               <button
