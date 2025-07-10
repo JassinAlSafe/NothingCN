@@ -1,5 +1,9 @@
 export const componentList = [
   {
+    href: "/components/accordion",
+    title: "Accordion"
+  },
+  {
     href: "/components/button",
     title: "Button"
   },
