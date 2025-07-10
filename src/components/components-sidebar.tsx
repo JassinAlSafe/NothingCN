@@ -43,6 +43,11 @@ const sidebarConfig: SidebarSection[] = [
     title: "Components",
     items: [
       {
+        title: "Accordion",
+        href: "/components/accordion",
+        label: "New",
+      },
+      {
         title: "Button",
         href: "/components/button",
       },

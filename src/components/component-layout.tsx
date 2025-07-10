@@ -28,17 +28,23 @@ export function ComponentLayout({
   next,
 }: ComponentLayoutProps) {
   return (
-    <div className="container relative py-6 lg:py-8 max-w-7xl">
-      <div className="flex gap-4 lg:gap-6">
+    <div className="container relative py-4 lg:py-6 max-w-none">
+      <div className="flex gap-6 lg:gap-8 xl:gap-12">
         {/* Main content */}
-        <main className="flex-1 min-w-0 max-w-5xl">
-          {children}
-          <ComponentNavigation previous={previous} next={next} />
+        <main className="flex-1 min-w-0 max-w-none">
+          <div className="max-w-4xl mx-auto lg:max-w-5xl xl:max-w-none xl:mx-0">
+            {children}
+          </div>
+          <div className="max-w-4xl mx-auto lg:max-w-5xl xl:max-w-none xl:mx-0">
+            <ComponentNavigation previous={previous} next={next} />
+          </div>
         </main>
 
         {/* Right sidebar - "On This Page" */}
         <aside className="hidden xl:block w-48 shrink-0">
-          <OnThisPage sections={sections} />
+          <div className="sticky top-6">
+            <OnThisPage sections={sections} />
+          </div>
         </aside>
       </div>
     </div>

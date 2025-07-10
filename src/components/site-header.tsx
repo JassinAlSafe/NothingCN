@@ -40,6 +40,11 @@ const searchableContent = [
     category: "Components",
     items: [
       {
+        name: "Accordion",
+        href: "/components/accordion",
+        description: "Collapsible content sections with smooth animations",
+      },
+      {
         name: "Button",
         href: "/components/button",
         description: "Versatile button variants for any interface",

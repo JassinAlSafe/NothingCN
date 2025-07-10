@@ -1,381 +1,364 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import { blocks } from "./data/blocks";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CodeBlock } from "@/components/ui/code-block";
+import { Input } from "@/components/ui/input";
+import { copyToClipboard } from "./utils/code-actions";
+import { cn } from "@/lib/utils";
 import {
-  User,
-  Mail,
-  MapPin,
-  Heart,
-  MessageCircle,
-  Share2,
-  Calendar,
-  Clock,
-  Users,
-  TrendingUp,
-  Activity,
-  DollarSign,
+  Monitor,
+  Tablet,
+  Smartphone,
+  Copy,
+  Check,
+  ExternalLink,
+  Search,
+  Grid3X3,
+  List,
+  Filter,
 } from "lucide-react";
 
-const statsCardCode = `import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { TrendingUp, Users, DollarSign, Activity } from "lucide-react"
-
-export function StatsCards() {
-  return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-          <DollarSign className="h-4 w-4 text-muted-foreground" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold">$45,231.89</div>
-          <p className="text-xs text-muted-foreground">+20.1% from last month</p>
-        </CardContent>
-      </Card>
-      {/* More cards... */}
-    </div>
-  )
-}`;
-
-const userCardCode = `import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { User, Mail, MapPin } from "lucide-react"
-
-export function UserCard() {
-  return (
-    <Card className="w-[350px]">
-      <CardHeader>
-        <div className="flex items-center space-x-4">
-          <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-            <User className="h-6 w-6 text-primary-foreground" />
-          </div>
-          <div>
-            <CardTitle>John Doe</CardTitle>
-            <CardDescription>Software Engineer</CardDescription>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <Mail className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm">john.doe@example.com</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <MapPin className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm">San Francisco, CA</span>
-          </div>
-          <div className="flex items-center space-x-2 pt-2">
-            <Badge variant="secondary">React</Badge>
-            <Badge variant="secondary">TypeScript</Badge>
-          </div>
-          <div className="flex space-x-2 pt-4">
-            <Button className="flex-1">Connect</Button>
-            <Button variant="outline" className="flex-1">Message</Button>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
-}`;
-
 export default function BlocksPage() {
+  const [selectedBlock, setSelectedBlock] = useState(blocks[0]);
+  const [activeTab, setActiveTab] = useState<"preview" | "code">("preview");
+  const [deviceView, setDeviceView] = useState<"desktop" | "tablet" | "mobile">("desktop");
+  const [copied, setCopied] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+
+  const categories = ["All", ...new Set(blocks.map((block) => block.category))];
+
+  const filteredBlocks = useMemo(() => {
+    return blocks.filter((block) => {
+      const matchesCategory = selectedCategory === "All" || block.category === selectedCategory;
+      const matchesSearch = block.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           block.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           block.category.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [selectedCategory, searchQuery]);
+
+  const handleCopy = async () => {
+    const success = await copyToClipboard(selectedBlock.code);
+    if (success) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const getDeviceClasses = () => {
+    switch (deviceView) {
+      case "tablet":
+        return "max-w-4xl mx-auto";
+      case "mobile":
+        return "max-w-md mx-auto";
+      default:
+        return "w-full max-w-none";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      <div className="mx-auto max-w-6xl px-6 py-8 lg:px-8 lg:py-12">
-        {/* Page Header */}
-        <div className="space-y-4 border-b border-border pb-8 mb-12">
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-12 bg-accent rounded-full" />
-            <h1 className="text-5xl font-bold tracking-tight font-ndot">Blocks</h1>
+      {/* Header */}
+      <div className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40">
+        <div className="container mx-auto px-4 sm:px-6 py-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="space-y-1">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-accent rounded-full" />
+                <h1 className="text-2xl font-bold font-ndot tracking-wide">BUILDING BLOCKS</h1>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Copy and paste into your apps. Free forever.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" className="gap-2">
+                <Filter className="h-4 w-4" />
+                Browse all
+              </Button>
+            </div>
           </div>
-          <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
-            Pre-built component blocks that you can copy and paste into your projects. 
-            Perfect for rapid prototyping and development.
-          </p>
         </div>
+      </div>
 
-        <div className="space-y-16">
-          {/* Stats Cards Block */}
-          <div className="space-y-8">
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <div className="w-1 h-8 bg-accent rounded-full" />
-                <h2 className="text-3xl font-bold tracking-tight">Stats Cards</h2>
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex gap-6 lg:gap-8">
+          {/* Sidebar */}
+          <aside className="hidden lg:block w-64 shrink-0">
+            <div className="sticky top-24 space-y-6 py-6">
+              {/* Search */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search blocks..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 bg-background/50 border-border/50 focus:border-accent/50 focus:bg-background transition-colors"
+                />
               </div>
-              <p className="text-muted-foreground leading-relaxed ml-4">
-                Display key metrics and statistics in a clean, organized layout.
-              </p>
+
+              {/* Categories */}
+              <div className="space-y-2">
+                <h3 className="text-sm font-semibold text-foreground/80 px-3">Categories</h3>
+                <div className="space-y-1">
+                  {categories.map((category) => {
+                    const count = category === "All" 
+                      ? blocks.length 
+                      : blocks.filter(block => block.category === category).length;
+                    
+                    return (
+                      <button
+                        key={category}
+                        onClick={() => {
+                          setSelectedCategory(category);
+                          const categoryBlocks = blocks.filter(
+                            (block) => category === "All" || block.category === category
+                          );
+                          if (categoryBlocks.length > 0 && selectedBlock && 
+                              !categoryBlocks.some(block => block.id === selectedBlock.id)) {
+                            setSelectedBlock(categoryBlocks[0]);
+                          }
+                        }}
+                        className={cn(
+                          "w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors text-left",
+                          selectedCategory === category
+                            ? "bg-accent/10 text-accent font-medium border border-accent/30"
+                            : "text-foreground/70 hover:text-foreground hover:bg-accent/5"
+                        )}
+                      >
+                        <span>{category}</span>
+                        <Badge variant="secondary" className="text-xs">
+                          {count}
+                        </Badge>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* View Options */}
+              <div className="space-y-2">
+                <h3 className="text-sm font-semibold text-foreground/80 px-3">View</h3>
+                <div className="flex rounded-lg bg-muted p-1">
+                  <button
+                    onClick={() => setViewMode("grid")}
+                    className={cn(
+                      "flex-1 flex items-center justify-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+                      viewMode === "grid"
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    <Grid3X3 className="h-4 w-4" />
+                    Grid
+                  </button>
+                  <button
+                    onClick={() => setViewMode("list")}
+                    className={cn(
+                      "flex-1 flex items-center justify-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+                      viewMode === "list"
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    <List className="h-4 w-4" />
+                    List
+                  </button>
+                </div>
+              </div>
             </div>
+          </aside>
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Revenue
-                </CardTitle>
-                <DollarSign className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">$45,231.89</div>
-                <p className="text-xs text-muted-foreground">
-                  +20.1% from last month
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Subscriptions
-                </CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">+2,350</div>
-                <p className="text-xs text-muted-foreground">
-                  +180.1% from last month
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Sales</CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">+12,234</div>
-                <p className="text-xs text-muted-foreground">
-                  +19% from last month
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Active Now
-                </CardTitle>
-                <Activity className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">+573</div>
-                <p className="text-xs text-muted-foreground">
-                  +201 since last hour
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+          {/* Main Content */}
+          <main className="flex-1 min-w-0">
+            <div className="py-6">
+              {selectedBlock ? (
+                <div className="space-y-6">
+                  {/* Block Header */}
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h2 className="text-xl font-semibold">{selectedBlock.title}</h2>
+                        <Badge variant="secondary" className="text-xs">
+                          {selectedBlock.category}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs">
+                          {selectedBlock.difficulty}
+                        </Badge>
+                      </div>
+                      {selectedBlock.description && (
+                        <p className="text-sm text-muted-foreground">{selectedBlock.description}</p>
+                      )}
+                    </div>
 
-          <CodeBlock
-            code={statsCardCode}
-            language="tsx"
-            title="StatsCards.tsx"
-          />
-        </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleCopy}
+                        className="gap-2"
+                      >
+                        {copied ? (
+                          <Check className="h-4 w-4" />
+                        ) : (
+                          <Copy className="h-4 w-4" />
+                        )}
+                        {copied ? "Copied!" : "Copy"}
+                      </Button>
+                      
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <ExternalLink className="h-4 w-4" />
+                        Open
+                      </Button>
+                    </div>
+                  </div>
 
-          {/* User Cards Block */}
-          <div className="space-y-8">
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <div className="w-1 h-8 bg-accent rounded-full" />
-                <h2 className="text-3xl font-bold tracking-tight">User Cards</h2>
-              </div>
-              <p className="text-muted-foreground leading-relaxed ml-4">
-                Display user information with profile cards and contact details.
-              </p>
+                  {/* Controls */}
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-center rounded-lg bg-muted p-1">
+                      <button
+                        onClick={() => setActiveTab("preview")}
+                        className={cn(
+                          "px-4 py-2 text-sm font-medium rounded-md transition-colors",
+                          activeTab === "preview"
+                            ? "bg-background text-foreground shadow-sm"
+                            : "text-muted-foreground hover:text-foreground"
+                        )}
+                      >
+                        Preview
+                      </button>
+                      <button
+                        onClick={() => setActiveTab("code")}
+                        className={cn(
+                          "px-4 py-2 text-sm font-medium rounded-md transition-colors",
+                          activeTab === "code"
+                            ? "bg-background text-foreground shadow-sm"
+                            : "text-muted-foreground hover:text-foreground"
+                        )}
+                      >
+                        Code
+                      </button>
+                    </div>
+
+                    {/* Device Controls */}
+                    {activeTab === "preview" && (
+                      <div className="flex items-center rounded-lg border p-1">
+                        <button
+                          onClick={() => setDeviceView("desktop")}
+                          className={cn(
+                            "p-2 rounded-md transition-colors",
+                            deviceView === "desktop"
+                              ? "bg-muted text-foreground"
+                              : "text-muted-foreground hover:text-foreground"
+                          )}
+                        >
+                          <Monitor className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => setDeviceView("tablet")}
+                          className={cn(
+                            "p-2 rounded-md transition-colors",
+                            deviceView === "tablet"
+                              ? "bg-muted text-foreground"
+                              : "text-muted-foreground hover:text-foreground"
+                          )}
+                        >
+                          <Tablet className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => setDeviceView("mobile")}
+                          className={cn(
+                            "p-2 rounded-md transition-colors",
+                            deviceView === "mobile"
+                              ? "bg-muted text-foreground"
+                              : "text-muted-foreground hover:text-foreground"
+                          )}
+                        >
+                          <Smartphone className="h-4 w-4" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="border border-border rounded-lg overflow-hidden">
+                    {activeTab === "preview" ? (
+                      <div className="bg-muted/20 overflow-auto">
+                        <div className={cn("min-h-[400px] p-8", getDeviceClasses())}>
+                          {selectedBlock.component}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="h-[500px]">
+                        <CodeBlock
+                          code={selectedBlock.code}
+                          language="tsx"
+                          title={`${selectedBlock.title.replace(/\s+/g, "")}.tsx`}
+                          showLineNumbers={true}
+                          className="h-full"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Block Grid */}
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-semibold">All Blocks</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {filteredBlocks.length} blocks
+                      </p>
+                    </div>
+                    
+                    <div className={cn(
+                      "grid gap-4",
+                      viewMode === "grid" 
+                        ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2" 
+                        : "grid-cols-1"
+                    )}>
+                      {filteredBlocks.map((block) => (
+                        <button
+                          key={block.id}
+                          onClick={() => setSelectedBlock(block)}
+                          className={cn(
+                            "text-left border rounded-lg p-4 transition-all hover:border-accent/50 hover:shadow-sm",
+                            selectedBlock?.id === block.id
+                              ? "border-accent/50 bg-accent/5 shadow-sm"
+                              : "border-border bg-background"
+                          )}
+                        >
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <h4 className="font-medium">{block.title}</h4>
+                              <div className="flex items-center gap-1">
+                                <Badge variant="secondary" className="text-xs">
+                                  {block.category}
+                                </Badge>
+                              </div>
+                            </div>
+                            {block.description && (
+                              <p className="text-sm text-muted-foreground line-clamp-2">
+                                {block.description}
+                              </p>
+                            )}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground">No blocks found matching your search.</p>
+                </div>
+              )}
             </div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="w-full">
-              <CardHeader>
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                    <User className="h-6 w-6 text-primary-foreground" />
-                  </div>
-                  <div>
-                    <CardTitle>John Doe</CardTitle>
-                    <CardDescription>Software Engineer</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <Mail className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm">john.doe@example.com</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm">San Francisco, CA</span>
-                  </div>
-                  <div className="flex items-center space-x-2 pt-2">
-                    <Badge variant="secondary">React</Badge>
-                    <Badge variant="secondary">TypeScript</Badge>
-                  </div>
-                  <div className="flex space-x-2 pt-4">
-                    <Button className="flex-1">Connect</Button>
-                    <Button variant="outline" className="flex-1">
-                      Message
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="w-full">
-              <CardHeader>
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center">
-                    <User className="h-6 w-6 text-secondary-foreground" />
-                  </div>
-                  <div>
-                    <CardTitle>Jane Smith</CardTitle>
-                    <CardDescription>Product Designer</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <Mail className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm">jane.smith@example.com</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm">New York, NY</span>
-                  </div>
-                  <div className="flex items-center space-x-2 pt-2">
-                    <Badge variant="secondary">Figma</Badge>
-                    <Badge variant="secondary">Design</Badge>
-                  </div>
-                  <div className="flex space-x-2 pt-4">
-                    <Button className="flex-1">Connect</Button>
-                    <Button variant="outline" className="flex-1">
-                      Message
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <CodeBlock code={userCardCode} language="tsx" title="UserCard.tsx" />
-        </div>
-
-          {/* Social Media Post Block */}
-          <div className="space-y-8">
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <div className="w-1 h-8 bg-accent rounded-full" />
-                <h2 className="text-3xl font-bold tracking-tight">Social Media Post</h2>
-              </div>
-              <p className="text-muted-foreground leading-relaxed ml-4">
-                A social media post layout with engagement buttons and user info.
-              </p>
-            </div>
-
-          <Card className="w-full max-w-md">
-            <CardHeader>
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                  <User className="h-5 w-5 text-primary-foreground" />
-                </div>
-                <div>
-                  <CardTitle className="text-sm">Alex Johnson</CardTitle>
-                  <CardDescription className="text-xs">
-                    @alexj • 2h ago
-                  </CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <p className="text-sm">
-                  Just launched our new component library! 🎉 Building beautiful
-                  UIs has never been easier. Check it out and let me know what
-                  you think!
-                </p>
-                <div className="flex items-center justify-between pt-2 border-t">
-                  <Button variant="ghost" size="sm">
-                    <Heart className="h-4 w-4 mr-1" />
-                    24
-                  </Button>
-                  <Button variant="ghost" size="sm">
-                    <MessageCircle className="h-4 w-4 mr-1" />8
-                  </Button>
-                  <Button variant="ghost" size="sm">
-                    <Share2 className="h-4 w-4 mr-1" />
-                    Share
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-          {/* Event Card Block */}
-          <div className="space-y-8">
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <div className="w-1 h-8 bg-accent rounded-full" />
-                <h2 className="text-3xl font-bold tracking-tight">Event Card</h2>
-              </div>
-              <p className="text-muted-foreground leading-relaxed ml-4">
-                Display event information with date, time, and location details.
-              </p>
-            </div>
-
-          <Card className="w-full max-w-md">
-            <CardHeader>
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <Calendar className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <CardTitle>React Conference 2024</CardTitle>
-                  <CardDescription>
-                    Annual React developer conference
-                  </CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-2">
-                  <Clock className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm">
-                    March 15, 2024 • 9:00 AM - 6:00 PM
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm">
-                    San Francisco Convention Center
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Users className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm">1,200 attendees</span>
-                </div>
-                <div className="flex items-center space-x-2 pt-2">
-                  <Badge>React</Badge>
-                  <Badge variant="secondary">JavaScript</Badge>
-                  <Badge variant="secondary">Web Development</Badge>
-                </div>
-                <div className="pt-4">
-                  <Button className="w-full">Register Now</Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+          </main>
         </div>
       </div>
     </div>
