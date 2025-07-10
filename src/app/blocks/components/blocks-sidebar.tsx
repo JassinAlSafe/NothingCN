@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -10,7 +9,12 @@ interface Block {
   id: string;
   title: string;
   category: string;
-  description?: string;
+  description: string;
+  tags: string[];
+  difficulty: "beginner" | "intermediate" | "advanced";
+  dependencies: string[];
+  code: string;
+  component: React.ReactNode;
 }
 
 interface BlocksSidebarProps {
@@ -36,7 +40,7 @@ export function BlocksSidebar({
 
   return (
     <aside className="hidden lg:block w-64 shrink-0">
-      <div className="sticky top-24 space-y-6 py-6">
+      <div className="sticky top-8 space-y-4">
         {/* Search */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -44,14 +48,14 @@ export function BlocksSidebar({
             placeholder="Search blocks..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-10 bg-background/50 border-border/50 focus:border-accent/50 focus:bg-background transition-colors"
+            className="pl-10 h-9 bg-background/50 border-border/50 focus:border-accent/50 focus:bg-background transition-all duration-200 focus:shadow-sm font-ndot"
           />
         </div>
 
         {/* Categories */}
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-foreground/80 px-3">Categories</h3>
-          <div className="space-y-1">
+          <h3 className="text-xs font-semibold text-foreground/80 px-2 tracking-wide uppercase font-ndot">Categories</h3>
+          <div className="space-y-0.5">
             {categories.map((category) => {
               const count = category === "All" 
                 ? blocks.length 
@@ -62,14 +66,14 @@ export function BlocksSidebar({
                   key={category}
                   onClick={() => onCategoryChange(category)}
                   className={cn(
-                    "w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors text-left",
+                    "w-full flex items-center justify-between px-2 py-2 text-sm rounded-md transition-all duration-200 text-left font-ndot",
                     selectedCategory === category
                       ? "bg-accent/10 text-accent font-medium border border-accent/30"
                       : "text-foreground/70 hover:text-foreground hover:bg-accent/5"
                   )}
                 >
                   <span>{category}</span>
-                  <Badge variant="secondary" className="text-xs">
+                  <Badge variant="secondary" className="text-xs h-5 px-2 font-ndot">
                     {count}
                   </Badge>
                 </button>
@@ -80,42 +84,42 @@ export function BlocksSidebar({
 
         {/* View Options */}
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-foreground/80 px-3">View</h3>
-          <div className="flex rounded-lg bg-muted p-1">
+          <h3 className="text-xs font-semibold text-foreground/80 px-2 tracking-wide uppercase font-ndot">View</h3>
+          <div className="flex rounded-md bg-muted p-0.5">
             <button
               onClick={() => onViewModeChange("grid")}
               className={cn(
-                "flex-1 flex items-center justify-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+                "flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 text-xs font-medium rounded-sm transition-all duration-200 font-ndot",
                 viewMode === "grid"
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <Grid3X3 className="h-4 w-4" />
+              <Grid3X3 className="h-3 w-3" />
               Grid
             </button>
             <button
               onClick={() => onViewModeChange("list")}
               className={cn(
-                "flex-1 flex items-center justify-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+                "flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 text-xs font-medium rounded-sm transition-all duration-200 font-ndot",
                 viewMode === "list"
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <List className="h-4 w-4" />
+              <List className="h-3 w-3" />
               List
             </button>
           </div>
         </div>
 
         {/* Stats */}
-        <div className="space-y-2 pt-4 border-t border-border">
-          <div className="px-3 space-y-1">
-            <p className="text-xs text-muted-foreground">
+        <div className="space-y-2 pt-3 border-t border-border">
+          <div className="px-2 space-y-1">
+            <p className="text-xs text-muted-foreground font-ndot">
               {blocks.length} total blocks
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground font-ndot">
               {categories.length - 1} categories
             </p>
           </div>
