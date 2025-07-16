@@ -29,7 +29,7 @@ export function ComponentLayout({
 }: ComponentLayoutProps) {
   return (
     <div className="container relative py-4 lg:py-6 max-w-none">
-      <div className="flex gap-6 lg:gap-8 xl:gap-12">
+      <div className="flex gap-6 lg:gap-8 xl:gap-6">
         {/* Main content */}
         <main className="flex-1 min-w-0 max-w-none">
           <div className="max-w-4xl mx-auto lg:max-w-5xl xl:max-w-none xl:mx-0">
@@ -41,7 +41,7 @@ export function ComponentLayout({
         </main>
 
         {/* Right sidebar - "On This Page" */}
-        <aside className="hidden xl:block w-40 shrink-0">
+        <aside className="hidden xl:block shrink-0">
           <div className="sticky top-6">
             <OnThisPage sections={sections} />
           </div>

@@ -34,7 +34,6 @@ import {
   Palette,
   Clock,
   TrendingUp,
-  Activity
 } from "lucide-react";
 
 const contributionTypes = [
