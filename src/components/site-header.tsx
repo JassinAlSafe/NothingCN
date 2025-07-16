@@ -45,6 +45,12 @@ const searchableContent = [
         description: "Collapsible content sections with smooth animations",
       },
       {
+        name: "Alert",
+        href: "/components/alert",
+        description:
+          "Display important messages and notifications with Nothing OS styling",
+      },
+      {
         name: "Button",
         href: "/components/button",
         description: "Versatile button variants for any interface",
