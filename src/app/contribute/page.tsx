@@ -33,7 +33,8 @@ import {
   BookOpen,
   Palette,
   Clock,
-  TrendingUp
+  TrendingUp,
+  Activity
 } from "lucide-react";
 
 const contributionTypes = [
@@ -306,6 +307,19 @@ export default function ContributePage() {
               </div>
               <HelpWantedIssues />
             </div>
+          </div>
+          
+          {/* Central Community Button */}
+          <div className="mt-16 text-center">
+            <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+              <Link href="/contribute/community">
+                <Users className="mr-2 h-5 w-5" />
+                Explore Full Community
+              </Link>
+            </Button>
+            <p className="text-sm text-muted-foreground mt-2">
+              View all contributors, activity, and issues in one place
+            </p>
           </div>
         </div>
       </section>

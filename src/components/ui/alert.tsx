@@ -23,12 +23,12 @@ const alertVariants = cva(
         default:
           "bg-gradient-to-br from-background via-background to-muted/30 border-border/50 text-foreground shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10 backdrop-blur-sm",
         destructive:
-          "bg-gradient-to-br from-red-50 via-red-100/50 to-red-200/30 border-red-300/50 text-red-800 dark:from-red-950/40 dark:via-red-900/30 dark:to-red-800/20 dark:border-red-800/40 dark:text-red-100 shadow-xl shadow-red-500/20 hover:shadow-2xl hover:shadow-red-500/30 backdrop-blur-sm",
+          "bg-gradient-to-br from-background via-background to-background/95 border-border/50 text-foreground shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10 backdrop-blur-sm",
         warning:
-          "bg-gradient-to-br from-amber-50 via-amber-100/50 to-amber-200/30 border-amber-300/50 text-amber-800 dark:from-amber-950/40 dark:via-amber-900/30 dark:to-amber-800/20 dark:border-amber-800/40 dark:text-amber-100 shadow-xl shadow-amber-500/20 hover:shadow-2xl hover:shadow-amber-500/30 backdrop-blur-sm",
+          "bg-gradient-to-br from-background via-background to-background/95 border-border/50 text-foreground shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10 backdrop-blur-sm",
         success:
-          "bg-gradient-to-br from-emerald-50 via-emerald-100/50 to-emerald-200/30 border-emerald-300/50 text-emerald-800 dark:from-emerald-950/40 dark:via-emerald-900/30 dark:to-emerald-800/20 dark:border-emerald-800/40 dark:text-emerald-100 shadow-xl shadow-emerald-500/20 hover:shadow-2xl hover:shadow-emerald-500/30 backdrop-blur-sm",
-        info: "bg-gradient-to-br from-blue-50 via-blue-100/50 to-blue-200/30 border-blue-300/50 text-blue-800 dark:from-blue-950/40 dark:via-blue-900/30 dark:to-blue-800/20 dark:border-blue-800/40 dark:text-blue-100 shadow-xl shadow-blue-500/20 hover:shadow-2xl hover:shadow-blue-500/30 backdrop-blur-sm",
+          "bg-gradient-to-br from-background via-background to-background/95 border-border/50 text-foreground shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10 backdrop-blur-sm",
+        info: "bg-gradient-to-br from-background via-background to-background/95 border-border/50 text-foreground shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10 backdrop-blur-sm",
         nothing:
           "bg-gradient-to-br from-background/95 via-background/90 to-accent/5 border-accent/30 text-foreground shadow-2xl shadow-accent/10 hover:shadow-accent/20 backdrop-blur-md relative",
         terminal:
@@ -140,10 +140,10 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         className={cn(alertVariants({ variant, size }), className)}
         {...props}
       >
-        {/* Subtle accent stripe */}
+        {/* Colored accent stripe */}
         {variant !== "default" && variant !== "nothing" && variant !== "terminal" && (
           <div className={cn(
-            "absolute top-0 left-0 w-1 h-full rounded-l-2xl",
+            "absolute top-0 left-0 w-1.5 h-full rounded-l-2xl",
             variant === "destructive" && "bg-gradient-to-b from-red-500 to-red-600",
             variant === "warning" && "bg-gradient-to-b from-amber-500 to-amber-600",
             variant === "success" && "bg-gradient-to-b from-emerald-500 to-emerald-600",

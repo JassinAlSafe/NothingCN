@@ -245,7 +245,7 @@ export function RecentActivity() {
       data: pr,
       date: pr.updated_at,
     })),
-  ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 8);
+  ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 4);
 
   return (
     <div className="space-y-4">
