@@ -29,7 +29,7 @@ export default function InstallationPage() {
         <div className="space-y-3">
           <div className="flex items-center space-x-3">
             <div className="w-1 h-8 bg-accent rounded-full" />
-            <h2 className="text-3xl font-bold tracking-tight font-ndot">What You'll Need</h2>
+            <h2 className="text-3xl font-bold tracking-tight font-ndot">What You&apos;ll Need</h2>
           </div>
           <p className="text-muted-foreground leading-relaxed ml-4">
             Before diving into NothingCN components, ensure your project has these foundational elements.
@@ -375,7 +375,7 @@ module.exports = {
           <div className="p-6 rounded-2xl border-2 border-yellow-500/20 bg-yellow-500/5">
             <h3 className="text-lg font-bold text-yellow-600 font-ndot mb-3">Components not styling correctly</h3>
             <p className="text-sm text-muted-foreground mb-3">
-              Make sure you've added the CSS variables and configured Tailwind CSS correctly.
+              Make sure you&apos;ve added the CSS variables and configured Tailwind CSS correctly.
             </p>
             <ul className="text-sm text-muted-foreground space-y-1 font-ndot">
               <li>• Check that globals.css includes the CSS variables</li>

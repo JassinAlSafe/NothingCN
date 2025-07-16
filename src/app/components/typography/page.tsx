@@ -56,7 +56,7 @@ export default function TypographyPage() {
             </div>
             <h3 className="text-xl font-bold font-ndot">Nothing OS Inspired</h3>
             <p className="text-muted-foreground font-ndot">
-              Distinctive aesthetic that captures the essence of Nothing's design language.
+              Distinctive aesthetic that captures the essence of Nothing&apos;s design language.
             </p>
           </div>
         </div>
@@ -286,7 +286,7 @@ export default function TypographyPage() {
               </span> for special emphasis.
             </p>
             <p className="text-base leading-relaxed">
-              Code elements like <code className="bg-muted px-2 py-1 rounded text-sm font-mono">className="text-base"</code> inline.
+              Code elements like <code className="bg-muted px-2 py-1 rounded text-sm font-mono">className=&quot;text-base&quot;</code> inline.
             </p>
           </div>
         </div>
@@ -392,7 +392,7 @@ export default function TypographyPage() {
           </div>
 
           <div className="space-y-4 p-6 rounded-2xl border-2 border-red-500/20 bg-red-500/5">
-            <h3 className="text-lg font-bold text-red-600 font-ndot">✗ Don't</h3>
+            <h3 className="text-lg font-bold text-red-600 font-ndot">✗ Don&apos;t</h3>
             <ul className="space-y-2 text-sm text-muted-foreground font-ndot">
               <li>• Mix too many font weights in one section</li>
               <li>• Use font-ndot for long-form body text</li>

@@ -68,7 +68,7 @@ export default function ComponentsPage() {
         {/* Core Principle */}
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-lg font-medium text-foreground font-ndot">
-            This is not a traditional component library. It's a collection of reusable components 
+            This is not a traditional component library. It&apos;s a collection of reusable components 
             that you can copy and paste into your apps.
           </p>
         </div>
