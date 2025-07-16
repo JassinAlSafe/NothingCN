@@ -46,7 +46,7 @@ export function OnThisPage({ sections }: OnThisPageProps) {
   };
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       <h4 className="font-ndot text-xs font-medium text-foreground uppercase tracking-wide">On This Page</h4>
       <nav className="space-y-0.5">
         {sections.map((section) => (
@@ -54,15 +54,15 @@ export function OnThisPage({ sections }: OnThisPageProps) {
             key={section.id}
             onClick={() => scrollToSection(section.id)}
             className={cn(
-              "block w-full text-left text-xs transition-colors hover:text-foreground py-0.5",
-              section.level === 2 && "pl-2",
-              section.level === 3 && "pl-4",
+              "block w-full text-left text-xs transition-colors hover:text-foreground py-0.5 leading-tight",
+              section.level === 2 && "pl-1.5",
+              section.level === 3 && "pl-3",
               activeSection === section.id
-                ? "text-foreground font-medium border-l-2 border-accent pl-2"
+                ? "text-foreground font-medium border-l-2 border-accent pl-1.5"
                 : "text-muted-foreground"
             )}
           >
-            {section.title}
+            <span className="block truncate">{section.title}</span>
           </button>
         ))}
       </nav>

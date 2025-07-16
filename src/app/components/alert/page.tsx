@@ -1,7 +1,6 @@
 "use client";
 
 import { ComponentLayout } from "@/components/component-layout";
-import { ComponentPreview } from "@/components/component-preview";
 import { ComponentCode } from "@/components/component-code";
 import { InstallationTabs } from "@/components/installation-tabs";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
@@ -45,10 +44,18 @@ export default function AlertPage() {
         />
 
         <div id="default">
-          <ComponentPreview
-            title="Default Alert"
-            description="A simple alert with default styling and automatic icon selection."
-            preview={
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold tracking-tight font-ndot">
+                Default Alert
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                A simple alert with default styling and automatic icon
+                selection.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-lg border border-border bg-muted/20">
               <div className="w-full max-w-2xl space-y-4">
                 <Alert>
                   <AlertTitle>Heads up!</AlertTitle>
@@ -58,21 +65,34 @@ export default function AlertPage() {
                   </AlertDescription>
                 </Alert>
               </div>
-            }
-            code={`<Alert>
+            </div>
+
+            <ComponentCode
+              title="Default Alert Example"
+              description="A simple alert with default styling and automatic icon selection."
+              code={`<Alert>
   <AlertTitle>Heads up!</AlertTitle>
   <AlertDescription>
     You can add components and dependencies to your app using the cli.
   </AlertDescription>
 </Alert>`}
-          />
+              previewLines={4}
+            />
+          </div>
         </div>
 
         <div id="variants">
-          <ComponentPreview
-            title="Alert Variants"
-            description="Different semantic variants with appropriate colors and icons."
-            preview={
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold tracking-tight font-ndot">
+                Alert Variants
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Different semantic variants with appropriate colors and icons.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-lg border border-border bg-muted/20">
               <div className="w-full max-w-2xl space-y-4">
                 <Alert variant="default">
                   <AlertTitle>Default Alert</AlertTitle>
@@ -109,8 +129,12 @@ export default function AlertPage() {
                   </AlertDescription>
                 </Alert>
               </div>
-            }
-            code={`<Alert variant="default">
+            </div>
+
+            <ComponentCode
+              title="Alert Variants Example"
+              description="Different semantic variants with appropriate colors and icons."
+              code={`<Alert variant="default">
   <AlertTitle>Default Alert</AlertTitle>
   <AlertDescription>This is a default alert message.</AlertDescription>
 </Alert>
@@ -134,14 +158,24 @@ export default function AlertPage() {
   <AlertTitle>Error</AlertTitle>
   <AlertDescription>Something went wrong. Please try again.</AlertDescription>
 </Alert>`}
-          />
+              previewLines={8}
+            />
+          </div>
         </div>
 
         <div id="nothing-variants">
-          <ComponentPreview
-            title="Nothing OS Variants"
-            description="Special variants inspired by Nothing OS design with ndot typography and distinctive styling."
-            preview={
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold tracking-tight font-ndot">
+                Nothing OS Variants
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Special variants inspired by Nothing OS design with ndot
+                typography and distinctive styling.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-lg border border-border bg-muted/20">
               <div className="w-full max-w-2xl space-y-4">
                 <Alert variant="nothing">
                   <AlertTitle variant="nothing">NOTHING OS UPDATE</AlertTitle>
@@ -172,8 +206,12 @@ export default function AlertPage() {
                   </AlertDescription>
                 </Alert>
               </div>
-            }
-            code={`<Alert variant="nothing">
+            </div>
+
+            <ComponentCode
+              title="Nothing OS Variants Example"
+              description="Special variants inspired by Nothing OS design with ndot typography and distinctive styling."
+              code={`<Alert variant="nothing">
   <AlertTitle variant="nothing">NOTHING OS UPDATE</AlertTitle>
   <AlertDescription variant="nothing">
     New system features available. Experience enhanced transparency and unique design elements.
@@ -196,14 +234,23 @@ export default function AlertPage() {
     > Last sync: 2 minutes ago
   </AlertDescription>
 </Alert>`}
-          />
+              previewLines={12}
+            />
+          </div>
         </div>
 
         <div id="sizes">
-          <ComponentPreview
-            title="Alert Sizes"
-            description="Different sizes to match your design needs."
-            preview={
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold tracking-tight font-ndot">
+                Alert Sizes
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Different sizes to match your design needs.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-lg border border-border bg-muted/20">
               <div className="w-full max-w-2xl space-y-4">
                 <Alert size="sm" variant="info">
                   <AlertTitle>Small Alert</AlertTitle>
@@ -227,8 +274,12 @@ export default function AlertPage() {
                   </AlertDescription>
                 </Alert>
               </div>
-            }
-            code={`<Alert size="sm" variant="info">
+            </div>
+
+            <ComponentCode
+              title="Alert Sizes Example"
+              description="Different sizes to match your design needs."
+              code={`<Alert size="sm" variant="info">
   <AlertTitle>Small Alert</AlertTitle>
   <AlertDescription>Compact alert for subtle notifications.</AlertDescription>
 </Alert>
@@ -244,14 +295,23 @@ export default function AlertPage() {
     Prominent alert for important announcements and critical information.
   </AlertDescription>
 </Alert>`}
-          />
+              previewLines={10}
+            />
+          </div>
         </div>
 
         <div id="dismissible">
-          <ComponentPreview
-            title="Dismissible Alerts"
-            description="Alerts that can be dismissed by the user."
-            preview={
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold tracking-tight font-ndot">
+                Dismissible Alerts
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Alerts that can be dismissed by the user.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-lg border border-border bg-muted/20">
               <div className="w-full max-w-2xl space-y-4">
                 <Alert variant="info" dismissible>
                   <AlertTitle>Dismissible Alert</AlertTitle>
@@ -273,8 +333,12 @@ export default function AlertPage() {
                   </AlertDescription>
                 </Alert>
               </div>
-            }
-            code={`<Alert variant="info" dismissible>
+            </div>
+
+            <ComponentCode
+              title="Dismissible Alerts Example"
+              description="Alerts that can be dismissed by the user."
+              code={`<Alert variant="info" dismissible>
   <AlertTitle>Dismissible Alert</AlertTitle>
   <AlertDescription>
     Click the X button to dismiss this alert.
@@ -287,14 +351,23 @@ export default function AlertPage() {
     This alert can be dismissed and will trigger a callback.
   </AlertDescription>
 </Alert>`}
-          />
+              previewLines={8}
+            />
+          </div>
         </div>
 
         <div id="custom-icons">
-          <ComponentPreview
-            title="Custom Icons"
-            description="Use custom icons or hide the icon completely."
-            preview={
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold tracking-tight font-ndot">
+                Custom Icons
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Use custom icons or hide the icon completely.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-lg border border-border bg-muted/20">
               <div className="w-full max-w-2xl space-y-4">
                 <Alert variant="info" icon={<Shield className="h-5 w-5" />}>
                   <AlertTitle>Security Update</AlertTitle>
@@ -327,8 +400,12 @@ export default function AlertPage() {
                   </AlertDescription>
                 </Alert>
               </div>
-            }
-            code={`<Alert variant="info" icon={<Shield className="h-5 w-5" />}>
+            </div>
+
+            <ComponentCode
+              title="Custom Icons Example"
+              description="Use custom icons or hide the icon completely."
+              code={`<Alert variant="info" icon={<Shield className="h-5 w-5" />}>
   <AlertTitle>Security Update</AlertTitle>
   <AlertDescription>Your security settings have been updated.</AlertDescription>
 </Alert>
@@ -351,14 +428,24 @@ export default function AlertPage() {
     Connection established: 5G Ultra Wideband
   </AlertDescription>
 </Alert>`}
-          />
+              previewLines={12}
+            />
+          </div>
         </div>
 
         <div id="examples">
-          <ComponentPreview
-            title="Real-world Examples"
-            description="Practical examples showing how to use alerts in real applications."
-            preview={
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold tracking-tight font-ndot">
+                Real-world Examples
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Practical examples showing how to use alerts in real
+                applications.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-lg border border-border bg-muted/20">
               <div className="w-full max-w-2xl space-y-6">
                 {/* Form validation */}
                 <div className="space-y-3">
@@ -422,8 +509,12 @@ export default function AlertPage() {
                   </Alert>
                 </div>
               </div>
-            }
-            code={`// Form validation
+            </div>
+
+            <ComponentCode
+              title="Real-world Examples"
+              description="Practical examples showing how to use alerts in real applications."
+              code={`// Form validation
 <Alert variant="destructive" size="sm">
   <AlertTitle>Validation Error</AlertTitle>
   <AlertDescription>
@@ -456,48 +547,35 @@ export default function AlertPage() {
     > Ready in 2.3s
   </AlertDescription>
 </Alert>`}
-          />
+              previewLines={15}
+            />
+          </div>
         </div>
 
         <ComponentCode
           title="Component Source"
           description="Copy and paste the following code into your project."
-          code={`"use client";
+          code={`// src/components/ui/alert.tsx
+"use client";
 
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { 
-  AlertTriangle, 
-  CheckCircle, 
-  Info, 
-  X, 
-  XCircle,
-  Terminal,
-  Zap,
-  Bell
-} from "lucide-react";
-
+import { AlertTriangle, CheckCircle, Info, X, XCircle, Terminal, Zap, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+// Enhanced alert variants with modern gradients and shadows
 const alertVariants = cva(
-  "relative rounded-xl border-2 px-6 py-4 transition-all duration-300 animate-fade-in-up",
+  "relative rounded-2xl border px-6 py-4 transition-all duration-300 animate-fade-in-up overflow-hidden",
   {
     variants: {
       variant: {
-        default:
-          "bg-background border-border text-foreground shadow-sm hover:shadow-md",
-        destructive:
-          "bg-red-50 border-red-200 text-red-900 dark:bg-red-950/30 dark:border-red-800 dark:text-red-200 shadow-sm shadow-red-500/20",
-        warning:
-          "bg-orange-50 border-orange-200 text-orange-900 dark:bg-orange-950/30 dark:border-orange-800 dark:text-orange-200 shadow-sm shadow-orange-500/20",
-        success:
-          "bg-green-50 border-green-200 text-green-900 dark:bg-green-950/30 dark:border-green-800 dark:text-green-200 shadow-sm shadow-green-500/20",
-        info:
-          "bg-blue-50 border-blue-200 text-blue-900 dark:bg-blue-950/30 dark:border-blue-800 dark:text-blue-200 shadow-sm shadow-blue-500/20",
-        nothing:
-          "bg-background/95 backdrop-blur-sm border-accent/30 text-foreground shadow-lg shadow-accent/10 relative overflow-hidden",
-        terminal:
-          "bg-background border-accent/40 text-foreground font-commit-mono text-sm shadow-lg relative before:absolute before:inset-0 before:bg-gradient-to-r before:from-accent/5 before:to-transparent before:pointer-events-none",
+        default: "bg-gradient-to-br from-background via-background to-muted/30 border-border/50 text-foreground shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10 backdrop-blur-sm",
+        destructive: "bg-gradient-to-br from-red-50 via-red-100/50 to-red-200/30 border-red-300/50 text-red-800 dark:from-red-950/40 dark:via-red-900/30 dark:to-red-800/20 dark:border-red-800/40 dark:text-red-100 shadow-xl shadow-red-500/20 hover:shadow-2xl hover:shadow-red-500/30 backdrop-blur-sm",
+        warning: "bg-gradient-to-br from-amber-50 via-amber-100/50 to-amber-200/30 border-amber-300/50 text-amber-800 dark:from-amber-950/40 dark:via-amber-900/30 dark:to-amber-800/20 dark:border-amber-800/40 dark:text-amber-100 shadow-xl shadow-amber-500/20 hover:shadow-2xl hover:shadow-amber-500/30 backdrop-blur-sm",
+        success: "bg-gradient-to-br from-emerald-50 via-emerald-100/50 to-emerald-200/30 border-emerald-300/50 text-emerald-800 dark:from-emerald-950/40 dark:via-emerald-900/30 dark:to-emerald-800/20 dark:border-emerald-800/40 dark:text-emerald-100 shadow-xl shadow-emerald-500/20 hover:shadow-2xl hover:shadow-emerald-500/30 backdrop-blur-sm",
+        info: "bg-gradient-to-br from-blue-50 via-blue-100/50 to-blue-200/30 border-blue-300/50 text-blue-800 dark:from-blue-950/40 dark:via-blue-900/30 dark:to-blue-800/20 dark:border-blue-800/40 dark:text-blue-100 shadow-xl shadow-blue-500/20 hover:shadow-2xl hover:shadow-blue-500/30 backdrop-blur-sm",
+        nothing: "bg-gradient-to-br from-background/95 via-background/90 to-accent/5 border-accent/30 text-foreground shadow-2xl shadow-accent/10 hover:shadow-accent/20 backdrop-blur-md relative",
+        terminal: "bg-gradient-to-br from-background via-background to-accent/5 border-accent/40 text-foreground font-commit-mono text-sm shadow-2xl shadow-accent/15 hover:shadow-accent/25 backdrop-blur-md relative before:absolute before:inset-0 before:bg-gradient-to-r before:from-accent/5 before:to-transparent before:pointer-events-none",
       },
       size: {
         sm: "text-sm py-3 px-4",
@@ -512,189 +590,18 @@ const alertVariants = cva(
   }
 );
 
-const alertIconVariants = cva("flex-shrink-0", {
-  variants: {
-    variant: {
-      default: "text-foreground",
-      destructive: "text-red-600 dark:text-red-400",
-      warning: "text-orange-600 dark:text-orange-400",
-      success: "text-green-600 dark:text-green-400",
-      info: "text-blue-600 dark:text-blue-400",
-      nothing: "text-accent",
-      terminal: "text-accent",
-    },
-    size: {
-      sm: "h-4 w-4",
-      default: "h-5 w-5",
-      lg: "h-6 w-6",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-    size: "default",
-  },
-});
-
-export interface AlertProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof alertVariants> {
-  icon?: React.ReactNode;
-  showIcon?: boolean;
-  dismissible?: boolean;
-  onDismiss?: () => void;
-  dotMatrix?: boolean;
-}
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  ({ 
-    className, 
-    variant, 
-    size, 
-    icon, 
-    showIcon = true,
-    dismissible = false,
-    onDismiss,
-    dotMatrix = false,
-    children, 
-    ...props 
-  }, ref) => {
-    const [isVisible, setIsVisible] = React.useState(true);
-
-    const handleDismiss = () => {
-      setIsVisible(false);
-      onDismiss?.();
-    };
-
-    const getDefaultIcon = () => {
-      switch (variant) {
-        case "destructive":
-          return <XCircle className={cn(alertIconVariants({ variant, size }))} />;
-        case "warning":
-          return <AlertTriangle className={cn(alertIconVariants({ variant, size }))} />;
-        case "success":
-          return <CheckCircle className={cn(alertIconVariants({ variant, size }))} />;
-        case "info":
-          return <Info className={cn(alertIconVariants({ variant, size }))} />;
-        case "nothing":
-          return <Zap className={cn(alertIconVariants({ variant, size }))} />;
-        case "terminal":
-          return <Terminal className={cn(alertIconVariants({ variant, size }))} />;
-        default:
-          return <Bell className={cn(alertIconVariants({ variant, size }))} />;
-      }
-    };
-
-    if (!isVisible) return null;
-
-    return (
-      <div
-        ref={ref}
-        className={cn(alertVariants({ variant, size }), className)}
-        {...props}
-      >
-        {/* Nothing OS corner dots */}
-        {variant === "nothing" && (
-          <>
-            <div className="absolute top-2 left-2 w-1 h-1 bg-accent/30 rounded-full" />
-            <div className="absolute top-2 right-2 w-1 h-1 bg-accent/30 rounded-full" />
-            <div className="absolute bottom-2 left-2 w-1 h-1 bg-accent/30 rounded-full" />
-            <div className="absolute bottom-2 right-2 w-1 h-1 bg-accent/30 rounded-full" />
-          </>
-        )}
-
-        {/* Dot matrix background for Nothing variant */}
-        {variant === "nothing" && dotMatrix && (
-          <div 
-            className="absolute inset-0 pointer-events-none opacity-5"
-            style={{
-              backgroundImage: \`radial-gradient(circle at center, currentColor 0.5px, transparent 0.5px)\`,
-              backgroundSize: "8px 8px",
-            }}
-          />
-        )}
-
-        <div className="flex items-start space-x-3 relative z-10">
-          {/* Icon */}
-          {showIcon && (
-            <div className="mt-0.5">
-              {icon || getDefaultIcon()}
-            </div>
-          )}
-
-          {/* Content */}
-          <div className="flex-1 min-w-0">
-            {children}
-          </div>
-
-          {/* Dismiss button */}
-          {dismissible && (
-            <button
-              onClick={handleDismiss}
-              className={cn(
-                "mt-0.5 p-1 rounded-md transition-colors duration-200 hover:bg-current/10 flex-shrink-0",
-                variant === "nothing" ? "text-accent hover:bg-accent/10" : "text-current"
-              )}
-              aria-label="Dismiss alert"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          )}
-        </div>
-      </div>
-    );
-  }
-);
-Alert.displayName = "Alert";
-
-export interface AlertTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
-  variant?: VariantProps<typeof alertVariants>["variant"];
-}
-
-const AlertTitle = React.forwardRef<HTMLParagraphElement, AlertTitleProps>(
-  ({ className, variant, ...props }, ref) => (
-    <h5
-      ref={ref}
-      className={cn(
-        "mb-2 font-medium leading-none tracking-tight",
-        variant === "nothing" || variant === "terminal" ? "font-ndot text-base" : "text-sm",
-        className
-      )}
-      {...props}
-    />
-  )
-);
-AlertTitle.displayName = "AlertTitle";
-
-export interface AlertDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {
-  variant?: VariantProps<typeof alertVariants>["variant"];
-}
-
-const AlertDescription = React.forwardRef<HTMLParagraphElement, AlertDescriptionProps>(
-  ({ className, variant, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(
-        "text-sm leading-relaxed",
-        variant === "nothing" ? "font-ndot text-foreground/90" : "[&_p]:leading-relaxed",
-        variant === "terminal" ? "font-commit-mono text-xs" : "",
-        className
-      )}
-      {...props}
-    />
-  )
-);
-AlertDescription.displayName = "AlertDescription";
-
-export { 
-  Alert, 
-  AlertTitle, 
-  AlertDescription, 
-  alertVariants, 
-  alertIconVariants 
-};`}
+// See full component implementation in src/components/ui/alert.tsx
+// Features include:
+// - Enhanced gradients and shadows
+// - Accent stripes for semantic variants
+// - Nothing OS corner dots with pulse animation
+// - Icon containers with subtle backgrounds
+// - Improved dismiss button styling
+// - Backdrop blur effects
+// - Responsive design`}
+          previewLines={25}
         />
-
-        </div>
+      </div>
     </ComponentLayout>
   );
 }

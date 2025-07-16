@@ -16,23 +16,23 @@ import {
 import { cn } from "@/lib/utils";
 
 const alertVariants = cva(
-  "relative rounded-xl border-2 px-6 py-4 transition-all duration-300 animate-fade-in-up",
+  "relative rounded-2xl border px-6 py-4 transition-all duration-300 animate-fade-in-up overflow-hidden",
   {
     variants: {
       variant: {
         default:
-          "bg-background border-border text-foreground shadow-sm hover:shadow-md",
+          "bg-gradient-to-br from-background via-background to-muted/30 border-border/50 text-foreground shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10 backdrop-blur-sm",
         destructive:
-          "bg-red-50 border-red-200 text-red-900 dark:bg-red-950/30 dark:border-red-800 dark:text-red-200 shadow-sm shadow-red-500/20",
+          "bg-gradient-to-br from-red-50 via-red-100/50 to-red-200/30 border-red-300/50 text-red-800 dark:from-red-950/40 dark:via-red-900/30 dark:to-red-800/20 dark:border-red-800/40 dark:text-red-100 shadow-xl shadow-red-500/20 hover:shadow-2xl hover:shadow-red-500/30 backdrop-blur-sm",
         warning:
-          "bg-orange-50 border-orange-200 text-orange-900 dark:bg-orange-950/30 dark:border-orange-800 dark:text-orange-200 shadow-sm shadow-orange-500/20",
+          "bg-gradient-to-br from-amber-50 via-amber-100/50 to-amber-200/30 border-amber-300/50 text-amber-800 dark:from-amber-950/40 dark:via-amber-900/30 dark:to-amber-800/20 dark:border-amber-800/40 dark:text-amber-100 shadow-xl shadow-amber-500/20 hover:shadow-2xl hover:shadow-amber-500/30 backdrop-blur-sm",
         success:
-          "bg-green-50 border-green-200 text-green-900 dark:bg-green-950/30 dark:border-green-800 dark:text-green-200 shadow-sm shadow-green-500/20",
-        info: "bg-blue-50 border-blue-200 text-blue-900 dark:bg-blue-950/30 dark:border-blue-800 dark:text-blue-200 shadow-sm shadow-blue-500/20",
+          "bg-gradient-to-br from-emerald-50 via-emerald-100/50 to-emerald-200/30 border-emerald-300/50 text-emerald-800 dark:from-emerald-950/40 dark:via-emerald-900/30 dark:to-emerald-800/20 dark:border-emerald-800/40 dark:text-emerald-100 shadow-xl shadow-emerald-500/20 hover:shadow-2xl hover:shadow-emerald-500/30 backdrop-blur-sm",
+        info: "bg-gradient-to-br from-blue-50 via-blue-100/50 to-blue-200/30 border-blue-300/50 text-blue-800 dark:from-blue-950/40 dark:via-blue-900/30 dark:to-blue-800/20 dark:border-blue-800/40 dark:text-blue-100 shadow-xl shadow-blue-500/20 hover:shadow-2xl hover:shadow-blue-500/30 backdrop-blur-sm",
         nothing:
-          "bg-background/95 backdrop-blur-sm border-accent/30 text-foreground shadow-lg shadow-accent/10 relative overflow-hidden",
+          "bg-gradient-to-br from-background/95 via-background/90 to-accent/5 border-accent/30 text-foreground shadow-2xl shadow-accent/10 hover:shadow-accent/20 backdrop-blur-md relative",
         terminal:
-          "bg-background border-accent/40 text-foreground font-commit-mono text-sm shadow-lg relative before:absolute before:inset-0 before:bg-gradient-to-r before:from-accent/5 before:to-transparent before:pointer-events-none",
+          "bg-gradient-to-br from-background via-background to-accent/5 border-accent/40 text-foreground font-commit-mono text-sm shadow-2xl shadow-accent/15 hover:shadow-accent/25 backdrop-blur-md relative before:absolute before:inset-0 before:bg-gradient-to-r before:from-accent/5 before:to-transparent before:pointer-events-none",
       },
       size: {
         sm: "text-sm py-3 px-4",
@@ -47,16 +47,16 @@ const alertVariants = cva(
   }
 );
 
-const alertIconVariants = cva("flex-shrink-0", {
+const alertIconVariants = cva("flex-shrink-0 drop-shadow-sm", {
   variants: {
     variant: {
-      default: "text-foreground",
+      default: "text-foreground/80",
       destructive: "text-red-600 dark:text-red-400",
-      warning: "text-orange-600 dark:text-orange-400",
-      success: "text-green-600 dark:text-green-400",
+      warning: "text-amber-600 dark:text-amber-400",
+      success: "text-emerald-600 dark:text-emerald-400",
       info: "text-blue-600 dark:text-blue-400",
-      nothing: "text-accent",
-      terminal: "text-accent",
+      nothing: "text-accent drop-shadow-md",
+      terminal: "text-accent drop-shadow-md",
     },
     size: {
       sm: "h-4 w-4",
@@ -140,13 +140,24 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         className={cn(alertVariants({ variant, size }), className)}
         {...props}
       >
+        {/* Subtle accent stripe */}
+        {variant !== "default" && variant !== "nothing" && variant !== "terminal" && (
+          <div className={cn(
+            "absolute top-0 left-0 w-1 h-full rounded-l-2xl",
+            variant === "destructive" && "bg-gradient-to-b from-red-500 to-red-600",
+            variant === "warning" && "bg-gradient-to-b from-amber-500 to-amber-600",
+            variant === "success" && "bg-gradient-to-b from-emerald-500 to-emerald-600",
+            variant === "info" && "bg-gradient-to-b from-blue-500 to-blue-600"
+          )} />
+        )}
+
         {/* Nothing OS corner dots */}
         {variant === "nothing" && (
           <>
-            <div className="absolute top-2 left-2 w-1 h-1 bg-accent/30 rounded-full" />
-            <div className="absolute top-2 right-2 w-1 h-1 bg-accent/30 rounded-full" />
-            <div className="absolute bottom-2 left-2 w-1 h-1 bg-accent/30 rounded-full" />
-            <div className="absolute bottom-2 right-2 w-1 h-1 bg-accent/30 rounded-full" />
+            <div className="absolute top-3 left-3 w-1.5 h-1.5 bg-accent/40 rounded-full animate-pulse" />
+            <div className="absolute top-3 right-3 w-1.5 h-1.5 bg-accent/40 rounded-full animate-pulse" />
+            <div className="absolute bottom-3 left-3 w-1.5 h-1.5 bg-accent/40 rounded-full animate-pulse" />
+            <div className="absolute bottom-3 right-3 w-1.5 h-1.5 bg-accent/40 rounded-full animate-pulse" />
           </>
         )}
 
@@ -161,9 +172,18 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
           />
         )}
 
+        {/* Subtle glow effect for special variants */}
+        {(variant === "nothing" || variant === "terminal") && (
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent pointer-events-none" />
+        )}
+
         <div className="flex items-start space-x-3 relative z-10">
           {/* Icon */}
-          {showIcon && <div className="mt-0.5">{icon || getDefaultIcon()}</div>}
+          {showIcon && (
+            <div className="mt-0.5 p-1 rounded-lg bg-current/5 border border-current/10">
+              {icon || getDefaultIcon()}
+            </div>
+          )}
 
           {/* Content */}
           <div className="flex-1 min-w-0">{children}</div>
@@ -173,9 +193,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
             <button
               onClick={handleDismiss}
               className={cn(
-                "mt-0.5 p-1 rounded-md transition-colors duration-200 hover:bg-current/10 flex-shrink-0",
+                "mt-0.5 p-1.5 rounded-xl transition-all duration-200 hover:bg-current/10 flex-shrink-0 border border-transparent hover:border-current/20",
                 variant === "nothing"
-                  ? "text-accent hover:bg-accent/10"
+                  ? "text-accent hover:bg-accent/10 hover:border-accent/20"
                   : "text-current"
               )}
               aria-label="Dismiss alert"
