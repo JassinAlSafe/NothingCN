@@ -41,7 +41,7 @@ export function ComponentLayout({
         </main>
 
         {/* Right sidebar - "On This Page" */}
-        <aside className="hidden xl:block w-48 shrink-0">
+        <aside className="hidden xl:block w-40 shrink-0">
           <div className="sticky top-6">
             <OnThisPage sections={sections} />
           </div>

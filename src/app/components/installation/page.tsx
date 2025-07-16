@@ -1,19 +1,79 @@
-import { ComponentPreview } from "@/components/component-preview";
+import { ComponentCode } from "@/components/component-code";
+import { Badge } from "@/components/ui/badge";
 
 export default function InstallationPage() {
   return (
     <div className="space-y-12">
       {/* Page Header */}
-      <div className="space-y-4 border-b border-border pb-8">
+      <div className="space-y-6">
         <div className="flex items-center space-x-3">
           <div className="w-2 h-12 bg-accent rounded-full" />
           <h1 className="text-5xl font-bold tracking-tight font-ndot">Installation</h1>
         </div>
-        <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
-          Get started with NothingCN components. Copy, paste, and customize to your heart&apos;s content.
-          <br />
-          <strong className="text-amber-600 dark:text-amber-400">⚠️ Important:</strong> Some components use semantic color tokens that may need configuration in your project.
+        <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl">
+          Get started with NothingCN components. This is not a traditional npm package - you copy and paste the 
+          components directly into your project. This gives you full control and ownership of your code.
         </p>
+        <div className="flex items-center gap-2">
+          <Badge variant="secondary" className="bg-amber-500/10 text-amber-600 border-amber-500/20">
+            ⚠️ Important
+          </Badge>
+          <span className="text-sm text-muted-foreground">
+            Some components use semantic color tokens that require configuration
+          </span>
+        </div>
+      </div>
+
+      {/* What You'll Need */}
+      <div className="space-y-6">
+        <div className="space-y-3">
+          <div className="flex items-center space-x-3">
+            <div className="w-1 h-8 bg-accent rounded-full" />
+            <h2 className="text-3xl font-bold tracking-tight font-ndot">What You&apos;ll Need</h2>
+          </div>
+          <p className="text-muted-foreground leading-relaxed ml-4">
+            Before diving into NothingCN components, ensure your project has these foundational elements.
+          </p>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="flex items-center space-x-3 p-4 rounded-lg border border-border">
+            <div className="w-8 h-8 bg-blue-500/10 text-blue-500 rounded-full flex items-center justify-center">
+              ⚛️
+            </div>
+            <div>
+              <h3 className="font-semibold font-ndot">React 18+</h3>
+              <p className="text-sm text-muted-foreground">Modern React with hooks support</p>
+            </div>
+          </div>
+          <div className="flex items-center space-x-3 p-4 rounded-lg border border-border">
+            <div className="w-8 h-8 bg-black/10 text-black dark:bg-white/10 dark:text-white rounded-full flex items-center justify-center">
+              ▲
+            </div>
+            <div>
+              <h3 className="font-semibold font-ndot">Next.js 13+</h3>
+              <p className="text-sm text-muted-foreground">App Router recommended</p>
+            </div>
+          </div>
+          <div className="flex items-center space-x-3 p-4 rounded-lg border border-border">
+            <div className="w-8 h-8 bg-cyan-500/10 text-cyan-500 rounded-full flex items-center justify-center">
+              🎨
+            </div>
+            <div>
+              <h3 className="font-semibold font-ndot">Tailwind CSS</h3>
+              <p className="text-sm text-muted-foreground">For styling and customization</p>
+            </div>
+          </div>
+          <div className="flex items-center space-x-3 p-4 rounded-lg border border-border">
+            <div className="w-8 h-8 bg-blue-600/10 text-blue-600 rounded-full flex items-center justify-center">
+              📘
+            </div>
+            <div>
+              <h3 className="font-semibold font-ndot">TypeScript</h3>
+              <p className="text-sm text-muted-foreground">Recommended for best experience</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* How it works */}
@@ -74,10 +134,9 @@ export default function InstallationPage() {
           </p>
         </div>
 
-        <ComponentPreview
+        <ComponentCode
           title="Next.js with Tailwind CSS"
           description="NothingCN components are built for Next.js projects with Tailwind CSS."
-          preview={<div />}
           code={`# Create a new Next.js project
 npx create-next-app@latest my-app --typescript --tailwind --eslint --app
 
@@ -86,7 +145,7 @@ cd my-app
 
 # Install additional dependencies
 npm install @radix-ui/react-slot class-variance-authority clsx tailwind-merge lucide-react`}
-          hidePreview
+          previewLines={8}
         />
       </div>
 
@@ -102,10 +161,9 @@ npm install @radix-ui/react-slot class-variance-authority clsx tailwind-merge lu
           </p>
         </div>
 
-        <ComponentPreview
+        <ComponentCode
           title="lib/utils.ts"
           description="Create this file in your project's lib directory."
-          preview={<div />}
           code={`import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -124,7 +182,7 @@ export function formatDate(date: Date | string | number) {
 export function absoluteUrl(path: string) {
   return \`\${process.env.NEXT_PUBLIC_APP_URL || ""}\${path}\`
 }`}
-          hidePreview
+          previewLines={6}
         />
       </div>
 
@@ -140,10 +198,9 @@ export function absoluteUrl(path: string) {
           </p>
         </div>
 
-        <ComponentPreview
+        <ComponentCode
           title="tailwind.config.js"
           description="Update your Tailwind config with NothingCN's design tokens."
-          preview={<div />}
           code={`/** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -220,7 +277,7 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 }`}
-          hidePreview
+          previewLines={15}
         />
       </div>
 
@@ -236,10 +293,9 @@ module.exports = {
           </p>
         </div>
 
-        <ComponentPreview
+        <ComponentCode
           title="app/globals.css"
           description="Add these CSS variables to your global stylesheet."
-          preview={<div />}
           code={`@tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -299,8 +355,59 @@ module.exports = {
     @apply bg-background text-foreground;
   }
 }`}
-          hidePreview
+          previewLines={12}
         />
+      </div>
+
+      {/* Troubleshooting */}
+      <div className="space-y-6">
+        <div className="space-y-3">
+          <div className="flex items-center space-x-3">
+            <div className="w-1 h-8 bg-accent rounded-full" />
+            <h2 className="text-3xl font-bold tracking-tight font-ndot">Troubleshooting</h2>
+          </div>
+          <p className="text-muted-foreground leading-relaxed ml-4">
+            Common issues and their solutions when setting up NothingCN components.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-1">
+          <div className="p-6 rounded-2xl border-2 border-yellow-500/20 bg-yellow-500/5">
+            <h3 className="text-lg font-bold text-yellow-600 font-ndot mb-3">Components not styling correctly</h3>
+            <p className="text-sm text-muted-foreground mb-3">
+              Make sure you&apos;ve added the CSS variables and configured Tailwind CSS correctly.
+            </p>
+            <ul className="text-sm text-muted-foreground space-y-1 font-ndot">
+              <li>• Check that globals.css includes the CSS variables</li>
+              <li>• Verify tailwind.config.js has the extended color scheme</li>
+              <li>• Ensure the utils.ts file is created with the cn() function</li>
+            </ul>
+          </div>
+
+          <div className="p-6 rounded-2xl border-2 border-red-500/20 bg-red-500/5">
+            <h3 className="text-lg font-bold text-red-600 font-ndot mb-3">TypeScript errors</h3>
+            <p className="text-sm text-muted-foreground mb-3">
+              Missing type definitions or import errors are common with copy-paste components.
+            </p>
+            <ul className="text-sm text-muted-foreground space-y-1 font-ndot">
+              <li>• Install required dependencies: @radix-ui/react-slot, lucide-react</li>
+              <li>• Check that utils.ts exports the cn() function</li>
+              <li>• Verify component imports match your file structure</li>
+            </ul>
+          </div>
+
+          <div className="p-6 rounded-2xl border-2 border-blue-500/20 bg-blue-500/5">
+            <h3 className="text-lg font-bold text-blue-600 font-ndot mb-3">Component not found errors</h3>
+            <p className="text-sm text-muted-foreground mb-3">
+              Import path issues are common when copying components between projects.
+            </p>
+            <ul className="text-sm text-muted-foreground space-y-1 font-ndot">
+              <li>• Update import paths to match your project structure</li>
+              <li>• Check that base components (Button, Card, etc.) are available</li>
+              <li>• Verify @/components/ui/ path alias is configured</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       {/* Start Using */}
@@ -308,7 +415,7 @@ module.exports = {
         <div className="space-y-3">
           <div className="flex items-center space-x-3">
             <div className="w-1 h-8 bg-accent rounded-full" />
-            <h2 className="text-3xl font-bold tracking-tight">Start Using Components</h2>
+            <h2 className="text-3xl font-bold tracking-tight font-ndot">Start Using Components</h2>
           </div>
           <p className="text-muted-foreground leading-relaxed ml-4">
             You&apos;re all set! Start browsing components and copy the code into your project.
@@ -321,11 +428,25 @@ module.exports = {
               <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center">
                 <span className="text-accent-foreground text-sm font-bold">✓</span>
               </div>
-              <h3 className="text-xl font-bold">You&apos;re ready to go!</h3>
+              <h3 className="text-xl font-bold font-ndot">You&apos;re ready to go!</h3>
             </div>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed font-ndot">
               Browse the component library, copy the code, and start building beautiful interfaces with NothingCN.
             </p>
+            <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground font-ndot mt-6">
+              <span className="flex items-center gap-1">
+                <div className="w-2 h-2 bg-accent rounded-full" />
+                Copy & Paste Ready
+              </span>
+              <span className="flex items-center gap-1">
+                <div className="w-2 h-2 bg-green-500 rounded-full" />
+                Full Code Ownership
+              </span>
+              <span className="flex items-center gap-1">
+                <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                No Dependencies
+              </span>
+            </div>
           </div>
         </div>
       </div>

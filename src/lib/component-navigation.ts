@@ -4,6 +4,10 @@ export const componentList = [
     title: "Accordion"
   },
   {
+    href: "/components/alert",
+    title: "Alert"
+  },
+  {
     href: "/components/button",
     title: "Button"
   },

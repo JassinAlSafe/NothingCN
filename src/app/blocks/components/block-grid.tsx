@@ -22,15 +22,32 @@ interface BlockGridProps {
   viewMode: "grid" | "list";
 }
 
-export function BlockGrid({ blocks, selectedBlock, onBlockSelect, viewMode }: BlockGridProps) {
+export function BlockGrid({
+  blocks,
+  selectedBlock,
+  onBlockSelect,
+  viewMode,
+}: BlockGridProps) {
   if (blocks.length === 0) {
     return (
       <div className="text-center py-12">
-        <div className="space-y-3">
-          <div className="w-16 h-16 mx-auto bg-muted rounded-full flex items-center justify-center">
-            <div className="w-8 h-8 border-2 border-dashed border-muted-foreground/50 rounded" />
+        <div className="space-y-4">
+          <div className="relative w-20 h-20 mx-auto">
+            <div className="absolute inset-0 bg-muted/50 rounded-full" />
+            <div className="absolute inset-2 border-2 border-dashed border-muted-foreground/30 rounded-full" />
+            <div className="absolute inset-4 bg-muted-foreground/10 rounded-full flex items-center justify-center">
+              <div className="w-4 h-4 border border-muted-foreground/50 rounded" />
+            </div>
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-accent/20 rounded-full animate-ping" />
           </div>
-          <p className="text-muted-foreground font-ndot">No blocks found matching your search.</p>
+          <div className="space-y-2">
+            <p className="font-semibold font-ndot text-foreground">
+              No blocks found
+            </p>
+            <p className="text-sm text-muted-foreground font-ndot">
+              Try adjusting your search or filters.
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -44,13 +61,15 @@ export function BlockGrid({ blocks, selectedBlock, onBlockSelect, viewMode }: Bl
           {blocks.length} {blocks.length === 1 ? "block" : "blocks"}
         </p>
       </div>
-      
-      <div className={cn(
-        "grid gap-4",
-        viewMode === "grid" 
-          ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3" 
-          : "grid-cols-1"
-      )}>
+
+      <div
+        className={cn(
+          "grid gap-4",
+          viewMode === "grid"
+            ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3"
+            : "grid-cols-1"
+        )}
+      >
         {blocks.map((block) => (
           <BlockCard
             key={block.id}
@@ -84,10 +103,9 @@ function BlockCard({ block, isSelected, onClick, viewMode }: BlockCardProps) {
         viewMode === "list" && "flex items-center gap-4"
       )}
     >
-      <div className={cn(
-        "space-y-3",
-        viewMode === "list" && "flex-1 space-y-2"
-      )}>
+      <div
+        className={cn("space-y-3", viewMode === "list" && "flex-1 space-y-2")}
+      >
         <div className="flex items-start justify-between gap-2">
           <div className="space-y-1">
             <h4 className="font-semibold group-hover:text-accent transition-colors font-ndot">
@@ -101,7 +119,7 @@ function BlockCard({ block, isSelected, onClick, viewMode }: BlockCardProps) {
             <div className="w-2 h-2 bg-accent rounded-full shrink-0 mt-2" />
           )}
         </div>
-        
+
         <div className="flex items-center gap-2 flex-wrap">
           <Badge variant="secondary" className="text-xs font-ndot">
             {block.category}

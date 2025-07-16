@@ -48,6 +48,11 @@ const sidebarConfig: SidebarSection[] = [
         label: "New",
       },
       {
+        title: "Alert",
+        href: "/components/alert",
+        label: "New",
+      },
+      {
         title: "Button",
         href: "/components/button",
       },
