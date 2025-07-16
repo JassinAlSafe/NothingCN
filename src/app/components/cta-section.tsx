@@ -108,7 +108,7 @@ export function CTASection() {
               </h2>
               <div className="flex items-center justify-center space-x-3">
                 <div className="h-0.5 w-24 bg-gradient-to-r from-accent to-accent/60" />
-                <span className="text-xs font-mono text-accent tracking-widest font-ndot">
+                <span className="text-xs text-accent tracking-widest font-ndot">
                   COPY • PASTE • CUSTOMIZE
                 </span>
                 <div className="h-0.5 w-20 bg-gradient-to-r from-accent/60 to-transparent" />
@@ -144,7 +144,11 @@ export function CTASection() {
               asChild
               className="border-2 border-accent/30 hover:border-accent hover:bg-accent/8 font-ndot tracking-wide px-8 py-4 transition-all duration-300 group backdrop-blur-sm"
             >
-              <Link href="/contribute" aria-label="Contribute to NothingCN">
+              <Link 
+                href="/contribute" 
+                aria-label="Contribute to NothingCN"
+                rel="noopener noreferrer"
+              >
                 <Heart className="mr-3 h-5 w-5 group-hover:text-red-500 transition-colors duration-300" />
                 CONTRIBUTE
                 <Sparkles className="ml-3 h-4 w-4 group-hover:rotate-12 transition-transform duration-300" />

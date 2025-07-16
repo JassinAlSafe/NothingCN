@@ -253,7 +253,7 @@ export function FAQSection() {
               </h2>
               <div className="flex items-center justify-center space-x-3">
                 <div className="h-0.5 w-20 bg-gradient-to-r from-accent to-accent/50" />
-                <span className="text-xs font-mono text-accent tracking-widest font-ndot">
+                <span className="text-xs text-accent tracking-widest font-ndot">
                   FIND ANSWERS
                 </span>
                 <div className="h-0.5 w-16 bg-gradient-to-r from-accent/50 to-transparent" />
@@ -333,7 +333,7 @@ export function FAQSection() {
             ) : (
               filteredFAQs.map((categoryData, categoryIndex) => (
                 <div
-                  key={categoryData.category}
+                  key={`category-${categoryData.category.toLowerCase().replace(/\s+/g, '-')}`}
                   className="space-y-6"
                   style={{
                     animation: "fadeInUp 0.6s ease-out forwards",
@@ -365,7 +365,7 @@ export function FAQSection() {
                       const isOpen = openItems.has(faq.id);
                       return (
                         <Card
-                          key={faq.id}
+                          key={`faq-${faq.id}`}
                           className="border border-border/50 bg-card/60 backdrop-blur-sm overflow-hidden hover:border-accent/50 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 group relative"
                         >
                           {/* Nothing OS card enhancements */}
@@ -377,9 +377,13 @@ export function FAQSection() {
                             className="w-full p-6 text-left focus:outline-none focus:ring-4 focus:ring-accent/20 rounded-lg relative z-10"
                             aria-expanded={isOpen}
                             aria-controls={`faq-content-${faq.id}`}
+                            aria-describedby={`faq-question-${faq.id}`}
                           >
                             <div className="flex items-start justify-between gap-4">
-                              <h4 className="font-bold text-lg leading-relaxed bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent group-hover:from-accent group-hover:to-accent/80 transition-all duration-300 font-ndot">
+                              <h4 
+                                id={`faq-question-${faq.id}`}
+                                className="font-bold text-lg leading-relaxed bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent group-hover:from-accent group-hover:to-accent/80 transition-all duration-300 font-ndot"
+                              >
                                 {faq.question}
                               </h4>
                               <div

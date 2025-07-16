@@ -106,7 +106,7 @@ export function FeaturesSection() {
             className="font-bold text-4xl md:text-6xl mb-6 tracking-tight font-ndot"
           >
             Built for Modern
-            <span className="block text-accent bg-gradient-to-r from-accent to-accent/80 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-accent to-accent/80 bg-clip-text text-transparent">
               Development
             </span>
           </h2>
@@ -122,9 +122,11 @@ export function FeaturesSection() {
 
         {/* Enhanced Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {features.map((feature, index) => (
+          {features.map((feature) => (
             <Card
-              key={index}
+              key={`feature-${feature.title
+                .toLowerCase()
+                .replace(/\s+/g, "-")}`}
               className="relative border-2 border-border/50 bg-gradient-to-br from-background to-muted/20 p-8 hover:border-accent/50 transition-all duration-500 group animate-slide-in overflow-hidden backdrop-blur-sm"
               style={{ animationDelay: feature.delay }}
             >
@@ -140,9 +142,7 @@ export function FeaturesSection() {
               <div className="relative z-10 space-y-6">
                 {/* Enhanced header */}
                 <div className="flex items-start justify-between">
-                  <div
-                    className={`w-16 h-16 bg-${feature.accent}/10 text-${feature.accent} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-${feature.accent}/20 transition-all duration-300 border border-${feature.accent}/20 shadow-lg`}
-                  >
+                  <div className="w-16 h-16 bg-accent/10 text-accent rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-accent/20 transition-all duration-300 border border-accent/20 shadow-lg">
                     {feature.icon}
                   </div>
                   <Badge

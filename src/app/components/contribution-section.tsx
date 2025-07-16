@@ -100,7 +100,7 @@ export function ContributionSection() {
               </h2>
               <div className="flex items-center justify-center space-x-3">
                 <div className="h-0.5 w-20 bg-gradient-to-r from-accent to-accent/50" />
-                <span className="text-xs font-mono text-accent tracking-widest font-ndot">
+                <span className="text-xs text-accent tracking-widest font-ndot">
                   OPEN SOURCE
                 </span>
                 <div className="h-0.5 w-16 bg-gradient-to-r from-accent/50 to-transparent" />
@@ -215,6 +215,7 @@ export function ContributionSection() {
             <Link
               href="/contribute"
               aria-label="Start contributing to NothingCN"
+              rel="noopener noreferrer"
             >
               <Heart className="mr-3 h-5 w-5" />
               START CONTRIBUTING

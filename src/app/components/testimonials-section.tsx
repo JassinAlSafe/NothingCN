@@ -115,7 +115,7 @@ export function TestimonialsSection() {
               </h2>
               <div className="flex items-center justify-center space-x-3">
                 <div className="h-0.5 w-16 bg-gradient-to-r from-accent to-accent/50" />
-                <span className="text-xs font-mono text-accent tracking-widest font-ndot">
+                <span className="text-xs text-accent tracking-widest font-ndot">
                   COMMUNITY VOICES
                 </span>
                 <div className="h-0.5 w-12 bg-gradient-to-r from-accent/50 to-transparent" />
@@ -127,7 +127,7 @@ export function TestimonialsSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <Card
-              key={index}
+              key={`${testimonial.author}-${testimonial.company}`}
               className="border border-border/50 bg-card/80 backdrop-blur-sm p-6 hover:border-accent/50 transition-all duration-300 group hover:shadow-xl hover:shadow-accent/5 relative overflow-hidden"
               style={{
                 animationDelay: `${index * 200}ms`,
@@ -148,7 +148,7 @@ export function TestimonialsSection() {
                   aria-label={`${testimonial.rating} star rating`}
                 >
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-current mr-1" />
+                    <Star key={`star-${i}`} className="w-4 h-4 fill-current mr-1" />
                   ))}
                 </div>
                 <blockquote className="text-muted-foreground leading-relaxed font-ndot text-base">
@@ -157,7 +157,10 @@ export function TestimonialsSection() {
               </div>
 
               <div className="flex items-center space-x-4 relative z-10">
-                <div className="w-12 h-12 bg-gradient-to-br from-accent/20 to-accent/10 rounded-full flex items-center justify-center text-accent font-bold group-hover:from-accent/30 group-hover:to-accent/20 transition-all duration-300 font-ndot text-lg border border-accent/20">
+                <div 
+                  className="w-12 h-12 bg-gradient-to-br from-accent/20 to-accent/10 rounded-full flex items-center justify-center text-accent font-bold group-hover:from-accent/30 group-hover:to-accent/20 transition-all duration-300 font-ndot text-lg border border-accent/20"
+                  aria-label={`${testimonial.author} avatar`}
+                >
                   {testimonial.author.charAt(0)}
                 </div>
                 <div>
