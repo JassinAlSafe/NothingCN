@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -76,8 +76,7 @@ const sidebarConfig: SidebarSection[] = [
       {
         title: "Tabs",
         href: "/components/tabs",
-        disabled: true,
-        label: "Soon",
+        label: "New",
       },
       {
         title: "Input",
@@ -153,6 +152,7 @@ const getCompletionStats = (section: SidebarSection) => {
 
 export function ComponentsSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [collapsedSections, setCollapsedSections] = useState<string[]>([]);
   const [focusedIndex, setFocusedIndex] = useState(-1);
@@ -217,8 +217,8 @@ export function ComponentsSidebar() {
           e.preventDefault();
           if (focusedIndex >= 0 && focusedIndex < visibleItems.length) {
             const item = visibleItems[focusedIndex];
-            if (!item.disabled) {
-              window.location.href = item.href;
+            if (!item.disabled && item.href.startsWith('/')) {
+              router.push(item.href);
             }
           }
           break;
@@ -230,7 +230,7 @@ export function ComponentsSidebar() {
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [visibleItems, focusedIndex]);
+  }, [visibleItems, focusedIndex, router]);
 
   return (
     <div ref={containerRef} className="space-y-8" tabIndex={0}>

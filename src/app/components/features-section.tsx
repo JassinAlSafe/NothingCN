@@ -11,45 +11,45 @@ import {
   Shield,
 } from "lucide-react";
 
-// Enhanced features with better descriptions and metrics
+// Enhanced features focused on user benefits
 const features = [
   {
     icon: <Rocket className="h-6 w-6" />,
-    title: "Lightning Fast",
+    title: "Ship Faster",
     description:
-      "Built with Next.js 15, React 19, and Tailwind CSS 4 for blazing performance. Optimized for Core Web Vitals.",
-    highlight: "Latest Tech",
-    metrics: "98% Lighthouse Score",
+      "Skip weeks of development time. Pre-built components mean you focus on your business logic, not recreating UI patterns.",
+    highlight: "Save Time",
+    metrics: "75% Faster Development",
     accent: "accent",
     delay: "0ms",
   },
   {
     icon: <Sparkles className="h-6 w-6" />,
-    title: "Creative & Unique",
+    title: "Stand Out",
     description:
-      "Stunning, eye-catching designs that make your projects stand out. Inspired by Nothing OS design language.",
-    highlight: "Stand Out",
-    metrics: "50+ Unique Components",
+      "Your projects will look unique and memorable. Nothing OS-inspired designs that stand out from typical Bootstrap and Material UI interfaces.",
+    highlight: "Be Different",
+    metrics: "Unique Visual Language",
     accent: "accent/80",
     delay: "150ms",
   },
   {
     icon: <Command className="h-6 w-6" />,
-    title: "Developer Experience",
+    title: "Just Works",
     description:
-      "TypeScript-first, accessible components with comprehensive documentation and IntelliSense support.",
-    highlight: "DX Focused",
-    metrics: "100% TypeScript",
+      "TypeScript support, accessibility built-in, and comprehensive docs. No guesswork, just productivity.",
+    highlight: "Developer Joy",
+    metrics: "Zero Configuration",
     accent: "accent/60",
     delay: "300ms",
   },
   {
     icon: <Copy className="h-6 w-6" />,
-    title: "Copy & Paste Ready",
+    title: "No Dependencies",
     description:
-      "Zero dependencies. Copy the code and paste directly into your project. No configuration needed.",
-    highlight: "No Setup",
-    metrics: "Zero Dependencies",
+      "Copy, paste, customize. No complex installations or version conflicts. Your codebase stays clean and maintainable.",
+    highlight: "Clean Code",
+    metrics: "Zero Bundle Bloat",
     accent: "accent/40",
     delay: "450ms",
   },
@@ -105,16 +105,15 @@ export function FeaturesSection() {
             id="features-heading"
             className="font-bold text-4xl md:text-6xl mb-6 tracking-tight font-ndot"
           >
-            Built for Modern
+            Why Developers
             <span className="block bg-gradient-to-r from-accent to-accent/80 bg-clip-text text-transparent">
-              Development
+              Choose NothingCN
             </span>
           </h2>
 
           <div className="space-y-4">
             <p className="max-w-3xl mx-auto text-lg text-muted-foreground font-ndot leading-relaxed">
-              Everything you need to create stunning, accessible interfaces that
-              users love and developers enjoy building.
+              Stop rebuilding the same components. Start shipping faster with components that users love and you&apos;ll actually enjoy using.
             </p>
             <div className="h-0.5 w-32 bg-gradient-to-r from-transparent via-accent to-transparent mx-auto" />
           </div>

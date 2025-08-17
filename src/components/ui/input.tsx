@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   variant?: "default" | "pixel" | "terminal" | "glow" | "nothing";
   pixelSize?: "sm" | "md" | "lg";
+  error?: string;
+  validation?: (value: string) => string | undefined;
 }
 
 // Pixel corners component for consistent styling
@@ -23,12 +25,26 @@ const PixelCorners: React.FC<{ size?: "sm" | "md" | "lg" }> = ({ size = "md" }) 
 };
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, variant = "default", pixelSize = "md", ...props }, ref) => {
+  ({ className, type, variant = "default", pixelSize = "md", error, validation, ...props }, ref) => {
     const [isFocused, setIsFocused] = React.useState(false);
     const [hasContent, setHasContent] = React.useState(false);
+    const [validationError, setValidationError] = React.useState<string | undefined>();
+
+    const currentError = error || validationError;
+    const hasError = Boolean(currentError);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setHasContent(e.target.value.length > 0);
+      const value = e.target.value;
+      setHasContent(value.length > 0);
+      
+      // Run validation if provided
+      if (validation && value) {
+        const validationResult = validation(value);
+        setValidationError(validationResult);
+      } else {
+        setValidationError(undefined);
+      }
+      
       props.onChange?.(e);
     };
 
@@ -36,7 +52,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     
     const variantClasses = {
       default: cn(
-        "flex h-11 rounded-xl border-2 border-border/40 bg-background/80 backdrop-blur-sm px-4 py-3 text-sm font-medium",
+        "flex h-12 min-h-[48px] rounded-xl border-2 border-border/40 bg-background/80 backdrop-blur-sm px-4 py-3 text-sm font-medium",
         "ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium",
         "placeholder:text-muted-foreground/50 placeholder:font-normal",
         "focus:outline-none focus:border-accent/80 focus:bg-background focus:shadow-[0_0_0_3px_theme(colors.accent/0.1)]",
@@ -45,13 +61,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         "transition-all duration-300 ease-out",
         // Unique Nothing OS touches
         hasContent ? "border-accent/60 bg-accent/[0.02] text-foreground" : "",
-        isFocused ? "shadow-[0_0_0_3px_theme(colors.accent/0.1)] scale-[1.02]" : "",
+        isFocused ? "motion-safe:shadow-[0_0_0_3px_theme(colors.accent/0.1)] motion-safe:scale-[1.02]" : "",
+        // Error states
+        hasError ? "border-destructive/80 bg-destructive/[0.02] focus:border-destructive focus:shadow-[0_0_0_3px_theme(colors.destructive/0.1)]" : "",
         // Subtle gradient borders
         "relative before:absolute before:inset-0 before:rounded-xl before:p-[1px] before:bg-gradient-to-r before:from-border/20 before:to-border/60 before:-z-10",
         "after:absolute after:inset-[1px] after:rounded-[10px] after:bg-background/80 after:-z-10"
       ),
       pixel: cn(
-        "relative h-12 bg-background text-foreground font-mono text-sm",
+        "relative h-12 min-h-[48px] bg-background text-foreground font-mono text-sm",
         "border-2 border-border rounded-none",
         "px-4 py-3 leading-none tracking-wide",
         "placeholder:text-muted-foreground/60 placeholder:font-mono",
@@ -64,7 +82,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         isFocused ? "bg-accent/5" : ""
       ),
       terminal: cn(
-        "h-12 bg-black text-green-400 font-mono text-sm border-2 border-green-500/30 rounded-none",
+        "h-12 min-h-[48px] bg-black text-green-400 font-mono text-sm border-2 border-green-500/30 rounded-none",
         "px-4 py-3 leading-none tracking-wider",
         "placeholder:text-green-500/40",
         "focus:outline-none focus:border-green-400 focus:bg-black focus:shadow-[0_0_10px_rgba(34,197,94,0.3)]",
@@ -75,7 +93,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         isFocused ? "shadow-[inset_0_0_20px_rgba(34,197,94,0.1)]" : ""
       ),
       glow: cn(
-        "h-12 bg-black/90 text-accent font-medium text-sm border-2 border-accent/30 rounded-2xl",
+        "h-12 min-h-[48px] bg-black/90 text-accent font-medium text-sm border-2 border-accent/30 rounded-2xl",
         "px-4 py-3 leading-none tracking-normal backdrop-blur-md",
         "placeholder:text-accent/40",
         "focus:outline-none focus:border-accent focus:bg-black/95 focus:shadow-[0_0_20px_theme(colors.accent/0.4),inset_0_0_20px_theme(colors.accent/0.1)]",
@@ -84,13 +102,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         "file:bg-transparent file:font-medium file:text-sm file:border-0 file:text-accent",
         // Unique glow effects
         hasContent ? "text-white shadow-[0_0_15px_theme(colors.accent/0.3)]" : "",
-        isFocused ? "scale-[1.02] shadow-[0_0_25px_theme(colors.accent/0.5),inset_0_0_25px_theme(colors.accent/0.1)]" : "",
+        isFocused ? "motion-safe:scale-[1.02] shadow-[0_0_25px_theme(colors.accent/0.5),inset_0_0_25px_theme(colors.accent/0.1)]" : "",
         // Animated border gradient
         "relative before:absolute before:inset-0 before:rounded-2xl before:p-[1px] before:bg-gradient-to-r before:from-accent/20 before:via-accent/60 before:to-accent/20 before:-z-10",
         "after:absolute after:inset-[1px] after:rounded-[15px] after:bg-black/90 after:-z-10"
       ),
       nothing: cn(
-        "h-12 bg-background/95 backdrop-blur-sm text-foreground font-ndot text-sm border-2 border-border/40 rounded-lg",
+        "h-12 min-h-[48px] bg-background/95 backdrop-blur-sm text-foreground font-ndot text-sm border-2 border-border/40 rounded-lg",
         "px-4 py-3 leading-none tracking-wide",
         "placeholder:text-muted-foreground/60 placeholder:font-ndot",
         "focus:outline-none focus:border-accent/80 focus:bg-background focus:shadow-[0_0_0_3px_theme(colors.accent/0.1)]",
@@ -100,7 +118,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         "transition-all duration-300 ease-out",
         // Nothing-specific styling
         hasContent ? "border-accent/70 bg-accent/[0.03] text-foreground shadow-[0_0_0_1px_theme(colors.accent/0.1)]" : "",
-        isFocused ? "scale-[1.01] border-accent shadow-[0_0_0_3px_theme(colors.accent/0.15)]" : "",
+        isFocused ? "motion-safe:scale-[1.01] border-accent shadow-[0_0_0_3px_theme(colors.accent/0.15)]" : "",
         // Unique Nothing design elements
         "relative before:absolute before:inset-0 before:rounded-lg before:p-[1px] before:bg-gradient-to-r before:from-border/30 before:via-border/10 before:to-border/30 before:-z-10",
         "after:absolute after:inset-[1px] after:rounded-[7px] after:bg-background/95 after:-z-10"
@@ -151,24 +169,24 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1 pointer-events-none">
               <div className={cn(
                 "w-1.5 h-1.5 rounded-full transition-all duration-300",
-                isFocused ? "bg-accent animate-pulse" : "bg-border/40",
+                isFocused ? "bg-accent motion-safe:animate-pulse" : "bg-border/40",
                 hasContent ? "bg-accent/70" : ""
               )} />
               <div className={cn(
                 "w-1.5 h-1.5 rounded-full transition-all duration-300",
-                isFocused ? "bg-accent animate-pulse [animation-delay:0.1s]" : "bg-border/40",
+                isFocused ? "bg-accent motion-safe:animate-pulse [animation-delay:0.1s]" : "bg-border/40",
                 hasContent ? "bg-accent/70 [animation-delay:0.1s]" : ""
               )} />
               <div className={cn(
                 "w-1.5 h-1.5 rounded-full transition-all duration-300",
-                isFocused ? "bg-accent animate-pulse [animation-delay:0.2s]" : "bg-border/40",
+                isFocused ? "bg-accent motion-safe:animate-pulse [animation-delay:0.2s]" : "bg-border/40",
                 hasContent ? "bg-accent/70 [animation-delay:0.2s]" : ""
               )} />
             </div>
             
             {/* Focus ring effect */}
             {isFocused && (
-              <div className="absolute inset-0 rounded-lg border border-accent/30 pointer-events-none animate-pulse" />
+              <div className="absolute inset-0 rounded-lg border border-accent/30 pointer-events-none motion-safe:animate-pulse" />
             )}
             
             {/* Subtle background pattern */}

@@ -80,11 +80,19 @@ export interface GitHubIssue {
   comments: number;
 }
 
-const GITHUB_API_BASE = 'https://api.github.com';
+// Use our API proxy to avoid CSP issues
+const GITHUB_API_BASE = '/api/github';
 
 // Repository configuration with fallbacks
+// Repository configuration - pointing to the actual NothingCN repository
 const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER || 'JassinAlSafe';
 const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME || 'NothingCN';
+
+// Export repository URLs for consistent usage across the app
+export const GITHUB_REPO_URL = `https://github.com/${REPO_OWNER}/${REPO_NAME}`;
+export const GITHUB_ISSUES_URL = `${GITHUB_REPO_URL}/issues`;
+export const GITHUB_FORK_URL = `${GITHUB_REPO_URL}/fork`;
+export const GITHUB_NEW_ISSUE_URL = `${GITHUB_ISSUES_URL}/new`;
 
 // Cache for API responses to avoid rate limiting
 const cache = new Map<string, { data: unknown; timestamp: number }>();
@@ -118,10 +126,7 @@ async function fetchGitHubAPI(endpoint: string, options?: RequestInit, retries =
         'User-Agent': 'NothingCN-Website',
       };
 
-      // Add GitHub token if available (for higher rate limits)
-      if (process.env.GITHUB_TOKEN) {
-        headers['Authorization'] = `Bearer ${process.env.GITHUB_TOKEN}`;
-      }
+      // Token is handled by the API proxy on the server side
 
       const response = await fetch(`${GITHUB_API_BASE}${endpoint}`, {
         headers,
@@ -153,6 +158,11 @@ async function fetchGitHubAPI(endpoint: string, options?: RequestInit, retries =
         };
 
         console.error('GitHub API error details:', errorDetails);
+        
+        // Provide helpful error context
+        if (response.status === 404) {
+          throw new Error(`Repository ${REPO_OWNER}/${REPO_NAME} not found. Please check the repository name and ensure it's publicly accessible.`);
+        }
 
         if (response.status === 403) {
           const rateLimitRemaining = response.headers.get('X-RateLimit-Remaining');
@@ -182,14 +192,14 @@ async function fetchGitHubAPI(endpoint: string, options?: RequestInit, retries =
   }
 }
 
-// Mock data fallbacks for when API fails
+// Mock data fallbacks for when API fails or repository doesn't exist
 const mockStats: GitHubRepoStats = {
-  stargazers_count: 1247,
-  forks_count: 156,
-  open_issues_count: 23,
-  watchers_count: 89,
-  subscribers_count: 45,
-  network_count: 156,
+  stargazers_count: 150,
+  forks_count: 25,
+  open_issues_count: 5,
+  watchers_count: 150,
+  subscribers_count: 12,
+  network_count: 25,
 };
 
 const mockContributors: GitHubContributor[] = [
@@ -383,6 +393,19 @@ export async function getOpenIssues(limit: number = 10): Promise<GitHubIssue[]> 
 }
 
 // Utility functions
+export function proxyAvatarUrl(originalUrl: string): string {
+  if (!originalUrl) return '';
+  
+  // If it's already a GitHub avatar URL, proxy it
+  if (originalUrl.startsWith('https://avatars.githubusercontent.com/') || 
+      originalUrl.startsWith('https://github.com/')) {
+    return `/api/avatar?url=${encodeURIComponent(originalUrl)}`;
+  }
+  
+  // Return as-is for other URLs (shouldn't happen with GitHub API)
+  return originalUrl;
+}
+
 export function getTimeAgo(dateString: string): string {
   const now = new Date();
   const date = new Date(dateString);
