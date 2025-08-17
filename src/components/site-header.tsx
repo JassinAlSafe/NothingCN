@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Menu,
   X,
@@ -152,56 +152,112 @@ function useSystemTheme() {
   return systemTheme;
 }
 
-// Enhanced Search Dialog Component
+// Enhanced Search Dialog Component with performance optimizations
 function SearchDialog() {
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [filteredResults, setFilteredResults] = React.useState<
-    typeof searchableContent
-  >([]);
+  const [debouncedQuery, setDebouncedQuery] = React.useState("");
+  const [selectedIndex, setSelectedIndex] = React.useState(-1);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  // Keyboard shortcut
+  // Memoized searchable content for performance
+  const memoizedContent = React.useMemo(() => searchableContent, []);
+
+  // Debounce search query
   React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen(true);
-      }
-      if (e.key === "Escape") {
-        setOpen(false);
-      }
-    };
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 300);
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
-  // Filter search results
-  React.useEffect(() => {
-    if (!searchQuery.trim()) {
-      setFilteredResults([]);
-      return;
+  // Memoized filtered results with loading state
+  const filteredResults = React.useMemo(() => {
+    if (!debouncedQuery.trim()) {
+      setIsLoading(false);
+      return [];
     }
 
+    setIsLoading(true);
     const results: typeof searchableContent = [];
-    searchableContent.forEach((category) => {
+    const query = debouncedQuery.toLowerCase();
+    
+    memoizedContent.forEach((category) => {
       const matchingItems = category.items.filter(
         (item) =>
-          item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.description.toLowerCase().includes(searchQuery.toLowerCase())
+          item.name.toLowerCase().includes(query) ||
+          item.description.toLowerCase().includes(query)
       );
       if (matchingItems.length > 0) {
         results.push({ ...category, items: matchingItems });
       }
     });
-    setFilteredResults(results);
-  }, [searchQuery]);
+    
+    setIsLoading(false);
+    return results;
+  }, [debouncedQuery, memoizedContent]);
 
-  const handleItemSelect = (href: string) => {
+  // Flatten results for keyboard navigation
+  const flatResults = React.useMemo(() => {
+    return filteredResults.flatMap(category => 
+      category.items.map(item => ({ ...item, category: category.category }))
+    );
+  }, [filteredResults]);
+
+  // Keyboard navigation
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen(true);
+        return;
+      }
+      
+      if (!open) return;
+
+      switch (e.key) {
+        case "Escape":
+          setOpen(false);
+          setSelectedIndex(-1);
+          break;
+        case "ArrowDown":
+          e.preventDefault();
+          setSelectedIndex(prev => 
+            prev < flatResults.length - 1 ? prev + 1 : prev
+          );
+          break;
+        case "ArrowUp":
+          e.preventDefault();
+          setSelectedIndex(prev => prev > 0 ? prev - 1 : -1);
+          break;
+        case "Enter":
+          e.preventDefault();
+          if (selectedIndex >= 0 && flatResults[selectedIndex]) {
+            handleItemSelect(flatResults[selectedIndex].href);
+          }
+          break;
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open, selectedIndex, flatResults]);
+
+  // Reset selection when results change
+  React.useEffect(() => {
+    setSelectedIndex(-1);
+  }, [filteredResults]);
+
+  const handleItemSelect = React.useCallback((href: string) => {
     setOpen(false);
     setSearchQuery("");
-    window.location.href = href;
-  };
+    setSelectedIndex(-1);
+    if (href.startsWith('/')) {
+      router.push(href);
+    }
+  }, [router]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -226,10 +282,10 @@ function SearchDialog() {
         <div className="flex items-center border-b px-4 py-3 bg-muted/20">
           <div className="flex items-center gap-2">
             <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
-            <div className="flex gap-1">
-              <Circle className="h-1.5 w-1.5 bg-accent rounded-full animate-pulse" />
-              <Circle className="h-1.5 w-1.5 bg-accent rounded-full animate-pulse [animation-delay:0.2s]" />
-              <Circle className="h-1.5 w-1.5 bg-accent rounded-full animate-pulse [animation-delay:0.4s]" />
+            <div className="flex gap-1" aria-hidden="true">
+              <Circle className="h-1.5 w-1.5 bg-accent rounded-full motion-safe:animate-pulse" />
+              <Circle className="h-1.5 w-1.5 bg-accent rounded-full motion-safe:animate-pulse motion-safe:[animation-delay:0.2s]" />
+              <Circle className="h-1.5 w-1.5 bg-accent rounded-full motion-safe:animate-pulse motion-safe:[animation-delay:0.4s]" />
             </div>
           </div>
           <Input
@@ -238,15 +294,29 @@ function SearchDialog() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-1 border-0 bg-transparent px-3 py-0 text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 font-ndot"
             autoFocus
+            role="combobox"
+            aria-expanded={filteredResults.length > 0}
+            aria-controls="search-results"
+            aria-activedescendant={selectedIndex >= 0 ? `search-item-${selectedIndex}` : undefined}
           />
+          {isLoading && (
+            <div className="ml-2">
+              <Circle className="h-4 w-4 motion-safe:animate-spin text-muted-foreground" />
+            </div>
+          )}
         </div>
-        <div className="max-h-[400px] overflow-y-auto">
-          {filteredResults.length === 0 && searchQuery.trim() === "" && (
+        <div 
+          className="max-h-[400px] overflow-y-auto" 
+          id="search-results"
+          role="listbox"
+          aria-label="Search results"
+        >
+          {filteredResults.length === 0 && debouncedQuery.trim() === "" && (
             <div className="p-6 text-center text-muted-foreground">
               <div className="mb-4 flex justify-center">
                 <div className="relative">
                   <Circle className="h-8 w-8 text-accent" />
-                  <div className="absolute inset-0 h-8 w-8 border-2 border-accent rounded-full animate-ping" />
+                  <div className="absolute inset-0 h-8 w-8 border-2 border-accent rounded-full motion-safe:animate-ping" />
                 </div>
               </div>
               <div className="mb-2 text-lg font-medium font-ndot">
@@ -257,7 +327,7 @@ function SearchDialog() {
               </p>
             </div>
           )}
-          {filteredResults.length === 0 && searchQuery.trim() !== "" && (
+          {filteredResults.length === 0 && debouncedQuery.trim() !== "" && (
             <div className="p-6 text-center text-muted-foreground">
               <div className="mb-4 flex justify-center">
                 <Circle className="h-8 w-8 text-muted-foreground opacity-50" />
@@ -270,39 +340,63 @@ function SearchDialog() {
               </p>
             </div>
           )}
-          {filteredResults.map((category) => (
+          {filteredResults.map((category, categoryIndex) => (
             <div key={category.category} className="p-2">
               <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider font-ndot">
                 {category.category}
               </div>
-              <div className="space-y-1">
-                {category.items.map((item) => (
-                  <button
-                    key={item.href}
-                    onClick={() => handleItemSelect(item.href)}
-                    className="w-full text-left px-3 py-2 rounded-md hover:bg-muted/50 transition-colors duration-200 group border border-transparent hover:border-accent/20"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <div className="font-medium group-hover:text-accent transition-colors font-ndot">
-                          {item.name}
+              <div className="space-y-1" role="group" aria-labelledby={`category-${categoryIndex}`}>
+                {category.items.map((item, itemIndex) => {
+                  const globalIndex = filteredResults
+                    .slice(0, categoryIndex)
+                    .reduce((acc, cat) => acc + cat.items.length, 0) + itemIndex;
+                  const isSelected = selectedIndex === globalIndex;
+                  
+                  return (
+                    <button
+                      key={item.href}
+                      id={`search-item-${globalIndex}`}
+                      onClick={() => handleItemSelect(item.href)}
+                      className={cn(
+                        "w-full text-left px-3 py-2 rounded-md transition-colors duration-200 group border",
+                        isSelected 
+                          ? "bg-accent/10 border-accent/20 text-accent" 
+                          : "border-transparent hover:bg-muted/50 hover:border-accent/20"
+                      )}
+                      role="option"
+                      aria-selected={isSelected}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className={cn(
+                            "font-medium transition-colors font-ndot",
+                            isSelected ? "text-accent" : "group-hover:text-accent"
+                          )}>
+                            {item.name}
+                          </div>
+                          <div className="text-sm text-muted-foreground line-clamp-1">
+                            {item.description}
+                          </div>
                         </div>
-                        <div className="text-sm text-muted-foreground line-clamp-1">
-                          {item.description}
+                        <div className="flex items-center gap-2">
+                          <ArrowRight className={cn(
+                            "h-3 w-3 transition-opacity text-accent",
+                            isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                          )} />
+                          <Badge
+                            variant="secondary"
+                            className={cn(
+                              "text-xs transition-opacity font-ndot",
+                              isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                            )}
+                          >
+                            Enter
+                          </Badge>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <ArrowRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity text-accent" />
-                        <Badge
-                          variant="secondary"
-                          className="text-xs opacity-0 group-hover:opacity-100 transition-opacity font-ndot"
-                        >
-                          Enter
-                        </Badge>
-                      </div>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           ))}
@@ -324,6 +418,48 @@ function SearchDialog() {
   );
 }
 
+// GitHub data hook with fallback
+function useGitHubData() {
+  const [starCount, setStarCount] = React.useState<string>("1.2k");
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    let mounted = true;
+    
+    const fetchStarCount = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('https://api.github.com/repos/JassinAlSafe/NothingCN');
+        if (response.ok && mounted) {
+          const data = await response.json();
+          const stars = data.stargazers_count;
+          // Format star count
+          const formatted = stars >= 1000 
+            ? `${(stars / 1000).toFixed(1)}k` 
+            : stars.toString();
+          setStarCount(formatted);
+        }
+      } catch (error) {
+        // Keep fallback value on error
+        console.warn('Failed to fetch GitHub star count:', error);
+      } finally {
+        if (mounted) setIsLoading(false);
+      }
+    };
+
+    // Only fetch in browser, with debounce
+    if (typeof window !== 'undefined') {
+      const timer = setTimeout(fetchStarCount, 1000);
+      return () => {
+        clearTimeout(timer);
+        mounted = false;
+      };
+    }
+  }, []);
+
+  return { starCount, isLoading };
+}
+
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [themeMode, setThemeMode] = React.useState<"light" | "dark" | "system">(
@@ -331,6 +467,7 @@ export function SiteHeader() {
   );
   const pathname = usePathname();
   const systemTheme = useSystemTheme();
+  const { starCount, isLoading: githubLoading } = useGitHubData();
 
   const applyTheme = React.useCallback(
     (mode: "light" | "dark" | "system") => {
@@ -397,16 +534,28 @@ export function SiteHeader() {
     }
   };
 
+  // Refs for outside click detection
+  const mobileMenuRef = React.useRef<HTMLDivElement>(null);
+  const menuButtonRef = React.useRef<HTMLButtonElement>(null);
+
   // Close menu on outside click
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (isMenuOpen && !(event.target as Element).closest(".mobile-menu")) {
+      if (
+        isMenuOpen &&
+        mobileMenuRef.current &&
+        menuButtonRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node) &&
+        !menuButtonRef.current.contains(event.target as Node)
+      ) {
         setIsMenuOpen(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
   }, [isMenuOpen]);
 
   // Focus trap for mobile menu
@@ -488,10 +637,13 @@ export function SiteHeader() {
 
           {/* Mobile Menu Button */}
           <Button
+            ref={menuButtonRef}
             variant="ghost"
             size="icon"
             className="md:hidden h-9 w-9"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMenuOpen ? (
               <X className="h-4 w-4" />
@@ -516,7 +668,9 @@ export function SiteHeader() {
             >
               <GitHubIcon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
               <Star className="h-3 w-3 fill-current transition-colors duration-300 group-hover:text-yellow-500" />
-              <span className="text-xs font-medium">1.2k</span>
+              <span className="text-xs font-medium">
+                {githubLoading ? "..." : starCount}
+              </span>
             </Link>
           </Button>
 
@@ -528,18 +682,21 @@ export function SiteHeader() {
             className="h-9 w-9 transition-all duration-300 hover:bg-accent/10 hover:text-accent group"
             title={`Theme: ${themeMode}`}
           >
-            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all duration-300 dark:-rotate-90 dark:scale-0 group-hover:rotate-180" />
-            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100 group-hover:-rotate-90" />
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all duration-300 dark:-rotate-90 dark:scale-0 motion-safe:group-hover:rotate-180" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100 motion-safe:group-hover:-rotate-90" />
           </Button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       <div
+        ref={mobileMenuRef}
+        id="mobile-menu"
         className={cn(
           "mobile-menu md:hidden border-t border-border bg-background/95 backdrop-blur-sm transition-all duration-300 ease-in-out overflow-hidden",
           isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
         )}
+        aria-hidden={!isMenuOpen}
       >
         <div
           className="px-4 py-6 space-y-4"
@@ -587,7 +744,9 @@ export function SiteHeader() {
               <span>GitHub</span>
               <div className="ml-auto flex items-center space-x-1">
                 <Star className="h-3 w-3 fill-current transition-colors duration-300 group-hover:text-yellow-500" />
-                <span className="text-xs">2</span>
+                <span className="text-xs">
+                  {githubLoading ? "..." : starCount}
+                </span>
               </div>
             </Link>
           </div>

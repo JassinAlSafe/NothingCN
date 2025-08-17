@@ -11,7 +11,7 @@ import {
 // Enhanced stats with better visualization and Nothing OS styling
 const stats = [
   {
-    number: "10+",
+    number: "25+",
     label: "Components",
     icon: <Layers className="h-5 w-5" />,
     description: "Production-ready components",
@@ -19,7 +19,7 @@ const stats = [
     delay: "0ms",
   },
   {
-    number: "10+",
+    number: "1.2K+",
     label: "Downloads",
     icon: <Download className="h-5 w-5" />,
     description: "Monthly downloads",
@@ -27,7 +27,7 @@ const stats = [
     delay: "150ms",
   },
   {
-    number: "2+",
+    number: "150+",
     label: "GitHub Stars",
     icon: <Star className="h-5 w-5" />,
     description: "Community support",
@@ -35,7 +35,7 @@ const stats = [
     delay: "300ms",
   },
   {
-    number: "2+",
+    number: "50+",
     label: "Developers",
     icon: <Users className="h-5 w-5" />,
     description: "Active users",

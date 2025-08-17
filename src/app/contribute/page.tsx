@@ -17,6 +17,11 @@ import {
   HelpWantedIssues 
 } from "@/components/github-stats";
 import { 
+  GITHUB_REPO_URL, 
+  GITHUB_FORK_URL, 
+  GITHUB_NEW_ISSUE_URL 
+} from "@/lib/github";
+import { 
   Github, 
   Heart, 
   Star, 
@@ -31,6 +36,8 @@ import {
   Coffee,
   MessageSquare,
   BookOpen,
+  ArrowRight,
+  Bug,
   Palette,
   Clock,
   TrendingUp,
@@ -123,7 +130,7 @@ export default function ContributePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
               <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                <Link href="https://github.com/nothingcn/nothingcn" target="_blank">
+                <Link href={GITHUB_REPO_URL} target="_blank" rel="noopener noreferrer">
                   <Github className="mr-2 h-5 w-5" />
                   View on GitHub
                 </Link>
@@ -155,6 +162,119 @@ export default function ContributePage() {
             <p className="text-muted-foreground">Real-time data from our GitHub repository</p>
           </div>
           <GitHubRepoStats />
+        </div>
+      </section>
+
+      {/* Quick Win Section */}
+      <section className="py-16 bg-accent/5 border-y border-accent/10">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Zap className="h-6 w-6 text-accent" />
+              <h2 className="text-3xl font-bold font-ndot">Quick Wins</h2>
+              <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-green-500/20">
+                No Setup Required
+              </Badge>
+            </div>
+            <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
+              Start contributing in under 5 minutes. These tasks require no technical setup.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {/* Documentation Fix */}
+            <Card className="group hover:border-accent/50 transition-all duration-300 relative overflow-hidden">
+              <CardHeader className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-blue-500/10 text-blue-500 rounded-lg flex items-center justify-center">
+                    <BookOpen className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <Badge variant="outline" className="text-xs">
+                      1-2 min
+                    </Badge>
+                  </div>
+                </div>
+                <h3 className="font-semibold text-lg mb-2 font-ndot">Fix Typos</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Spot a typo or unclear documentation? Click edit on any docs page and suggest improvements.
+                </p>
+                <div className="mt-4">
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/docs" className="text-xs">
+                      Browse Docs
+                      <ArrowRight className="ml-2 h-3 w-3" />
+                    </Link>
+                  </Button>
+                </div>
+              </CardHeader>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/3 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </Card>
+
+            {/* Component Ideas */}
+            <Card className="group hover:border-accent/50 transition-all duration-300 relative overflow-hidden">
+              <CardHeader className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-purple-500/10 text-purple-500 rounded-lg flex items-center justify-center">
+                    <Lightbulb className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <Badge variant="outline" className="text-xs">
+                      2-3 min
+                    </Badge>
+                  </div>
+                </div>
+                <h3 className="font-semibold text-lg mb-2 font-ndot">Suggest Ideas</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Have an idea for a new component? Share it in our feature requests. No coding required.
+                </p>
+                <div className="mt-4">
+                  <Button asChild size="sm" variant="outline">
+                    <Link href="/feature-requests" className="text-xs">
+                      Share Ideas
+                      <ArrowRight className="ml-2 h-3 w-3" />
+                    </Link>
+                  </Button>
+                </div>
+              </CardHeader>
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/3 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </Card>
+
+            {/* Report Issues */}
+            <Card className="group hover:border-accent/50 transition-all duration-300 relative overflow-hidden">
+              <CardHeader className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-orange-500/10 text-orange-500 rounded-lg flex items-center justify-center">
+                    <Bug className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <Badge variant="outline" className="text-xs">
+                      3-5 min
+                    </Badge>
+                  </div>
+                </div>
+                <h3 className="font-semibold text-lg mb-2 font-ndot">Report Bugs</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Found something broken? Help us improve by reporting issues with clear steps to reproduce.
+                </p>
+                <div className="mt-4">
+                  <Button asChild size="sm" variant="outline">
+                    <Link href={GITHUB_NEW_ISSUE_URL} target="_blank" rel="noopener noreferrer" className="text-xs">
+                      Report Bug
+                      <ArrowRight className="ml-2 h-3 w-3" />
+                    </Link>
+                  </Button>
+                </div>
+              </CardHeader>
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/3 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </Card>
+          </div>
+
+          <div className="text-center mt-8">
+            <p className="text-sm text-muted-foreground font-ndot">
+              💡 <strong>Just getting started?</strong> These contributions help you learn our workflow and build confidence.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -257,7 +377,7 @@ export default function ContributePage() {
           
           <div className="text-center mt-12">
             <Button asChild size="lg" variant="outline" className="border-2 border-accent/20 hover:border-accent hover:bg-accent/5">
-              <Link href="/docs/contributing" target="_blank">
+              <Link href="/docs/contributing" target="_blank" rel="noopener noreferrer">
                 <BookOpen className="mr-2 h-4 w-4" />
                 Read Full Contributing Guide
                 <ExternalLink className="ml-2 h-4 w-4" />
@@ -383,13 +503,13 @@ export default function ContributePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                <Link href="https://github.com/nothingcn/nothingcn/fork" target="_blank">
+                <Link href={GITHUB_FORK_URL} target="_blank" rel="noopener noreferrer">
                   <Github className="mr-2 h-5 w-5" />
                   Fork Repository
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <Link href="https://discord.gg/nothingcn" target="_blank">
+                <Link href="https://discord.gg/nothingcn" target="_blank" rel="noopener noreferrer">
                   <MessageSquare className="mr-2 h-4 w-4" />
                   Join Discord
                 </Link>

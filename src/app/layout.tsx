@@ -96,6 +96,12 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
+{process.env.NODE_ENV === 'production' && (
+          <meta 
+            httpEquiv="Content-Security-Policy" 
+            content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: http: blob: https://avatars.githubusercontent.com; font-src 'self' data:; connect-src 'self' https://api.github.com; media-src 'self'; object-src 'none'; child-src 'self'; frame-src 'self'; worker-src 'self' blob:; form-action 'self'; base-uri 'self'; manifest-src 'self';"
+          />
+        )}
 
         {/* Preload critical resources */}
         <link

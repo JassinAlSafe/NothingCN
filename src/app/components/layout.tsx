@@ -26,23 +26,23 @@ export default function ComponentsLayout({
       <div className="flex">
         {/* Mobile Sidebar */}
         <aside className={cn(
-          "fixed top-20 left-0 z-50 h-[calc(100vh-5rem)] w-80 shrink-0 border-r-2 border-border bg-background transform transition-transform duration-300 md:hidden",
+          "fixed top-20 left-0 z-50 h-[calc(100vh-5rem)] w-72 sm:w-80 shrink-0 border-r-2 border-border bg-background transform transition-transform duration-300 md:hidden",
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}>
-          <div className="h-full overflow-y-auto py-6 px-6 scrollbar-thin scroll-smooth">
+          <div className="h-full overflow-y-auto py-4 px-4 sm:py-6 sm:px-6 scrollbar-thin scroll-smooth">
             <ComponentsSidebar />
           </div>
         </aside>
         
         {/* Desktop Sidebar */}
-        <aside className="fixed top-20 left-0 z-30 hidden h-[calc(100vh-5rem)] w-64 shrink-0 border-r-2 border-border bg-background/95 backdrop-blur-xl md:block">
+        <aside className="fixed top-20 left-0 z-30 hidden h-[calc(100vh-5rem)] w-64 lg:w-72 shrink-0 border-r-2 border-border bg-background/95 backdrop-blur-xl md:block">
           <div className="h-full overflow-y-auto py-6 px-6 scrollbar-thin scroll-smooth">
             <ComponentsSidebar />
           </div>
         </aside>
         
         {/* Main Content */}
-        <main className="flex-1 md:ml-64">
+        <main className="flex-1 md:ml-64 lg:ml-72">
           {/* Mobile Header */}
           <div className="sticky top-20 z-20 border-b-2 border-border bg-background/95 backdrop-blur-xl px-6 py-4 md:hidden">
             <Button
@@ -60,7 +60,7 @@ export default function ComponentsLayout({
             </Button>
           </div>
           
-          <div className="mx-auto max-w-4xl px-6 py-8 lg:px-8 lg:py-12">
+          <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
             {children}
           </div>
         </main>

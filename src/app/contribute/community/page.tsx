@@ -31,11 +31,22 @@ import {
   getTimeAgo,
   formatCommitMessage,
   getContributionTypeFromCommit,
+  proxyAvatarUrl,
   type GitHubContributor,
   type GitHubCommit,
   type GitHubPullRequest,
   type GitHubIssue,
 } from "@/lib/github";
+
+// Security function to sanitize color values to prevent XSS
+const sanitizeColor = (color: string): string => {
+  // Only allow valid hex colors (6 characters, alphanumeric)
+  if (/^[0-9A-Fa-f]{6}$/.test(color)) {
+    return color;
+  }
+  // Fallback to neutral color if invalid
+  return '6b7280'; // gray-500
+};
 
 export default function CommunityPage() {
   const [contributors, setContributors] = useState<GitHubContributor[]>([]);
@@ -208,7 +219,7 @@ export default function CommunityPage() {
                     <div className="relative">
                       <Avatar className="w-10 h-10 group-hover:scale-110 transition-transform duration-300">
                         <AvatarImage
-                          src={contributor.avatar_url}
+                          src={proxyAvatarUrl(contributor.avatar_url)}
                           alt={contributor.login}
                         />
                         <AvatarFallback>
@@ -232,6 +243,7 @@ export default function CommunityPage() {
                         <Link
                           href={contributor.html_url}
                           target="_blank"
+                          rel="noopener noreferrer"
                           className="font-medium text-sm hover:text-accent transition-colors"
                         >
                           {contributor.name || contributor.login}
@@ -300,12 +312,12 @@ export default function CommunityPage() {
                                     {activity.type === "commit" &&
                                     activity.data.author ? (
                                       <AvatarImage
-                                        src={activity.data.author.avatar_url}
+                                        src={proxyAvatarUrl(activity.data.author.avatar_url)}
                                         alt={activity.data.author.login}
                                       />
                                     ) : activity.type === "pullrequest" ? (
                                       <AvatarImage
-                                        src={activity.data.user.avatar_url}
+                                        src={proxyAvatarUrl(activity.data.user.avatar_url)}
                                         alt={activity.data.user.login}
                                       />
                                     ) : null}
@@ -356,6 +368,7 @@ export default function CommunityPage() {
                                   <Link
                                     href={activity.data.html_url}
                                     target="_blank"
+                                    rel="noopener noreferrer"
                                     className="text-sm text-foreground hover:text-accent transition-colors block line-clamp-2 group"
                                   >
                                     {activity.type === "commit"
@@ -448,7 +461,7 @@ export default function CommunityPage() {
                         <div className="relative">
                           <Avatar className="w-8 h-8 group-hover:scale-110 transition-transform duration-300">
                             <AvatarImage
-                              src={issue.user.avatar_url}
+                              src={proxyAvatarUrl(issue.user.avatar_url)}
                               alt={issue.user.login}
                             />
                             <AvatarFallback>
@@ -473,6 +486,7 @@ export default function CommunityPage() {
                           <Link
                             href={issue.html_url}
                             target="_blank"
+                            rel="noopener noreferrer"
                             className="font-medium text-sm hover:text-accent transition-colors group-hover:underline block"
                           >
                             {issue.title}
@@ -485,8 +499,8 @@ export default function CommunityPage() {
                                 variant="secondary"
                                 className="text-xs"
                                 style={{
-                                  backgroundColor: `#${label.color}20`,
-                                  color: `#${label.color}`,
+                                  backgroundColor: `#${sanitizeColor(label.color)}20`,
+                                  color: `#${sanitizeColor(label.color)}`,
                                 }}
                               >
                                 {label.name}
@@ -530,6 +544,7 @@ export default function CommunityPage() {
                 <Link
                   href="https://github.com/JassinAlSafe/NothingCN/fork"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Github className="mr-2 h-5 w-5" />
                   Fork Repository
@@ -539,6 +554,7 @@ export default function CommunityPage() {
                 <Link
                   href="https://github.com/JassinAlSafe/NothingCN/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Heart className="mr-2 h-4 w-4" />
                   Good First Issues

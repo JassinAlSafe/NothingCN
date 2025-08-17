@@ -28,6 +28,7 @@ import {
   getTimeAgo,
   formatCommitMessage,
   getContributionTypeFromCommit,
+  proxyAvatarUrl,
   type GitHubContributor,
   type GitHubCommit,
   type GitHubPullRequest,
@@ -143,7 +144,7 @@ export function TopContributors() {
         <div key={contributor.id} className="flex items-center space-x-3 group hover:bg-muted/30 p-2 rounded-lg transition-colors">
           <div className="relative">
             <Avatar className="w-10 h-10 group-hover:scale-110 transition-transform duration-300">
-              <AvatarImage src={contributor.avatar_url} alt={contributor.login} />
+              <AvatarImage src={proxyAvatarUrl(contributor.avatar_url)} alt={contributor.login} />
               <AvatarFallback>{contributor.login.slice(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
             {index < 3 && (
@@ -254,9 +255,9 @@ export function RecentActivity() {
           <div className="relative">
             <Avatar className="w-8 h-8 group-hover:scale-110 transition-transform duration-300">
               {activity.type === 'commit' && activity.data.author ? (
-                <AvatarImage src={activity.data.author.avatar_url} alt={activity.data.author.login} />
+                <AvatarImage src={proxyAvatarUrl(activity.data.author.avatar_url)} alt={activity.data.author.login} />
               ) : activity.type === 'pullrequest' ? (
-                <AvatarImage src={activity.data.user.avatar_url} alt={activity.data.user.login} />
+                <AvatarImage src={proxyAvatarUrl(activity.data.user.avatar_url)} alt={activity.data.user.login} />
               ) : null}
               <AvatarFallback>
                 {activity.type === 'commit' 
@@ -365,7 +366,7 @@ export function HelpWantedIssues() {
             
             <div className="flex items-center space-x-2 mb-3">
               <Avatar className="w-6 h-6">
-                <AvatarImage src={issue.user.avatar_url} alt={issue.user.login} />
+                <AvatarImage src={proxyAvatarUrl(issue.user.avatar_url)} alt={issue.user.login} />
                 <AvatarFallback>{issue.user.login.slice(0, 2).toUpperCase()}</AvatarFallback>
               </Avatar>
               <span className="text-xs text-muted-foreground">
