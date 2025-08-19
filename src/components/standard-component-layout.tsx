@@ -68,8 +68,14 @@ export const StandardComponentLayout = React.memo(function StandardComponentLayo
   testVariants = [],
   ComponentClass
 }: StandardComponentLayoutProps) {
-  // Use custom sections or default ones
-  const sections = customSections || defaultSections;
+  // Build sections array based on what content we'll actually render
+  const sections = customSections || [
+    { id: "installation", title: "Installation" },
+    { id: "usage", title: "Usage" },
+    ...(basicUsageCode ? [{ id: "basic-usage", title: "Basic Usage" }] : []),
+    { id: "examples", title: "Examples" },
+    ...(componentSourceCode ? [{ id: "component-source", title: "Component Source" }] : []),
+  ];
   
   // Get navigation for this component
   const { previous, next } = getComponentNavigation(componentPath);
@@ -134,65 +140,8 @@ export function Example() {
           )}
         </div>
 
-        {/* Installation Section */}
-        <div id="installation" className="space-y-4">
-          <h2 className="text-3xl font-bold tracking-tight font-ndot">Installation</h2>
-          <InstallationTabs
-            cliCommand={cliCommand || `npx nothingcn@latest add ${componentName.toLowerCase()}`}
-            manualSteps={defaultManualSteps}
-          />
-        </div>
-
-        {/* Usage Section */}
-        <div id="usage" className="space-y-4">
-          <h2 className="text-3xl font-bold tracking-tight font-ndot">Usage</h2>
-          <div className="space-y-2">
-            <pre className="bg-muted rounded-lg p-4 overflow-x-auto text-sm">
-              <code>{`import { ${componentName} } from "@/components/ui/${componentName.toLowerCase()}"`}</code>
-            </pre>
-          </div>
-        </div>
-
-        {/* Basic Usage Example */}
-        {basicUsageCode && (
-          <div id="basic-usage">
-            <ComponentPreview
-              title="Basic Usage"
-              description={`Basic example of the ${componentName} component.`}
-              preview={<div className="text-muted-foreground">Component preview will be rendered here</div>}
-              code={basicUsageCode}
-            />
-          </div>
-        )}
-
-        {/* Custom Content */}
-        <div id="examples" className="space-y-8">
-          {children}
-        </div>
-
-        {/* Component Testing */}
-        {enableTesting && ComponentClass && (
-          <div id="testing" className="space-y-4">
-            <h2 className="text-3xl font-bold tracking-tight font-ndot">Component Testing</h2>
-            <ComponentTestRunner
-              componentName={componentName}
-              ComponentClass={ComponentClass}
-              variants={testVariants}
-              baseProps={{}}
-            />
-          </div>
-        )}
-
-        {/* Component Source Code */}
-        {componentSourceCode && (
-          <div id="component-source">
-            <ComponentCode
-              title="Component Source"
-              description="Copy and paste the following code into your project."
-              code={componentSourceCode}
-            />
-          </div>
-        )}
+        {/* All Content Provided by Children */}
+        {children}
       </div>
     </ComponentLayout>
   );

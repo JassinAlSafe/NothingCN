@@ -8,6 +8,10 @@ export const componentList = [
     title: "Alert"
   },
   {
+    href: "/components/badge",
+    title: "Badge"
+  },
+  {
     href: "/components/button",
     title: "Button"
   },
@@ -16,16 +20,12 @@ export const componentList = [
     title: "Card"
   },
   {
-    href: "/components/badge",
-    title: "Badge"
-  },
-  {
     href: "/components/code-block",
     title: "Code Block"
   },
   {
-    href: "/components/input",
-    title: "Input"
+    href: "/components/code-preview",
+    title: "Code Preview"
   },
   {
     href: "/components/dialog",
@@ -36,16 +36,24 @@ export const componentList = [
     title: "Discussion Card"
   },
   {
-    href: "/components/pixel-weather-card",
-    title: "Pixel Weather Card"
+    href: "/components/input",
+    title: "Input"
+  },
+  {
+    href: "/components/nothing-calendar",
+    title: "Nothing Calendar"
   },
   {
     href: "/components/pixel-forms",
     title: "Pixel Forms"
   },
   {
-    href: "/components/nothing-calendar",
-    title: "Nothing Calendar"
+    href: "/components/pixel-weather-card",
+    title: "Pixel Weather Card"
+  },
+  {
+    href: "/components/tabs",
+    title: "Tabs"
   }
 ];
 

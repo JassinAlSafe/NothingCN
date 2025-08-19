@@ -271,3 +271,152 @@ This standardized approach ensures:
 - Excellent mobile responsiveness
 - Proper accessibility support
 - Easy navigation and documentation discovery
+
+## Component Registry System
+
+### Overview
+NothingCN will implement a component registry system similar to shadcn/ui for managing and distributing components. This system allows for programmatic installation, versioning, and dependency management of components.
+
+### Registry JSON Structure
+
+The main registry file (`registry.json`) defines the entire component library:
+
+```json
+{
+  "$schema": "https://nothingcn.com/schema/registry.json",
+  "name": "nothingcn",
+  "homepage": "https://nothingcn.com",
+  "items": [
+    // Array of registry items
+  ]
+}
+```
+
+#### Registry Fields
+- **`$schema`**: Points to the JSON schema definition for validation
+- **`name`**: Registry identifier (used for metadata and data attributes)
+- **`homepage`**: URL of the registry's homepage
+- **`items`**: Array of all registry items (components, blocks, etc.)
+
+### Registry Item JSON Structure
+
+Each item in the registry follows this schema:
+
+```json
+{
+  "$schema": "https://nothingcn.com/schema/registry-item.json",
+  "name": "button",
+  "type": "registry:ui",
+  "title": "Button",
+  "description": "A versatile button component with multiple variants.",
+  "files": [
+    {
+      "path": "registry/default/ui/button.tsx",
+      "type": "registry:component",
+      "target": "components/ui/button.tsx"
+    }
+  ],
+  "dependencies": ["@radix-ui/react-slot"],
+  "registryDependencies": ["utils"],
+  "tailwind": {
+    "config": {
+      "theme": {
+        "extend": {
+          // Tailwind config extensions
+        }
+      }
+    }
+  },
+  "cssVars": {
+    "light": {
+      "--button-bg": "0 0% 100%"
+    },
+    "dark": {
+      "--button-bg": "0 0% 0%"
+    }
+  }
+}
+```
+
+#### Item Type Values
+- **`registry:block`**: Complete UI blocks/sections
+- **`registry:component`**: Individual components
+- **`registry:ui`**: UI primitives
+- **`registry:lib`**: Library utilities
+- **`registry:hook`**: React hooks
+- **`registry:page`**: Full page templates
+- **`registry:file`**: Generic files
+- **`registry:style`**: Style-only files
+- **`registry:theme`**: Theme configurations
+- **`registry:item`**: Generic registry items
+
+#### Required Fields
+- **`name`**: Unique identifier (kebab-case)
+- **`type`**: Item type from the list above
+- **`title`**: Human-readable name
+- **`description`**: Clear description of functionality
+- **`files`**: Array of file objects with:
+  - `path`: Source file location in registry
+  - `type`: File type (usually `registry:component`)
+  - `target` (optional): Installation destination path
+
+#### Optional Fields
+- **`dependencies`**: NPM package dependencies
+- **`registryDependencies`**: Other registry items this depends on
+- **`cssVars`**: CSS custom properties for theming
+- **`tailwind`**: Tailwind configuration extensions
+- **`css`**: Additional CSS requirements
+- **`envVars`**: Required environment variables
+- **`docs`**: Documentation URL
+- **`categories`**: Array of category tags
+- **`meta`**: Additional metadata
+- **`author`**: Component author information
+
+### Implementation Guidelines
+
+1. **File Organization**
+   ```
+   registry/
+   ├── default/           # Default theme components
+   │   ├── ui/           # UI primitives
+   │   ├── blocks/       # Complete blocks
+   │   └── hooks/        # Custom hooks
+   ├── themes/           # Alternative themes
+   └── registry.json     # Main registry file
+   ```
+
+2. **Component Variants**
+   - Each variant should be a separate registry item
+   - Use `registryDependencies` to share common code
+   - Maintain consistent naming: `component-variant`
+
+3. **Dependency Management**
+   - List all NPM dependencies explicitly
+   - Use `registryDependencies` for internal components
+   - Include peer dependencies when necessary
+
+4. **CSS Variables**
+   - Define both light and dark theme values
+   - Use HSL color format for flexibility
+   - Prefix variables with component name
+
+5. **CLI Integration**
+   - Support `npx nothingcn@latest add [component]`
+   - Auto-install dependencies
+   - Handle file conflicts gracefully
+   - Support batch installation
+
+### Registry API Endpoints
+
+Future implementation will include:
+- `GET /api/registry` - Full registry JSON
+- `GET /api/registry/[item]` - Individual item details
+- `GET /api/registry/schema` - JSON schema definitions
+- `GET /api/registry/categories` - Available categories
+
+### Benefits
+- **Programmatic Installation**: Components can be installed via CLI
+- **Dependency Resolution**: Automatic handling of component dependencies
+- **Version Control**: Track component versions and updates
+- **Customization**: Users can modify after installation
+- **Type Safety**: Full TypeScript support with proper schemas

@@ -1,6 +1,6 @@
 "use client";
 
-import { ComponentPreview } from "@/components/component-preview";
+import { CodePreview } from "@/components/ui/code-preview";
 import { ThemePageHeader } from "@/components/themes/theme-page-header";
 import { ThemePageLayout } from "@/components/themes/theme-page-layout";
 import { ThemeErrorBoundary } from "@/components/theme-error-boundary";
@@ -31,7 +31,7 @@ export default function ThemePlaygroundPage() {
 
         {/* Live Preview */}
         <section id="live-preview" className="scroll-mt-20">
-          <ComponentPreview
+          <CodePreview
             title="Interactive Theme Switcher"
             description="Click any color to see your UI transform instantly"
             preview={
@@ -43,12 +43,16 @@ export default function ThemePlaygroundPage() {
 const applyTheme = (color) => {
   document.documentElement.style.setProperty('--accent', color);
 }`}
+            language="javascript"
+            defaultTab="preview"
+            tabsVariant="nothing"
+            minimal={true}
           />
         </section>
 
         {/* Theme Presets */}
         <section id="presets" className="scroll-mt-20">
-          <ComponentPreview
+          <CodePreview
             title="Theme Presets"
             description="Pre-configured themes ready to use"
             preview={
@@ -61,12 +65,16 @@ import { themes } from '@/lib/themes';
 
 // Apply a preset
 themes.ocean.apply();`}
+            language="typescript"
+            defaultTab="preview"
+            tabsVariant="nothing"
+            minimal={true}
           />
         </section>
 
         {/* Animations */}
         <section id="animations" className="scroll-mt-20">
-          <ComponentPreview
+          <CodePreview
             title="Theme Transitions"
             description="Smooth animations between theme changes"
             preview={
@@ -78,6 +86,10 @@ themes.ocean.apply();`}
 * {
   transition: background-color 0.3s, color 0.3s;
 }`}
+            language="css"
+            defaultTab="preview"
+            tabsVariant="nothing"
+            minimal={true}
           />
         </section>
 
