@@ -89,11 +89,14 @@ export function testComponentVariants(
 /**
  * Tests component accessibility requirements
  */
-export async function testAccessibility(_element: ReactElement): Promise<AccessibilityTest[]> {
+export async function testAccessibility(element: ReactElement): Promise<AccessibilityTest[]> {
+  // Get component name for testing context
+  const componentName = element.type?.toString() || 'Component';
+  
   const tests: AccessibilityTest[] = [
     {
       name: 'Keyboard Navigation',
-      description: 'Component should be keyboard accessible',
+      description: `${componentName} should be keyboard accessible`,
       test: async () => {
         // Mock keyboard navigation test
         return true;
@@ -126,11 +129,14 @@ export async function testAccessibility(_element: ReactElement): Promise<Accessi
 /**
  * Tests component performance characteristics
  */
-export async function testPerformance(_element: ReactElement): Promise<PerformanceTest[]> {
+export async function testPerformance(element: ReactElement): Promise<PerformanceTest[]> {
+  // Get component name for testing context
+  const componentName = element.type?.toString() || 'Component';
+  
   const tests: PerformanceTest[] = [
     {
       name: 'Render Time',
-      description: 'Component should render within acceptable time',
+      description: `${componentName} should render within acceptable time`,
       test: async () => {
         const start = performance.now();
         // Simulate render time

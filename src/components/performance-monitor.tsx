@@ -239,8 +239,8 @@ export const PerformanceMonitor = React.memo(function PerformanceMonitor({
               </div>
             </div>
 
-            {/* Component Performance */}
-            {componentReport && componentReport.renderTimes && Object.keys(componentReport.renderTimes).length > 0 && (
+            {/* Component Performance - Only show if showDetailedMetrics is true */}
+            {showDetailedMetrics && componentReport && componentReport.renderTimes && Object.keys(componentReport.renderTimes).length > 0 && (
               <div className="space-y-4">
                 <h3 className="font-semibold flex items-center space-x-2">
                   <Timer className="w-4 h-4" />

@@ -162,12 +162,13 @@ interface ToastState {
   duration?: number;
 }
 
-const actionTypes = {
-  ADD_TOAST: "ADD_TOAST",
-  UPDATE_TOAST: "UPDATE_TOAST",
-  DISMISS_TOAST: "DISMISS_TOAST",
-  REMOVE_TOAST: "REMOVE_TOAST",
-} as const;
+// Action type constants
+type ActionType = {
+  ADD_TOAST: "ADD_TOAST";
+  UPDATE_TOAST: "UPDATE_TOAST";
+  DISMISS_TOAST: "DISMISS_TOAST";
+  REMOVE_TOAST: "REMOVE_TOAST";
+};
 
 let count = 0;
 
@@ -175,8 +176,6 @@ function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER;
   return count.toString();
 }
-
-type ActionType = typeof actionTypes;
 
 type Action =
   | {
@@ -288,9 +287,10 @@ export function ToastContextProvider({ children }: { children: React.ReactNode }
 
   // Cleanup timeouts on unmount
   React.useEffect(() => {
+    const currentTimeouts = timeouts.current;
     return () => {
-      timeouts.current.forEach(clearTimeout);
-      timeouts.current.clear();
+      currentTimeouts.forEach(clearTimeout);
+      currentTimeouts.clear();
     };
   }, []);
 
