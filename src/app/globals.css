@@ -187,6 +187,10 @@ body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Only apply transitions after the app has loaded to prevent flashing */
+body.theme-loaded {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { Analytics } from "@vercel/analytics/next";
+import { ThemeProvider } from "@/providers/theme-provider";
+import { getPreHydrationScript } from "@/lib/theme-utils";
 
 // Both fonts are now loaded via CSS @font-face declarations in globals.css
 
@@ -119,6 +121,13 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
 
+        {/* Theme initialization script - prevents flash of wrong theme */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: getPreHydrationScript(),
+          }}
+        />
+
         {/* Structured Data */}
         <script
           type="application/ld+json"
@@ -154,12 +163,14 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        <div className="relative flex min-h-screen flex-col">
-          <SiteHeader />
-          <main id="main-content" className="flex-1" role="main">
-            {children}
-          </main>
-        </div>
+        <ThemeProvider>
+          <div className="relative flex min-h-screen flex-col">
+            <SiteHeader />
+            <main id="main-content" className="flex-1" role="main">
+              {children}
+            </main>
+          </div>
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>
