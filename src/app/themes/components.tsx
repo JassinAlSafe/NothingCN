@@ -5,59 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Check, Copy, Palette, Moon, Sun, Monitor, Loader2 } from "lucide-react";
+import { Check, Copy, Moon, Sun, Monitor, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/providers/theme-provider";
+import { THEME_COLORS, type ThemeMode, type ColorScheme } from "@/lib/theme-config";
+import { useToastWithHelpers } from "@/components/ui/toast";
 
-type ThemeMode = "light" | "dark" | "system";
-
-interface ThemeColors {
-  accent: string;
-  accentForeground: string;
-  ring: string;
-}
-
-const themePresets: Record<string, ThemeColors> = {
-  red: {
-    accent: "0 84% 60%",
-    accentForeground: "0 0% 100%",
-    ring: "0 84% 60%",
-  },
-  blue: {
-    accent: "221 83% 53%",
-    accentForeground: "0 0% 98%",
-    ring: "221 83% 53%",
-  },
-  green: {
-    accent: "142 76% 36%",
-    accentForeground: "0 0% 98%",
-    ring: "142 76% 36%",
-  },
-  purple: {
-    accent: "263 70% 50%",
-    accentForeground: "0 0% 98%",
-    ring: "263 70% 50%",
-  },
-  orange: {
-    accent: "24 95% 53%",
-    accentForeground: "0 0% 98%",
-    ring: "24 95% 53%",
-  },
-  yellow: {
-    accent: "45 93% 47%",
-    accentForeground: "0 0% 4%",
-    ring: "45 93% 47%",
-  },
-  pink: {
-    accent: "330 81% 60%",
-    accentForeground: "0 0% 100%",
-    ring: "330 81% 60%",
-  },
-  cyan: {
-    accent: "188 76% 42%",
-    accentForeground: "0 0% 100%",
-    ring: "188 76% 42%",
-  },
-};
+// Use the centralized theme colors instead of duplicating
+const themePresets = THEME_COLORS;
 
 export const InteractiveThemeSwitcher = React.memo(function InteractiveThemeSwitcher() {
   const [copied, setCopied] = React.useState(false);
@@ -72,13 +27,13 @@ export const InteractiveThemeSwitcher = React.memo(function InteractiveThemeSwit
   // to just use useTheme() hook directly
 
   const themeStyles = React.useMemo(() => ({
-    "--accent": themePresets[activeTheme].accent,
-    "--accent-foreground": themePresets[activeTheme].accentForeground,
-    "--ring": themePresets[activeTheme].ring,
+    "--accent": themePresets[activeTheme as keyof typeof themePresets].accent,
+    "--accent-foreground": themePresets[activeTheme as keyof typeof themePresets].accentForeground,
+    "--ring": themePresets[activeTheme as keyof typeof themePresets].ring,
   }), [activeTheme]);
 
   const themeCode = React.useMemo(() => {
-    const colors = themePresets[activeTheme];
+    const colors = themePresets[activeTheme as keyof typeof themePresets];
     return `:root {
   --accent: ${colors.accent};
   --accent-foreground: ${colors.accentForeground};
@@ -102,15 +57,18 @@ export const InteractiveThemeSwitcher = React.memo(function InteractiveThemeSwit
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       console.error("Failed to copy theme code:", error);
-      // Fallback for browsers that don't support clipboard API
-      const textArea = document.createElement("textarea");
-      textArea.value = themeCode;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textArea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      // Modern fallback without deprecated execCommand
+      try {
+        // Use the Clipboard API with a fallback
+        const clipboardItem = new ClipboardItem({
+          "text/plain": new Blob([themeCode], { type: "text/plain" })
+        });
+        await navigator.clipboard.write([clipboardItem]);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (fallbackError) {
+        console.error("Clipboard API not supported:", fallbackError);
+      }
     }
   }, [themeCode]);
 
@@ -138,7 +96,7 @@ export const InteractiveThemeSwitcher = React.memo(function InteractiveThemeSwit
               ) : (
                 <div
                   className="w-4 h-4 rounded-full"
-                  style={{ backgroundColor: `hsl(${themePresets[theme].accent})` }}
+                  style={{ backgroundColor: `hsl(${themePresets[theme as keyof typeof themePresets].accent})` }}
                 />
               )}
               {theme}
@@ -309,62 +267,279 @@ export function ColorCard({ name, variable, value, dark }: ColorCardProps) {
 }
 
 export function ThemePresetsGrid() {
+  const [hoveredCard, setHoveredCard] = React.useState<string | null>(null);
+  const [applyingTheme, setApplyingTheme] = React.useState<string | null>(null);
+  const [isHydrated, setIsHydrated] = React.useState(false);
+  
+  // Access theme context - it should be available in the themes page
+  const { theme, setColorScheme, isApplying } = useTheme();
+  const currentColorScheme = isHydrated ? theme.colorScheme : "red";
+  
+  // Initialize toast helpers
+  const { toast } = useToastWithHelpers();
+  
+  // Mark as hydrated after mount to prevent hydration mismatches
+  React.useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+  
   const presets = [
     {
       name: "Nothing OS",
       description: "Clean monochrome with red accent",
-      accent: "#F43F5E",
-      bg: "linear-gradient(135deg, #000 0%, #111 100%)",
+      colorScheme: "red" as ColorScheme,
+      accent: `hsl(${THEME_COLORS.red.accent})`,
+      secondary: "hsl(0, 84%, 70%)",
+      tertiary: "hsl(0, 84%, 80%)",
+      glow: "rgba(244, 63, 94, 0.1)",
     },
     {
       name: "Ocean",
       description: "Deep blues and aqua tones",
-      accent: "#3B82F6",
-      bg: "linear-gradient(135deg, #001e3c 0%, #003366 100%)",
+      colorScheme: "blue" as ColorScheme,
+      accent: `hsl(${THEME_COLORS.blue.accent})`,
+      secondary: "hsl(221, 83%, 63%)",
+      tertiary: "hsl(221, 83%, 73%)",
+      glow: "rgba(59, 130, 246, 0.1)",
     },
     {
       name: "Forest",
       description: "Natural greens and earth tones",
-      accent: "#10B981",
-      bg: "linear-gradient(135deg, #0f2617 0%, #1a3a2a 100%)",
+      colorScheme: "green" as ColorScheme,
+      accent: `hsl(${THEME_COLORS.green.accent})`,
+      secondary: "hsl(142, 76%, 46%)",
+      tertiary: "hsl(142, 76%, 56%)",
+      glow: "rgba(16, 185, 129, 0.1)",
     },
     {
       name: "Sunset",
       description: "Warm oranges and purples",
-      accent: "#F97316",
-      bg: "linear-gradient(135deg, #451a03 0%, #7c2d12 100%)",
+      colorScheme: "orange" as ColorScheme,
+      accent: `hsl(${THEME_COLORS.orange.accent})`,
+      secondary: "hsl(24, 95%, 63%)",
+      tertiary: "hsl(24, 95%, 73%)",
+      glow: "rgba(249, 115, 22, 0.1)",
     },
   ];
 
+  const handleApplyTheme = React.useCallback(async (preset: typeof presets[number]) => {
+    if (applyingTheme || isApplying) return; // Prevent multiple rapid clicks
+    
+    setApplyingTheme(preset.name);
+    
+    try {
+      // Use the global theme system
+      await new Promise(resolve => setTimeout(resolve, 500)); // Brief loading state for better UX
+      setColorScheme(preset.colorScheme);
+      
+      // Show success toast
+      toast.success({
+        title: `${preset.name} Theme Applied`,
+        description: `Your theme has been updated to ${preset.name.toLowerCase()}.`,
+      });
+    } catch (error) {
+      console.error("Failed to apply theme:", error);
+      
+      // Show error toast
+      toast.error({
+        title: "Theme Application Failed",
+        description: "There was an error applying the theme. Please try again.",
+      });
+    } finally {
+      // Clear loading state after a brief moment to show success
+      setTimeout(() => setApplyingTheme(null), 800);
+    }
+  }, [setColorScheme, applyingTheme, isApplying, toast]);
+
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {presets.map((preset) => (
+    <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4 auto-rows-fr">
+      {presets.map((preset, index) => (
         <Card
           key={preset.name}
-          className="group relative overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer"
+          onMouseEnter={() => setHoveredCard(preset.name)}
+          onMouseLeave={() => setHoveredCard(null)}
+          className={cn(
+            "group relative overflow-hidden transition-all duration-500 cursor-pointer",
+            // Custom theme preset card styling
+            "theme-preset-card",
+            // Premium border treatment
+            "border border-border/40 hover:border-accent/20",
+            // More sophisticated shadow system
+            "shadow-sm hover:shadow-2xl hover:shadow-accent/10",
+            // Subtle scale transform for premium feel
+            "hover:scale-[1.02] hover:-translate-y-1",
+            // Enhanced focus states
+            "focus:outline-none focus:ring-2 focus:ring-accent/50 focus:ring-offset-2 focus:ring-offset-background",
+            // Active state styling
+            currentColorScheme === preset.colorScheme && 
+              "ring-1 ring-accent/30 shadow-accent/20 shadow-lg border-accent/30 scale-[1.01]",
+            // Animation classes
+            "animate-in"
+          )}
+          style={{
+            boxShadow: hoveredCard === preset.name 
+              ? `0 20px 60px -15px ${preset.glow}` 
+              : (isHydrated && currentColorScheme === preset.colorScheme)
+              ? `0 10px 30px -10px ${preset.glow}`
+              : undefined,
+            animationDelay: `${index * 100}ms`,
+            animationFillMode: 'both'
+          }}
+          role="button"
+          aria-label={`${preset.name} theme preset - ${preset.description}${isHydrated && currentColorScheme === preset.colorScheme ? ' (currently active)' : ''}`}
+          aria-pressed={isHydrated && currentColorScheme === preset.colorScheme}
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleApplyTheme(preset);
+            }
+          }}
         >
+          {/* Enhanced gradient overlay on hover */}
           <div
-            className="absolute inset-0 opacity-10"
-            style={{ background: preset.bg }}
+            className={cn(
+              "absolute inset-0 opacity-0 transition-all duration-700 pointer-events-none",
+              hoveredCard === preset.name && "opacity-100"
+            )}
+            style={{ 
+              background: `conic-gradient(from 0deg at 50% 50%, transparent 0deg, ${preset.glow} 60deg, transparent 120deg, ${preset.glow} 180deg, transparent 240deg, ${preset.glow} 300deg, transparent 360deg)`,
+              filter: 'blur(40px)',
+              transform: 'scale(1.5)',
+            }}
           />
-          <div className="relative p-6 space-y-4">
-            <div
-              className="w-12 h-12 rounded-lg shadow-lg"
-              style={{ backgroundColor: preset.accent }}
-            />
-            <div className="space-y-2">
-              <h3 className="font-bold">{preset.name}</h3>
-              <p className="text-sm text-muted-foreground">
+          
+          {/* Subtle radial gradient overlay */}
+          <div
+            className={cn(
+              "absolute inset-0 opacity-0 transition-opacity duration-500",
+              hoveredCard === preset.name && "opacity-100"
+            )}
+            style={{ 
+              background: `radial-gradient(circle at 50% 0%, ${preset.glow}, transparent 70%)`
+            }}
+          />
+          
+          {/* Content */}
+          <div className="relative p-6 flex flex-col h-full space-y-5">
+            {/* Enhanced color swatches - sophisticated layout */}
+            <div className="flex-shrink-0">
+              <div className="flex items-center gap-4">
+                {/* Primary swatch with enhanced visual hierarchy */}
+                <div className="relative group/swatch">
+                  <div
+                    className={cn(
+                      "w-16 h-16 rounded-2xl transition-all duration-500",
+                      "shadow-lg group-hover:shadow-xl",
+                      hoveredCard === preset.name && "scale-110 rotate-3"
+                    )}
+                    style={{ 
+                      backgroundColor: preset.accent,
+                      boxShadow: `0 8px 32px -8px ${preset.glow}, inset 0 1px 0 rgba(255,255,255,0.1)`
+                    }}
+                    aria-label={`${preset.name} theme primary color`}
+                    role="img"
+                  />
+                  
+                  {/* Animated ripple effect on hover */}
+                  {hoveredCard === preset.name && (
+                    <div 
+                      className="absolute inset-0 rounded-2xl animate-ping opacity-30"
+                      style={{ backgroundColor: preset.accent }}
+                    />
+                  )}
+                  
+                  {/* More prominent active indicator */}
+                  {isHydrated && currentColorScheme === preset.colorScheme && (
+                    <div className="absolute -top-2 -right-2 w-5 h-5 bg-green-500 rounded-full 
+                                   border-2 border-background shadow-lg animate-enhanced-pulse
+                                   flex items-center justify-center">
+                      <Check className="w-2.5 h-2.5 text-white" />
+                    </div>
+                  )}
+                </div>
+                
+                {/* Secondary color palette with staggered animation */}
+                <div className="grid grid-cols-2 gap-2">
+                  {[preset.secondary, preset.tertiary, preset.glow.replace('0.1', '0.3'), preset.accent].map((color, i) => (
+                    <div
+                      key={i}
+                      className={cn(
+                        "w-6 h-6 rounded-lg transition-all duration-300",
+                        hoveredCard === preset.name && "scale-110"
+                      )}
+                      style={{ 
+                        backgroundColor: color.includes('rgba') ? color : color,
+                        transitionDelay: `${i * 50}ms`
+                      }}
+                      aria-label={`${preset.name} theme color variant ${i + 1}`}
+                      role="img"
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            {/* Flexible content area */}
+            <div className="flex-grow space-y-3">
+              <h3 className={cn(
+                "font-bold text-base transition-colors duration-200",
+                hoveredCard === preset.name && "text-foreground"
+              )}>
+                {preset.name}
+              </h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 {preset.description}
               </p>
             </div>
-            <Button
-              size="sm"
-              variant="outline"
-              className="w-full opacity-0 group-hover:opacity-100 transition-opacity"
-            >
-              Apply Theme
-            </Button>
+            
+            {/* Fixed height footer with enhanced button */}
+            <div className="flex-shrink-0 pt-2">
+              <Button
+                size="sm"
+                variant="outline"
+                className={cn(
+                  "w-full transition-all duration-300 text-xs h-9 font-medium",
+                  "border-border/30 bg-transparent backdrop-blur-sm",
+                  hoveredCard === preset.name 
+                    ? "border-accent/50 bg-accent/[0.03] text-foreground shadow-sm" 
+                    : "hover:border-accent/30 hover:bg-accent/[0.02]",
+                  applyingTheme === preset.name && 
+                    "bg-accent/10 border-accent/40 text-accent-foreground",
+                  isHydrated && currentColorScheme === preset.colorScheme &&
+                    "bg-accent/5 border-accent/30 text-accent"
+                )}
+                onClick={() => handleApplyTheme(preset)}
+                disabled={applyingTheme === preset.name}
+              >
+                {applyingTheme === preset.name ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 border-2 border-accent border-t-transparent 
+                                   rounded-full animate-spin" />
+                    <span className="animate-pulse">Applying...</span>
+                  </div>
+                ) : isHydrated && currentColorScheme === preset.colorScheme ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-enhanced-pulse" />
+                    Active
+                  </div>
+                ) : (
+                  <span className="group-hover:tracking-wide transition-all duration-200">
+                    Apply Theme
+                  </span>
+                )}
+              </Button>
+              
+              {/* Live region for screen readers */}
+              <div 
+                role="status" 
+                aria-live="polite" 
+                className="sr-only"
+              >
+                {applyingTheme === preset.name && `Applying ${preset.name} theme`}
+                {isHydrated && currentColorScheme === preset.colorScheme && `${preset.name} theme is currently active`}
+              </div>
+            </div>
           </div>
         </Card>
       ))}
@@ -375,64 +550,219 @@ export function ThemePresetsGrid() {
 export function AnimatedThemeTransition() {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
 
+  const handleToggle = React.useCallback(() => {
+    setTheme(prev => prev === "light" ? "dark" : "light");
+  }, []);
+
   return (
-    <div className="space-y-4">
-      <Button
-        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        variant="outline"
-        className="w-full sm:w-auto"
-      >
-        <Palette className="w-4 h-4 mr-2" />
-        Toggle Theme Animation
-      </Button>
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+        <div className="space-y-1">
+          <p className="text-sm font-medium">Current Mode: {theme === "light" ? "Light" : "Dark"}</p>
+          <p className="text-xs text-muted-foreground">Click to see smooth transitions</p>
+        </div>
+        <Button
+          onClick={handleToggle}
+          variant="outline"
+          className="flex items-center gap-2"
+          aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+        >
+          {theme === "light" ? (
+            <>
+              <Moon className="w-4 h-4" />
+              Switch to Dark
+            </>
+          ) : (
+            <>
+              <Sun className="w-4 h-4" />
+              Switch to Light
+            </>
+          )}
+        </Button>
+      </div>
       
       <div
         className={cn(
-          "relative overflow-hidden rounded-lg border p-8 transition-all duration-500",
-          theme === "dark" ? "dark" : ""
+          "relative overflow-hidden rounded-xl border-2",
+          "motion-safe:transition-all motion-safe:duration-500",
+          theme === "dark" ? "border-white/10" : "border-black/10"
         )}
         style={{
-          backgroundColor: theme === "dark" ? "hsl(0 0% 0%)" : "hsl(0 0% 100%)",
-          color: theme === "dark" ? "hsl(0 0% 100%)" : "hsl(0 0% 0%)",
-          borderColor: theme === "dark" ? "hsl(0 0% 100% / 0.2)" : "hsl(0 0% 0% / 0.2)",
+          backgroundColor: theme === "dark" ? "hsl(0 0% 8%)" : "hsl(0 0% 96%)",
+          boxShadow: theme === "dark" 
+            ? "0 20px 40px -10px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.05) inset"
+            : "0 20px 40px -10px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset",
         }}
       >
-        <div className="space-y-4">
-          <h3 className="text-2xl font-bold transition-colors duration-500"
-              style={{ color: theme === "dark" ? "hsl(0 0% 100%)" : "hsl(0 0% 0%)" }}>
-            Smooth Theme Transitions
-          </h3>
-          <p className="transition-colors duration-500"
-             style={{ color: theme === "dark" ? "hsl(0 0% 100% / 0.7)" : "hsl(0 0% 0% / 0.7)" }}>
-            Watch how smoothly components transition between themes with proper CSS transitions.
+        <div className="p-8 lg:p-12 space-y-6">
+          {/* Header with icon */}
+          <div className="flex items-center gap-4">
+            <div className={cn(
+              "w-12 h-12 rounded-full flex items-center justify-center",
+              "motion-safe:transition-all motion-safe:duration-300",
+              theme === "dark" 
+                ? "bg-white/90 text-black" 
+                : "bg-black/90 text-white"
+            )}>
+              {theme === "dark" ? <Moon className="w-6 h-6" /> : <Sun className="w-6 h-6" />}
+            </div>
+            <h3 
+              className="text-3xl font-bold motion-safe:transition-colors motion-safe:duration-300"
+              style={{ color: theme === "dark" ? "hsl(0 0% 100%)" : "hsl(0 0% 0%)" }}
+            >
+              {theme === "dark" ? "Dark Mode Active" : "Light Mode Active"}
+            </h3>
+          </div>
+          
+          <p 
+            className="text-lg leading-relaxed motion-safe:transition-colors motion-safe:duration-300"
+            style={{ color: theme === "dark" ? "hsl(0 0% 100% / 0.9)" : "hsl(0 0% 0% / 0.9)" }}
+          >
+            Experience seamless theme transitions with smooth animations. 
+            Every element adapts gracefully to provide the best visual experience.
           </p>
-          <div className="flex gap-3">
-            <div className="px-4 py-2 rounded-lg transition-all duration-500"
-                 style={{
-                   backgroundColor: theme === "dark" ? "hsl(0 0% 100%)" : "hsl(0 0% 0%)",
-                   color: theme === "dark" ? "hsl(0 0% 0%)" : "hsl(0 0% 100%)"
-                 }}>
-              Inverted
+          
+          {/* Sample UI elements */}
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className={cn(
+              "p-4 rounded-lg border motion-safe:transition-all motion-safe:duration-300",
+              theme === "dark" 
+                ? "bg-white/5 border-white/10" 
+                : "bg-black/5 border-black/10"
+            )}>
+              <div 
+                className={cn(
+                  "w-8 h-8 rounded mb-3 motion-safe:transition-all motion-safe:duration-300",
+                  theme === "dark" ? "bg-blue-500" : "bg-blue-600"
+                )}
+                style={{
+                  boxShadow: theme === "dark" 
+                    ? "0 2px 8px rgba(59, 130, 246, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.1)"
+                    : "0 2px 8px rgba(37, 99, 235, 0.2), 0 0 0 1px rgba(37, 99, 235, 0.1)"
+                }}
+              />
+              <h4 
+                className="font-semibold mb-1 motion-safe:transition-colors motion-safe:duration-300"
+                style={{ color: theme === "dark" ? "hsl(0 0% 100%)" : "hsl(0 0% 0%)" }}
+              >
+                Primary
+              </h4>
+              <p 
+                className="text-sm motion-safe:transition-colors motion-safe:duration-300"
+                style={{ color: theme === "dark" ? "hsl(0 0% 100% / 0.7)" : "hsl(0 0% 0% / 0.7)" }}
+              >
+                Core actions
+              </p>
             </div>
-            <div className="px-4 py-2 rounded-lg border transition-all duration-500"
-                 style={{
-                   borderColor: theme === "dark" ? "hsl(0 0% 100% / 0.2)" : "hsl(0 0% 0% / 0.2)"
-                 }}>
-              Bordered
+            
+            <div className={cn(
+              "p-4 rounded-lg border motion-safe:transition-all motion-safe:duration-300",
+              theme === "dark" 
+                ? "bg-white/5 border-white/10" 
+                : "bg-black/5 border-black/10"
+            )}>
+              <div 
+                className={cn(
+                  "w-8 h-8 rounded mb-3 motion-safe:transition-all motion-safe:duration-300",
+                  theme === "dark" ? "bg-green-500" : "bg-green-600"
+                )}
+                style={{
+                  boxShadow: theme === "dark" 
+                    ? "0 2px 8px rgba(34, 197, 94, 0.3), 0 0 0 1px rgba(34, 197, 94, 0.1)"
+                    : "0 2px 8px rgba(22, 163, 74, 0.2), 0 0 0 1px rgba(22, 163, 74, 0.1)"
+                }}
+              />
+              <h4 
+                className="font-semibold mb-1 motion-safe:transition-colors motion-safe:duration-300"
+                style={{ color: theme === "dark" ? "hsl(0 0% 100%)" : "hsl(0 0% 0%)" }}
+              >
+                Success
+              </h4>
+              <p 
+                className="text-sm motion-safe:transition-colors motion-safe:duration-300"
+                style={{ color: theme === "dark" ? "hsl(0 0% 100% / 0.7)" : "hsl(0 0% 0% / 0.7)" }}
+              >
+                Confirmations
+              </p>
             </div>
+            
+            <div className={cn(
+              "p-4 rounded-lg border motion-safe:transition-all motion-safe:duration-300",
+              theme === "dark" 
+                ? "bg-white/5 border-white/10" 
+                : "bg-black/5 border-black/10"
+            )}>
+              <div 
+                className={cn(
+                  "w-8 h-8 rounded mb-3 motion-safe:transition-all motion-safe:duration-300",
+                  theme === "dark" ? "bg-red-500" : "bg-red-600"
+                )}
+                style={{
+                  boxShadow: theme === "dark" 
+                    ? "0 2px 8px rgba(239, 68, 68, 0.3), 0 0 0 1px rgba(239, 68, 68, 0.1)"
+                    : "0 2px 8px rgba(220, 38, 38, 0.2), 0 0 0 1px rgba(220, 38, 38, 0.1)"
+                }}
+              />
+              <h4 
+                className="font-semibold mb-1 motion-safe:transition-colors motion-safe:duration-300"
+                style={{ color: theme === "dark" ? "hsl(0 0% 100%)" : "hsl(0 0% 0%)" }}
+              >
+                Danger
+              </h4>
+              <p 
+                className="text-sm motion-safe:transition-colors motion-safe:duration-300"
+                style={{ color: theme === "dark" ? "hsl(0 0% 100% / 0.7)" : "hsl(0 0% 0% / 0.7)" }}
+              >
+                Warnings
+              </p>
+            </div>
+          </div>
+          
+          {/* Action buttons */}
+          <div className="flex flex-wrap gap-3 pt-4">
+            <Button
+              className={cn(
+                "motion-safe:transition-all motion-safe:duration-300",
+                theme === "dark"
+                  ? "bg-white text-black hover:bg-white/90"
+                  : "bg-black text-white hover:bg-black/90"
+              )}
+            >
+              Primary Action
+            </Button>
+            <Button
+              variant="outline"
+              style={{
+                borderColor: theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.3)",
+                color: theme === "dark" ? "white" : "black",
+                backgroundColor: "transparent"
+              }}
+              className="motion-safe:transition-all motion-safe:duration-300 hover:bg-opacity-10"
+            >
+              Secondary Action
+            </Button>
           </div>
         </div>
         
-        {/* Animated gradient overlay */}
+        {/* Enhanced background effects for visual interest */}
         <div
-          className={cn(
-            "absolute inset-0 pointer-events-none transition-opacity duration-1000",
-            theme === "dark" ? "opacity-20" : "opacity-10"
-          )}
+          className="absolute inset-0 pointer-events-none motion-safe:transition-opacity motion-safe:duration-500"
           style={{
+            opacity: theme === "dark" ? 0.1 : 0.08,
             background: theme === "dark" 
-              ? "radial-gradient(circle at top right, #3b82f6 0%, transparent 50%)"
-              : "radial-gradient(circle at bottom left, #f43f5e 0%, transparent 50%)",
+              ? "radial-gradient(circle at 20% 50%, #3b82f6 0%, transparent 50%), radial-gradient(circle at 80% 80%, #8b5cf6 0%, transparent 60%)"
+              : "radial-gradient(circle at 80% 20%, #f43f5e 0%, transparent 50%), radial-gradient(circle at 20% 80%, #f97316 0%, transparent 60%)",
+          }}
+        />
+        
+        {/* Subtle noise texture overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-20"
+          style={{
+            backgroundImage: theme === "dark"
+              ? "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0)"
+              : "radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0)",
+            backgroundSize: "20px 20px"
           }}
         />
       </div>

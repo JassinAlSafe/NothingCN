@@ -4,6 +4,8 @@ import { SiteHeader } from "@/components/site-header";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { getPreHydrationScript } from "@/lib/theme-utils";
+import { Toaster } from "@/components/ui/toaster";
+import { ToastContextProvider } from "@/components/ui/toast";
 
 // Both fonts are now loaded via CSS @font-face declarations in globals.css
 
@@ -164,12 +166,15 @@ export default function RootLayout({
         </a>
 
         <ThemeProvider>
-          <div className="relative flex min-h-screen flex-col">
-            <SiteHeader />
-            <main id="main-content" className="flex-1" role="main">
-              {children}
-            </main>
-          </div>
+          <ToastContextProvider>
+            <div className="relative flex min-h-screen flex-col">
+              <SiteHeader />
+              <main id="main-content" className="flex-1" role="main">
+                {children}
+              </main>
+            </div>
+            <Toaster />
+          </ToastContextProvider>
         </ThemeProvider>
         <Analytics />
       </body>

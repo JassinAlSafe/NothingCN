@@ -82,7 +82,7 @@ themes.ocean.apply();`}
         </section>
 
         {/* Add some bottom spacing */}
-        <div className="h-8" />
+        <div className="h-16" />
     </ThemePageLayout>
   );
 }
