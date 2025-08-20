@@ -48,6 +48,17 @@ const enhancedComponents = [
 </Badge>`,
   },
   {
+    name: "Banner",
+    description: "Flexible notification banners with Nothing OS-inspired design and persistent dismiss.",
+    href: "/components/banner",
+    category: "Feedback",
+    isNew: true,
+    isPopular: false,
+    quickCode: `<Banner variant="nothing">
+  🚀 System update available
+</Banner>`,
+  },
+  {
     name: "Code Block",
     description: "Syntax-highlighted code display with one-click copy functionality.",
     href: "/components/code-block",

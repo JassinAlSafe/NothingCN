@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
+import { SiteHeader } from "@/components/header";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { getPreHydrationScript } from "@/lib/theme-utils";
 import { Toaster } from "@/components/ui/toaster";
 import { ToastContextProvider } from "@/components/ui/toast";
+import { BetaBanner } from "@/components/beta-banner";
 
 // Both fonts are now loaded via CSS @font-face declarations in globals.css
 
@@ -168,8 +169,14 @@ export default function RootLayout({
         <ThemeProvider>
           <ToastContextProvider>
             <div className="relative flex min-h-screen flex-col">
+              <BetaBanner />
               <SiteHeader />
-              <main id="main-content" className="flex-1" role="main">
+              <main 
+                id="main-content" 
+                className="flex-1" 
+                role="main"
+                style={{ paddingTop: 'var(--banner-height, 0px)' }}
+              >
                 {children}
               </main>
             </div>

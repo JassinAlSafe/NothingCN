@@ -1,5 +1,5 @@
 // Component source code for tabs documentation
-// Extracted to improve maintainability and reduce duplication
+// Completely redesigned to match NothingCN aesthetic
 
 export const tabsSourceCode = `"use client";
 
@@ -50,22 +50,22 @@ const useTabsContext = () => {
   return context;
 };
 
-// Optimized TabsList variants with better accessibility and consistency
+// TabsList variants following shadcn patterns with NothingCN design
 const tabsListVariants = cva(
-  "inline-flex items-center text-muted-foreground relative overflow-hidden focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background",
+  "inline-flex items-center text-muted-foreground motion-safe:transition-all motion-safe:duration-200 focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2",
   {
     variants: {
       variant: {
-        default: "justify-center rounded-full bg-muted p-1 shadow-sm",
-        nothing: "justify-center rounded-2xl bg-muted/50 border border-border/50 backdrop-blur-sm p-1.5 shadow-sm hover:shadow-md transition-all duration-300 hover:border-border/70",
-        pixel: "justify-center rounded-none border-2 border-border bg-gradient-to-r from-muted to-muted/80 p-1 shadow-[2px_2px_0px_0px_theme(colors.border)]",
-        underline: "justify-start bg-transparent border-b border-border rounded-none p-0 gap-0 shadow-none",
-        minimal: "justify-start bg-transparent rounded-none p-0 gap-2 shadow-none"
+        default: "justify-center rounded-full bg-muted p-1 text-muted-foreground",
+        nothing: "justify-center rounded-full bg-card border-2 border-accent/20 p-1 motion-safe:hover:border-accent/40",
+        pixel: "justify-center bg-background border-2 border-foreground p-1 shadow-[4px_4px_0px_0px_theme(colors.foreground)] motion-safe:hover:shadow-[2px_2px_0px_0px_theme(colors.foreground)] motion-safe:hover:translate-x-[2px] motion-safe:hover:translate-y-[2px]",
+        underline: "justify-start bg-transparent border-b border-border p-0",
+        minimal: "justify-start bg-transparent p-1"
       },
       size: {
-        sm: "h-10 text-sm min-w-fit",
-        default: "h-12 text-sm min-w-fit", 
-        lg: "h-14 text-base min-w-fit"
+        sm: "h-9 text-sm",
+        default: "h-10 text-sm", 
+        lg: "h-12 text-base"
       }
     },
     defaultVariants: {
@@ -75,51 +75,22 @@ const tabsListVariants = cva(
   }
 );
 
-// TabsTrigger variants with Nothing OS inspired styling and improved states
+// TabsTrigger variants following button component patterns
 const tabsTriggerVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:shadow-lg focus-visible:shadow-accent/25 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background motion-safe:transition-all motion-safe:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground data-[state=active]:shadow-sm",
   {
     variants: {
       variant: {
-        default: \`rounded-full px-4 py-2 h-full flex-1 relative
-          data-[state=active]:bg-background data-[state=active]:text-foreground 
-          data-[state=active]:shadow-md data-[state=active]:scale-[1.02]
-          hover:bg-background/60 hover:scale-[0.98]
-          motion-safe:data-[state=active]:animate-in motion-safe:data-[state=active]:zoom-in-95\`,
-        nothing: \`rounded-2xl px-4 py-2 h-full flex-1 relative
-          data-[state=active]:bg-accent data-[state=active]:text-accent-foreground 
-          data-[state=active]:shadow-lg data-[state=active]:shadow-accent/25
-          data-[state=active]:border data-[state=active]:border-accent/20
-          hover:bg-accent/8 dark:hover:bg-accent/12 hover:shadow-md hover:shadow-accent/10
-          before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-r 
-          before:from-transparent before:via-accent/5 before:to-transparent 
-          before:opacity-0 before:transition-opacity before:duration-300
-          data-[state=active]:before:opacity-100\`,
-        pixel: \`rounded-none px-4 py-2 border-2 border-transparent font-mono font-bold tracking-wider
-          data-[state=active]:border-accent data-[state=active]:bg-accent 
-          data-[state=active]:text-accent-foreground data-[state=active]:shadow-lg
-          data-[state=active]:shadow-accent/20 data-[state=active]:scale-[1.02]
-          hover:border-accent/30 hover:bg-accent/10 hover:scale-[0.98]
-          after:content-[''] after:absolute after:inset-0 after:border-2 after:border-accent
-          after:opacity-0 data-[state=active]:after:opacity-100 after:animate-pulse\`,
-        underline: \`rounded-none px-4 py-3 border-b-2 border-transparent relative
-          data-[state=active]:border-accent data-[state=active]:text-accent 
-          hover:text-accent/70 hover:border-accent/30
-          after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 
-          after:bg-gradient-to-r after:from-transparent after:via-accent after:to-transparent
-          after:opacity-0 after:transition-all after:duration-300
-          data-[state=active]:after:opacity-100\`,
-        minimal: \`rounded-lg px-3 py-2 relative
-          data-[state=active]:bg-accent/10 data-[state=active]:text-accent 
-          hover:bg-accent/5 hover:text-accent/80
-          before:absolute before:inset-0 before:rounded-lg before:bg-accent/10
-          before:scale-0 before:transition-transform before:duration-300
-          data-[state=active]:before:scale-100\`
+        default: "rounded-full px-3 py-1.5 data-[state=active]:bg-background data-[state=active]:text-foreground hover:bg-accent/10 hover:text-accent",
+        nothing: "rounded-full px-4 py-2 font-ndot font-bold tracking-wider text-sm bg-background text-foreground border-2 border-border hover:bg-accent hover:text-accent-foreground hover:border-accent data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:border-accent relative overflow-hidden group image-rendering-pixelated [-webkit-font-smoothing:none] [-moz-osx-font-smoothing:grayscale] [text-rendering:optimizeSpeed]",
+        pixel: "px-3 py-1.5 bg-background text-foreground border-2 border-foreground hover:bg-foreground hover:text-background font-mono font-bold tracking-wider uppercase text-xs rounded-none relative overflow-hidden shadow-[4px_4px_0px_0px_theme(colors.foreground)] motion-safe:hover:shadow-[2px_2px_0px_0px_theme(colors.foreground)] motion-safe:hover:translate-x-[2px] motion-safe:hover:translate-y-[2px] data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:border-accent data-[state=active]:shadow-[2px_2px_0px_0px_theme(colors.accent)]",
+        underline: "px-3 py-1.5 border-b-2 border-transparent data-[state=active]:border-accent data-[state=active]:text-accent hover:text-accent/70",
+        minimal: "px-3 py-1.5 hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
       },
       size: {
-        sm: "text-sm min-h-[40px]",
-        default: "text-sm min-h-[48px]",
-        lg: "text-base min-h-[52px]"
+        sm: "text-xs h-7 px-2",
+        default: "text-sm h-8 px-3",
+        lg: "text-base h-10 px-4"
       }
     },
     defaultVariants: {
@@ -210,8 +181,8 @@ const TabsContent = React.forwardRef<
     <Comp
       ref={ref}
       className={cn(
-        "mt-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-        "motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-1 motion-safe:duration-200 motion-safe:ease-out",
+        "mt-6 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 motion-safe:duration-300 motion-safe:ease-out",
         "data-[state=inactive]:motion-safe:animate-out data-[state=inactive]:motion-safe:fade-out-0 data-[state=inactive]:motion-safe:slide-out-to-bottom-1",
         className
       )}

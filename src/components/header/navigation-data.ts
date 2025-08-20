@@ -25,6 +25,11 @@ export const searchableContent = [
         description: "Small status indicators with variant styling",
       },
       {
+        name: "Banner",
+        href: "/components/banner",
+        description: "Flexible notification banners with Nothing OS design",
+      },
+      {
         name: "Button",
         href: "/components/button",
         description: "Interactive elements with multiple variants and states",

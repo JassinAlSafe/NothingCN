@@ -78,6 +78,35 @@
       },
       "categories": ["components", "ui", "navigation"],
       "docs": "/components/tabs"
+    },
+    {
+      "name": "banner",
+      "type": "registry:ui",
+      "title": "Banner",
+      "description": "Flexible notification banners with Nothing OS-inspired design. Perfect for announcements, warnings, and system messages with persistent dismiss functionality.",
+      "files": [
+        {
+          "path": "default/ui/banner.tsx",
+          "type": "registry:component",
+          "target": "components/ui/banner.tsx"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "utils"
+      ],
+      "tailwind": {
+        "config": {}
+      },
+      "cssVars": {
+        "light": {},
+        "dark": {}
+      },
+      "categories": ["components", "ui", "notification"],
+      "docs": "/components/banner"
     }
   ]
 }

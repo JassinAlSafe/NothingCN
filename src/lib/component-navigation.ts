@@ -12,6 +12,10 @@ export const componentList = [
     title: "Badge"
   },
   {
+    href: "/components/banner",
+    title: "Banner"
+  },
+  {
     href: "/components/button",
     title: "Button"
   },
