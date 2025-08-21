@@ -24,8 +24,6 @@ export default function ButtonPage() {
         { text: "✓ Accessible", variant: "secondary", className: "bg-blue-500/10 text-blue-600 border-blue-500/20" },
         { text: "✓ Customizable", variant: "secondary", className: "bg-purple-500/10 text-purple-600 border-purple-500/20" }
       ]}
-      dependencies={["@radix-ui/react-slot", "class-variance-authority", "clsx", "tailwind-merge"]}
-      cliCommand="npx nothingcn@latest add button"
       componentSourceCode={buttonSourceCode}
     >
       {/* Basic Usage - Override the default one */}

@@ -35,8 +35,6 @@ export default function BadgePage() {
         { text: "✓ Customizable", variant: "secondary", className: "bg-purple-500/10 text-purple-600 border-purple-500/20" }
       ]}
       customSections={sections}
-      dependencies={["class-variance-authority", "clsx", "tailwind-merge"]}
-      cliCommand="npx nothingcn@latest add badge"
       basicUsageCode={badgeCode}
       componentSourceCode={badgeSourceCode}
     >
