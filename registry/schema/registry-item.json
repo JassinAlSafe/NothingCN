@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nothingcn.com/schema/registry-item.json",
+  "title": "NothingCN Registry Item Schema",
+  "description": "Schema for individual registry items",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Unique identifier (kebab-case)"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "registry:block",
+        "registry:component",
+        "registry:ui",
+        "registry:lib",
+        "registry:hook",
+        "registry:page",
+        "registry:file",
+        "registry:style",
+        "registry:theme",
+        "registry:item"
+      ],
+      "description": "Item type"
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Clear description of functionality"
+    },
+    "files": {
+      "type": "array",
+      "description": "Array of file objects",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Source file location in registry"
+          },
+          "type": {
+            "type": "string",
+            "description": "File type"
+          },
+          "target": {
+            "type": "string",
+            "description": "Installation destination path"
+          }
+        },
+        "required": ["path", "type"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "NPM package dependencies",
+      "items": {
+        "type": "string"
+      }
+    },
+    "registryDependencies": {
+      "type": "array",
+      "description": "Other registry items this depends on",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tailwind": {
+      "type": "object",
+      "description": "Tailwind configuration extensions"
+    },
+    "cssVars": {
+      "type": "object",
+      "description": "CSS custom properties for theming",
+      "properties": {
+        "light": {
+          "type": "object"
+        },
+        "dark": {
+          "type": "object"
+        }
+      }
+    },
+    "categories": {
+      "type": "array",
+      "description": "Category tags",
+      "items": {
+        "type": "string"
+      }
+    },
+    "docs": {
+      "type": "string",
+      "description": "Documentation URL"
+    },
+    "author": {
+      "type": "object",
+      "description": "Component author information",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "description": "Additional metadata"
+    }
+  },
+  "required": ["name", "type", "title", "description", "files"],
+  "additionalProperties": false
+}

@@ -1,32 +1,71 @@
 // Component source code for tabs documentation
-// Extracted to improve maintainability and reduce duplication
+// Completely redesigned to match NothingCN aesthetic
 
 export const tabsSourceCode = `"use client";
 
 import * as React from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Slot } from "@radix-ui/react-slot";
 
 import { cn } from "@/lib/utils";
 
-const Tabs = TabsPrimitive.Root;
+// Enhanced Tabs Root with proper forwardRef and variant support
+interface TabsProps 
+  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root> {
+  variant?: "default" | "nothing" | "pixel" | "underline" | "minimal";
+  size?: "sm" | "default" | "lg";
+}
 
-// TabsList variants following the design system pattern
+const Tabs = React.forwardRef<
+  React.ComponentRef<typeof TabsPrimitive.Root>,
+  TabsProps
+>(({ className, variant = "default", size = "default", ...props }, ref) => {
+  // Create context to pass variant and size to child components
+  const contextValue = React.useMemo(() => ({ variant, size }), [variant, size]);
+  
+  return (
+    <TabsContext.Provider value={contextValue}>
+      <TabsPrimitive.Root
+        ref={ref}
+        className={cn("w-full", className)}
+        {...props}
+      />
+    </TabsContext.Provider>
+  );
+});
+Tabs.displayName = "Tabs";
+
+// Context for sharing variant and size
+const TabsContext = React.createContext<{
+  variant: "default" | "nothing" | "pixel" | "underline" | "minimal";
+  size: "sm" | "default" | "lg";
+}>({ variant: "default", size: "default" });
+
+const useTabsContext = () => {
+  const context = React.useContext(TabsContext);
+  if (!context) {
+    throw new Error("Tabs compound components must be used within Tabs");
+  }
+  return context;
+};
+
+// TabsList variants following shadcn patterns with NothingCN design
 const tabsListVariants = cva(
-  "inline-flex items-center justify-center p-1 text-muted-foreground",
+  "inline-flex items-center text-muted-foreground motion-safe:transition-all motion-safe:duration-200 focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2",
   {
     variants: {
       variant: {
-        default: "rounded-full bg-muted",
-        nothing: "rounded-3xl bg-muted border border-border",
-        pixel: "rounded-none border-2 border-border bg-gradient-to-r from-muted to-muted/50",
-        underline: "bg-transparent border-b border-border rounded-none p-0",
-        minimal: "bg-transparent rounded-none p-0 gap-1"
+        default: "justify-center rounded-full bg-muted p-1 text-muted-foreground",
+        nothing: "justify-center rounded-full bg-card border-2 border-accent/20 p-1 motion-safe:hover:border-accent/40",
+        pixel: "justify-center bg-background border-2 border-foreground p-1 shadow-[4px_4px_0px_0px_theme(colors.foreground)] motion-safe:hover:shadow-[2px_2px_0px_0px_theme(colors.foreground)] motion-safe:hover:translate-x-[2px] motion-safe:hover:translate-y-[2px]",
+        underline: "justify-start bg-transparent border-b border-border p-0",
+        minimal: "justify-start bg-transparent p-1"
       },
       size: {
-        sm: "h-10 text-sm",
-        default: "h-12 text-sm",
-        lg: "h-14 text-base"
+        sm: "h-9 text-sm",
+        default: "h-10 text-sm", 
+        lg: "h-12 text-base"
       }
     },
     defaultVariants: {
@@ -36,22 +75,22 @@ const tabsListVariants = cva(
   }
 );
 
-// TabsTrigger variants with Nothing OS inspired styling
+// TabsTrigger variants following button component patterns
 const tabsTriggerVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background motion-safe:transition-all motion-safe:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground data-[state=active]:shadow-sm",
   {
     variants: {
       variant: {
-        default: "rounded-full px-4 py-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm hover:bg-background/50",
-        nothing: "rounded-2xl px-4 py-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-lg data-[state=active]:border data-[state=active]:border-accent/20 hover:bg-accent/10",
-        pixel: "rounded-none px-4 py-2 border-2 border-transparent font-ndot tracking-wider data-[state=active]:border-accent data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-sm hover:border-accent/30 hover:bg-accent/10",
-        underline: "rounded-none px-4 py-3 border-b-2 border-transparent data-[state=active]:border-accent data-[state=active]:text-accent hover:text-accent/70",
-        minimal: "rounded-lg px-3 py-2 data-[state=active]:bg-accent/10 data-[state=active]:text-accent hover:bg-accent/5"
+        default: "rounded-full px-3 py-1.5 data-[state=active]:bg-background data-[state=active]:text-foreground hover:bg-accent/10 hover:text-accent",
+        nothing: "rounded-full px-4 py-2 font-ndot font-bold tracking-wider text-sm bg-background text-foreground border-2 border-border hover:bg-accent hover:text-accent-foreground hover:border-accent data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:border-accent relative overflow-hidden group image-rendering-pixelated [-webkit-font-smoothing:none] [-moz-osx-font-smoothing:grayscale] [text-rendering:optimizeSpeed]",
+        pixel: "px-3 py-1.5 bg-background text-foreground border-2 border-foreground hover:bg-foreground hover:text-background font-mono font-bold tracking-wider uppercase text-xs rounded-none relative overflow-hidden shadow-[4px_4px_0px_0px_theme(colors.foreground)] motion-safe:hover:shadow-[2px_2px_0px_0px_theme(colors.foreground)] motion-safe:hover:translate-x-[2px] motion-safe:hover:translate-y-[2px] data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:border-accent data-[state=active]:shadow-[2px_2px_0px_0px_theme(colors.accent)]",
+        underline: "px-3 py-1.5 border-b-2 border-transparent data-[state=active]:border-accent data-[state=active]:text-accent hover:text-accent/70",
+        minimal: "px-3 py-1.5 hover:bg-accent hover:text-accent-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
       },
       size: {
-        sm: "text-sm px-3 py-1.5",
-        default: "text-sm px-4 py-2",
-        lg: "text-base px-6 py-3"
+        sm: "text-xs h-7 px-2",
+        default: "text-sm h-8 px-3",
+        lg: "text-base h-10 px-4"
       }
     },
     defaultVariants: {
@@ -61,51 +100,108 @@ const tabsTriggerVariants = cva(
   }
 );
 
-export interface TabsListProps
+interface TabsListProps
   extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>,
-    VariantProps<typeof tabsListVariants> {}
+    VariantProps<typeof tabsListVariants> {
+  asChild?: boolean;
+}
 
-export interface TabsTriggerProps
+interface TabsTriggerProps
   extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>,
-    VariantProps<typeof tabsTriggerVariants> {}
+    VariantProps<typeof tabsTriggerVariants> {
+  asChild?: boolean;
+}
 
 const TabsList = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.List>,
+  React.ComponentRef<typeof TabsPrimitive.List>,
   TabsListProps
->(({ className, variant, size, ...props }, ref) => (
-  <TabsPrimitive.List
-    ref={ref}
-    className={cn(tabsListVariants({ variant, size, className }))}
-    {...props}
-  />
-));
-TabsList.displayName = TabsPrimitive.List.displayName;
+>(({ className, variant, size, asChild = false, ...props }, ref) => {
+  // Use context values if props aren't provided
+  const context = useTabsContext();
+  const resolvedVariant = variant ?? context.variant;
+  const resolvedSize = size ?? context.size;
+  
+  const Comp = asChild ? Slot : TabsPrimitive.List;
+  
+  return (
+    <Comp
+      ref={ref}
+      className={cn(
+        tabsListVariants({ 
+          variant: resolvedVariant, 
+          size: resolvedSize, 
+          className 
+        })
+      )}
+      {...props}
+    />
+  );
+});
+TabsList.displayName = "TabsList";
 
 const TabsTrigger = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Trigger>,
+  React.ComponentRef<typeof TabsPrimitive.Trigger>,
   TabsTriggerProps
->(({ className, variant, size, ...props }, ref) => (
-  <TabsPrimitive.Trigger
-    ref={ref}
-    className={cn(tabsTriggerVariants({ variant, size, className }))}
-    {...props}
-  />
-));
-TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
+>(({ className, variant, size, asChild = false, ...props }, ref) => {
+  // Use context values if props aren't provided
+  const context = useTabsContext();
+  const resolvedVariant = variant ?? context.variant;
+  const resolvedSize = size ?? context.size;
+  
+  const Comp = asChild ? Slot : TabsPrimitive.Trigger;
+  
+  return (
+    <Comp
+      ref={ref}
+      className={cn(
+        tabsTriggerVariants({ 
+          variant: resolvedVariant, 
+          size: resolvedSize, 
+          className 
+        })
+      )}
+      {...props}
+    />
+  );
+});
+TabsTrigger.displayName = "TabsTrigger";
+
+interface TabsContentProps
+  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content> {
+  asChild?: boolean;
+}
 
 const TabsContent = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Content
-    ref={ref}
-    className={cn(
-      "mt-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-safe:animate-in motion-safe:fade-in-50 motion-safe:slide-in-from-bottom-2 motion-safe:duration-300",
-      className
-    )}
-    {...props}
-  />
-));
-TabsContent.displayName = TabsPrimitive.Content.displayName;
+  React.ComponentRef<typeof TabsPrimitive.Content>,
+  TabsContentProps
+>(({ className, asChild = false, ...props }, ref) => {
+  const Comp = asChild ? Slot : TabsPrimitive.Content;
+  
+  return (
+    <Comp
+      ref={ref}
+      className={cn(
+        "mt-6 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 motion-safe:duration-300 motion-safe:ease-out",
+        "data-[state=inactive]:motion-safe:animate-out data-[state=inactive]:motion-safe:fade-out-0 data-[state=inactive]:motion-safe:slide-out-to-bottom-1",
+        className
+      )}
+      {...props}
+    />
+  );
+});
+TabsContent.displayName = "TabsContent";
 
-export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants, tabsTriggerVariants };`;
+// Export all components and variants
+export { 
+  Tabs, 
+  TabsList, 
+  TabsTrigger, 
+  TabsContent, 
+  tabsListVariants, 
+  tabsTriggerVariants,
+  type TabsProps,
+  type TabsListProps,
+  type TabsTriggerProps,
+  type TabsContentProps
+};`;

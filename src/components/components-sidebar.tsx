@@ -65,6 +65,11 @@ const sidebarConfig: SidebarSection[] = [
         href: "/components/badge",
       },
       {
+        title: "Banner",
+        href: "/components/banner",
+        label: "New",
+      },
+      {
         title: "Code Block",
         href: "/components/code-block",
       },

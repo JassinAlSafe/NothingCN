@@ -1,0 +1,112 @@
+{
+  "$schema": "https://nothingcn.com/schema/registry.json",
+  "name": "nothingcn",
+  "homepage": "https://nothingcn.com",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "A versatile button component with multiple variants including pixel and nothing styles.",
+      "files": [
+        {
+          "path": "default/ui/button.tsx",
+          "type": "registry:component",
+          "target": "components/ui/button.tsx"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "utils"
+      ],
+      "tailwind": {
+        "config": {}
+      },
+      "cssVars": {
+        "light": {},
+        "dark": {}
+      },
+      "categories": ["components", "ui"],
+      "docs": "/components/button"
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Utils",
+      "description": "Utility functions including cn for class merging.",
+      "files": [
+        {
+          "path": "default/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "A set of layered sections of content—known as tab panels—that are displayed one at a time with multiple variants.",
+      "files": [
+        {
+          "path": "default/ui/tabs.tsx",
+          "type": "registry:component",
+          "target": "components/ui/tabs.tsx"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-tabs",
+        "@radix-ui/react-slot",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "utils"
+      ],
+      "tailwind": {
+        "config": {}
+      },
+      "cssVars": {
+        "light": {},
+        "dark": {}
+      },
+      "categories": ["components", "ui", "navigation"],
+      "docs": "/components/tabs"
+    },
+    {
+      "name": "banner",
+      "type": "registry:ui",
+      "title": "Banner",
+      "description": "Flexible notification banners with Nothing OS-inspired design. Perfect for announcements, warnings, and system messages with persistent dismiss functionality.",
+      "files": [
+        {
+          "path": "default/ui/banner.tsx",
+          "type": "registry:component",
+          "target": "components/ui/banner.tsx"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "utils"
+      ],
+      "tailwind": {
+        "config": {}
+      },
+      "cssVars": {
+        "light": {},
+        "dark": {}
+      },
+      "categories": ["components", "ui", "notification"],
+      "docs": "/components/banner"
+    }
+  ]
+}

@@ -43,11 +43,11 @@ export const nothingVariantCode = `import { Tabs, TabsList, TabsTrigger, TabsCon
 
 export function NothingTabsExample() {
   return (
-    <Tabs defaultValue="design" className="w-full max-w-md">
-      <TabsList variant="nothing">
-        <TabsTrigger variant="nothing" value="design">Design</TabsTrigger>
-        <TabsTrigger variant="nothing" value="features">Features</TabsTrigger>
-        <TabsTrigger variant="nothing" value="specs">Specs</TabsTrigger>
+    <Tabs defaultValue="design" variant="nothing" className="w-full max-w-md">
+      <TabsList className="grid w-full grid-cols-3">
+        <TabsTrigger value="design">Design</TabsTrigger>
+        <TabsTrigger value="features">Features</TabsTrigger>
+        <TabsTrigger value="specs">Specs</TabsTrigger>
       </TabsList>
       <TabsContent value="design">
         <div className="space-y-2">
@@ -81,11 +81,11 @@ export const pixelVariantCode = `import { Tabs, TabsList, TabsTrigger, TabsConte
 
 export function PixelTabsExample() {
   return (
-    <Tabs defaultValue="level1" className="w-full max-w-md">
-      <TabsList variant="pixel">
-        <TabsTrigger variant="pixel" value="level1">LEVEL_01</TabsTrigger>
-        <TabsTrigger variant="pixel" value="level2">LEVEL_02</TabsTrigger>
-        <TabsTrigger variant="pixel" value="level3">LEVEL_03</TabsTrigger>
+    <Tabs defaultValue="level1" variant="pixel" className="w-full max-w-md">
+      <TabsList className="grid w-full grid-cols-3">
+        <TabsTrigger value="level1">LEVEL_01</TabsTrigger>
+        <TabsTrigger value="level2">LEVEL_02</TabsTrigger>
+        <TabsTrigger value="level3">LEVEL_03</TabsTrigger>
       </TabsList>
       <TabsContent value="level1">
         <div className="space-y-2">
@@ -119,11 +119,11 @@ export const underlineVariantCode = `import { Tabs, TabsList, TabsTrigger, TabsC
 
 export function UnderlineTabsExample() {
   return (
-    <Tabs defaultValue="overview" className="w-full max-w-md">
-      <TabsList variant="underline">
-        <TabsTrigger variant="underline" value="overview">Overview</TabsTrigger>
-        <TabsTrigger variant="underline" value="details">Details</TabsTrigger>
-        <TabsTrigger variant="underline" value="settings">Settings</TabsTrigger>
+    <Tabs defaultValue="overview" variant="underline" className="w-full max-w-md">
+      <TabsList className="grid w-full grid-cols-3">
+        <TabsTrigger value="overview">Overview</TabsTrigger>
+        <TabsTrigger value="details">Details</TabsTrigger>
+        <TabsTrigger value="settings">Settings</TabsTrigger>
       </TabsList>
       <TabsContent value="overview">
         <div className="space-y-2">
@@ -157,11 +157,11 @@ export const minimalVariantCode = `import { Tabs, TabsList, TabsTrigger, TabsCon
 
 export function MinimalTabsExample() {
   return (
-    <Tabs defaultValue="tab1" className="w-full max-w-md">
-      <TabsList variant="minimal">
-        <TabsTrigger variant="minimal" value="tab1">Tab 1</TabsTrigger>
-        <TabsTrigger variant="minimal" value="tab2">Tab 2</TabsTrigger>
-        <TabsTrigger variant="minimal" value="tab3">Tab 3</TabsTrigger>
+    <Tabs defaultValue="tab1" variant="minimal" className="w-full max-w-md">
+      <TabsList className="grid w-full grid-cols-3">
+        <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+        <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+        <TabsTrigger value="tab3">Tab 3</TabsTrigger>
       </TabsList>
       <TabsContent value="tab1">
         <div className="space-y-2">
@@ -197,20 +197,20 @@ export function TabsSizesExample() {
   return (
     <div className="space-y-6">
       {/* Small Size */}
-      <Tabs defaultValue="tab1" className="w-full max-w-md">
-        <TabsList size="sm">
-          <TabsTrigger size="sm" value="tab1">Small</TabsTrigger>
-          <TabsTrigger size="sm" value="tab2">Compact</TabsTrigger>
+      <Tabs defaultValue="tab1" size="sm" className="w-full max-w-md">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="tab1">Small</TabsTrigger>
+          <TabsTrigger value="tab2">Compact</TabsTrigger>
         </TabsList>
         <TabsContent value="tab1">Small size content</TabsContent>
         <TabsContent value="tab2">Perfect for tight spaces</TabsContent>
       </Tabs>
       
       {/* Large Size */}
-      <Tabs defaultValue="tab1" className="w-full max-w-md">
-        <TabsList size="lg">
-          <TabsTrigger size="lg" value="tab1">Large</TabsTrigger>
-          <TabsTrigger size="lg" value="tab2">Prominent</TabsTrigger>
+      <Tabs defaultValue="tab1" size="lg" className="w-full max-w-md">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="tab1">Large</TabsTrigger>
+          <TabsTrigger value="tab2">Prominent</TabsTrigger>
         </TabsList>
         <TabsContent value="tab1">Large size content</TabsContent>
         <TabsContent value="tab2">Great for primary navigation</TabsContent>
