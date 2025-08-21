@@ -90,7 +90,7 @@ export function Example() {
                     <CardHeader>
                       <CardTitle>Account</CardTitle>
                       <CardDescription>
-                        Make changes to your account here. Click save when you're done.
+                        Make changes to your account here. Click save when you&apos;re done.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -110,7 +110,7 @@ export function Example() {
                     <CardHeader>
                       <CardTitle>Password</CardTitle>
                       <CardDescription>
-                        Change your password here. After saving, you'll be logged out.
+                        Change your password here. After saving, you&apos;ll be logged out.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -165,7 +165,7 @@ export function Example() {
                   <div className="p-6 sm:p-8 rounded-3xl border-2 border-border/40 bg-background/95">
                     <h3 className="text-xl font-ndot font-semibold mb-3">System Overview</h3>
                     <p className="text-muted-foreground">
-                      Monitor your system's performance and health metrics in real-time.
+                      Monitor your system&apos;s performance and health metrics in real-time.
                       Everything is running smoothly with optimal efficiency.
                     </p>
                   </div>

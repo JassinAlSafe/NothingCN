@@ -5,7 +5,6 @@ import { Highlight, themes } from "prism-react-renderer";
 import { Copy, Check } from "lucide-react";
 import { Button } from "./button";
 import { cn } from "@/lib/utils";
-import { useTheme } from "@/providers/theme-provider";
 
 interface CodeBlockProps {
   code: string;
@@ -24,7 +23,6 @@ export function CodeBlock({
   ...props
 }: CodeBlockProps) {
   const [isCopied, setIsCopied] = React.useState(false);
-  const { theme } = useTheme();
   
   // Determine if we're in dark mode - check DOM state directly for immediate updates
   const [isDarkMode, setIsDarkMode] = React.useState(false);

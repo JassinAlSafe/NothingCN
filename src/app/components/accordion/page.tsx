@@ -126,7 +126,7 @@ export function Example() {
                   </AccordionTrigger>
                   <AccordionContent>
                     Yes. You can expand multiple items at once by setting
-                    type="multiple".
+                    type=&quot;multiple&quot;.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">

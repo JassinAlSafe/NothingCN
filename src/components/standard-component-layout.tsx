@@ -2,10 +2,6 @@
 
 import React from "react";
 import { ComponentLayout } from "@/components/component-layout";
-import { InstallationTabs } from "@/components/installation-tabs";
-import { ComponentPreview } from "@/components/component-preview";
-import { ComponentCode } from "@/components/component-code";
-import { ComponentTestRunner } from "@/components/component-test-runner";
 import { getComponentNavigation } from "@/lib/component-navigation";
 import { Badge } from "@/components/ui/badge";
 import { LucideIcon } from "lucide-react";
@@ -30,27 +26,10 @@ interface StandardComponentLayoutProps {
   badges?: Badge[];
   children?: React.ReactNode;
   customSections?: Section[];
-  dependencies?: string[];
-  cliCommand?: string;
-  manualSteps?: Array<{
-    title: string;
-    description: string;
-    code: string;
-  }>;
   componentSourceCode?: string;
   basicUsageCode?: string;
-  enableTesting?: boolean;
-  testVariants?: Record<string, unknown>[];
-  ComponentClass?: React.ComponentType<Record<string, unknown>>;
 }
 
-const defaultSections: Section[] = [
-  { id: "installation", title: "Installation" },
-  { id: "usage", title: "Usage" },
-  { id: "basic-usage", title: "Basic Usage" },
-  { id: "examples", title: "Examples" },
-  { id: "component-source", title: "Component Source" },
-];
 
 export const StandardComponentLayout = React.memo(function StandardComponentLayout({
   componentName,
@@ -59,14 +38,8 @@ export const StandardComponentLayout = React.memo(function StandardComponentLayo
   badges = [],
   children,
   customSections,
-  dependencies = ["class-variance-authority", "clsx", "tailwind-merge"],
-  cliCommand,
-  manualSteps = [],
   componentSourceCode = "",
   basicUsageCode = "",
-  enableTesting = false,
-  testVariants = [],
-  ComponentClass
 }: StandardComponentLayoutProps) {
   // Build sections array based on what content we'll actually render
   const sections = customSections || [
@@ -80,32 +53,6 @@ export const StandardComponentLayout = React.memo(function StandardComponentLayo
   // Get navigation for this component
   const { previous, next } = getComponentNavigation(componentPath);
 
-  // Default manual steps if none provided
-  const defaultManualSteps = manualSteps.length > 0 ? manualSteps : [
-    {
-      title: "Install dependencies",
-      description: "Install required dependencies for the component.",
-      code: `npm install ${dependencies.join(" ")}`,
-    },
-    {
-      title: "Copy component source code",
-      description: "Create a new file and paste the component code.",
-      code: componentSourceCode,
-    },
-    {
-      title: "Import and use",
-      description: "Import the component and use it in your project.",
-      code: basicUsageCode || `import { ${componentName} } from "@/components/ui/${componentName.toLowerCase()}";
-
-export function Example() {
-  return (
-    <${componentName}>
-      Example content
-    </${componentName}>
-  );
-}`,
-    },
-  ];
 
   return (
     <ComponentLayout sections={sections} previous={previous} next={next}>

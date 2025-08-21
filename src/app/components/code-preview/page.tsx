@@ -86,11 +86,10 @@ export function Example() {
               <CodePreview
                 title="Button Example"
                 description="A simple button component demonstration"
+                preview={<Button>Click me</Button>}
                 code={`<Button>Click me</Button>`}
                 language="tsx"
-              >
-                <Button>Click me</Button>
-              </CodePreview>
+              />
             </div>
           }
           code={basicUsageCode}
@@ -106,42 +105,45 @@ export function Example() {
             <div className="w-full max-w-sm sm:max-w-2xl space-y-8">
               <CodePreview
                 title="Default Tabs"
-                tabVariant="default"
+                tabsVariant="default"
+                preview={
+                  <Card className="p-4">
+                    <p>Default tab style</p>
+                  </Card>
+                }
                 code={`<Card className="p-4">
   <p>Default tab style</p>
 </Card>`}
                 language="tsx"
-              >
-                <Card className="p-4">
-                  <p>Default tab style</p>
-                </Card>
-              </CodePreview>
+              />
 
               <CodePreview
                 title="Underline Tabs"
-                tabVariant="underline"
+                tabsVariant="underline"
+                preview={
+                  <Card className="p-4">
+                    <p>Underline tab style</p>
+                  </Card>
+                }
                 code={`<Card className="p-4">
   <p>Underline tab style</p>
 </Card>`}
                 language="tsx"
-              >
-                <Card className="p-4">
-                  <p>Underline tab style</p>
-                </Card>
-              </CodePreview>
+              />
 
               <CodePreview
                 title="Nothing Tabs"
-                tabVariant="nothing"
+                tabsVariant="nothing"
+                preview={
+                  <Card className="p-4">
+                    <p>Nothing OS tab style</p>
+                  </Card>
+                }
                 code={`<Card className="p-4">
   <p>Nothing OS tab style</p>
 </Card>`}
                 language="tsx"
-              >
-                <Card className="p-4">
-                  <p>Nothing OS tab style</p>
-                </Card>
-              </CodePreview>
+              />
             </div>
           }
           code={withTabVariantsCode}
@@ -159,6 +161,12 @@ export function Example() {
                 title="With Line Numbers"
                 description="Code display with line numbers enabled"
                 showLineNumbers={true}
+                preview={
+                  <Card className="p-6">
+                    <p className="font-mono">Hello, Developer!</p>
+                    <p className="text-sm text-muted-foreground mt-2">Welcome to NothingCN</p>
+                  </Card>
+                }
                 code={`function greet(name: string) {
   console.log(\`Hello, \${name}!\`);
   return \`Welcome to NothingCN\`;
@@ -167,12 +175,7 @@ export function Example() {
 const result = greet("Developer");
 console.log(result);`}
                 language="typescript"
-              >
-                <Card className="p-6">
-                  <p className="font-mono">Hello, Developer!</p>
-                  <p className="text-sm text-muted-foreground mt-2">Welcome to NothingCN</p>
-                </Card>
-              </CodePreview>
+              />
             </div>
           }
           code={withLineNumbersCode}
@@ -188,11 +191,10 @@ console.log(result);`}
             <div className="w-full max-w-sm sm:max-w-2xl">
               <CodePreview
                 minimal={true}
+                preview={<Badge>New Feature</Badge>}
                 code={`<Badge>New Feature</Badge>`}
                 language="tsx"
-              >
-                <Badge>New Feature</Badge>
-              </CodePreview>
+              />
             </div>
           }
           code={minimalStyleCode}
@@ -210,17 +212,18 @@ console.log(result);`}
                 title="Custom Background"
                 description="Preview with gradient background"
                 previewClassName="bg-gradient-to-br from-purple-500/10 to-pink-500/10 min-h-[200px] flex items-center justify-center"
+                preview={
+                  <div className="text-center">
+                    <h3 className="text-2xl font-bold mb-2">Gradient Background</h3>
+                    <p className="text-muted-foreground">Custom preview styling</p>
+                  </div>
+                }
                 code={`<div className="text-center">
   <h3 className="text-2xl font-bold mb-2">Gradient Background</h3>
   <p className="text-muted-foreground">Custom preview styling</p>
 </div>`}
                 language="tsx"
-              >
-                <div className="text-center">
-                  <h3 className="text-2xl font-bold mb-2">Gradient Background</h3>
-                  <p className="text-muted-foreground">Custom preview styling</p>
-                </div>
-              </CodePreview>
+              />
             </div>
           }
           code={customPreviewClassCode}
@@ -236,22 +239,28 @@ console.log(result);`}
             <div className="w-full max-w-sm sm:max-w-2xl space-y-8">
               <CodePreview
                 title="JavaScript"
+                preview={
+                  <Card className="p-4">
+                    <p className="font-mono text-sm">APPLE</p>
+                    <p className="font-mono text-sm">BANANA</p>
+                    <p className="font-mono text-sm">ORANGE</p>
+                  </Card>
+                }
                 code={`const items = ['apple', 'banana', 'orange'];
 items.forEach(item => {
   console.log(item.toUpperCase());
 });`}
                 language="javascript"
                 showLineNumbers={true}
-              >
-                <Card className="p-4">
-                  <p className="font-mono text-sm">APPLE</p>
-                  <p className="font-mono text-sm">BANANA</p>
-                  <p className="font-mono text-sm">ORANGE</p>
-                </Card>
-              </CodePreview>
+              />
 
               <CodePreview
                 title="CSS"
+                preview={
+                  <button className="bg-gradient-to-br from-purple-500 to-purple-700 px-6 py-3 rounded-lg text-white font-semibold">
+                    Styled Button
+                  </button>
+                }
                 code={`.button {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 12px 24px;
@@ -261,11 +270,7 @@ items.forEach(item => {
 }`}
                 language="css"
                 showLineNumbers={true}
-              >
-                <button className="bg-gradient-to-br from-purple-500 to-purple-700 px-6 py-3 rounded-lg text-white font-semibold">
-                  Styled Button
-                </button>
-              </CodePreview>
+              />
             </div>
           }
           code={differentLanguagesCode}
@@ -282,18 +287,19 @@ items.forEach(item => {
               <CodePreview
                 title="No Card Wrapper"
                 description="Clean display without container"
-                noCard={true}
+                useCard={false}
+                preview={
+                  <div className="flex gap-2">
+                    <Input placeholder="Enter text..." />
+                    <Button>Submit</Button>
+                  </div>
+                }
                 code={`<div className="flex gap-2">
   <Input placeholder="Enter text..." />
   <Button>Submit</Button>
 </div>`}
                 language="tsx"
-              >
-                <div className="flex gap-2">
-                  <Input placeholder="Enter text..." />
-                  <Button>Submit</Button>
-                </div>
-              </CodePreview>
+              />
             </div>
           }
           code={withoutCardWrapperCode}
@@ -311,6 +317,14 @@ items.forEach(item => {
                 title="Code Tab Default"
                 description="Opens with code tab selected"
                 defaultTab="code"
+                preview={
+                  <div className="flex items-center gap-4">
+                    <Button variant="outline" size="sm">
+                      Toggle
+                    </Button>
+                    <label>Enable notifications</label>
+                  </div>
+                }
                 code={`<div className="flex items-center gap-4">
   <Button variant="outline" size="sm">
     Toggle
@@ -318,14 +332,7 @@ items.forEach(item => {
   <label>Enable notifications</label>
 </div>`}
                 language="tsx"
-              >
-                <div className="flex items-center gap-4">
-                  <Button variant="outline" size="sm">
-                    Toggle
-                  </Button>
-                  <label>Enable notifications</label>
-                </div>
-              </CodePreview>
+              />
             </div>
           }
           code={defaultTabCode}

@@ -122,7 +122,7 @@ export function Example() {
             <Card className="w-full max-w-sm sm:max-w-md">
               <CardHeader>
                 <CardTitle className="font-ndot">Get in Touch</CardTitle>
-                <CardDescription>Send us a message and we'll respond within 24 hours.</CardDescription>
+                <CardDescription>Send us a message and we&apos;ll respond within 24 hours.</CardDescription>
               </CardHeader>
               <CardContent>
                 <form className="space-y-4">
@@ -189,7 +189,7 @@ export function Example() {
                 placeholder="Password"
               />
               <Textarea 
-                variant="nothing"
+                variant="default"
                 placeholder="Tell us your story..."
                 className="min-h-[120px]"
               />
@@ -232,7 +232,7 @@ export function Example() {
                   <div className="space-y-2">
                     <label className="text-sm font-medium font-ndot">Bio</label>
                     <Textarea 
-                      variant="nothing"
+                      variant="default"
                       placeholder="Tell us about yourself..."
                       className="min-h-[100px]"
                     />
@@ -268,8 +268,8 @@ export function Example() {
                 <Input variant="pixel" placeholder="PIXEL INPUT..." />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium">Minimal</label>
-                <Input variant="minimal" placeholder="Minimal input..." />
+                <label className="text-sm font-medium">Glow</label>
+                <Input variant="glow" placeholder="Glow input..." />
               </div>
             </div>
           }
